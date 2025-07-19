@@ -67,6 +67,5 @@ include_once(G5_THEME_PATH . '/head.php');
 	?>
 	<!-- } 최신글 끝 -->
 </div>
-맥북에서 수정
 <?php
 include_once(G5_THEME_PATH . '/tail.php');
