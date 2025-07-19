@@ -1,0 +1,57 @@
+# 그누보드 AI 프로젝트 .gitignore
+
+# 데이터베이스 설정 파일 (보안상 제외)
+data/dbconfig.php
+data/dbconfig.php.bak
+
+# 세션 파일
+data/session/
+
+# 캐시 파일
+data/cache/
+data/file_cache/
+
+# 업로드된 파일들 (선택적)
+data/file/
+data/editor/
+
+# 로그 파일
+data/log/
+
+# 임시 파일
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# OS 생성 파일
+.DS_Store
+Thumbs.db
+
+# IDE 파일
+.vscode/
+.idea/
+*.sublime-*
+
+# 백업 파일
+*.bak
+*.backup
+
+# 설정 파일 (보안상 민감한 정보 포함)
+config.php
+common.php
+
+# 설치 파일들
+install/
+g4_import.php
+g4_import_run.php
+yc4_import.php
+yc4_import_run.php
+orderupgrade.php
+
+# 권한 스크립트
+perms.sh
+
+# Cloudflare 체크 파일
+cloudflare.check.php 
