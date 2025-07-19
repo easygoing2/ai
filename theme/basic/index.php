@@ -67,5 +67,6 @@ include_once(G5_THEME_PATH . '/head.php');
 	?>
 	<!-- } 최신글 끝 -->
 </div>
+PC에서 작업중.
 <?php
 include_once(G5_THEME_PATH . '/tail.php');
