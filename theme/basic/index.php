@@ -67,6 +67,5 @@ include_once(G5_THEME_PATH . '/head.php');
 	?>
 	<!-- } 최신글 끝 -->
 </div>
-인덱스 페이지 입니다.
 <?php
 include_once(G5_THEME_PATH . '/tail.php');
