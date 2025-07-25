@@ -1,0 +1,93 @@
+@charset "utf-8";
+
+/* 새글 스킨 (latest) */
+.pic_plyr_lt {position:relative;margin-bottom:20px;background:#fff}
+.pic_plyr_lt .lat_title {display:block;line-height:45px;font-size:1.2em;color:#253dbe}
+.pic_plyr_lt .lat_title a {color:#000;display:inline-block;position:relative}
+
+.pic_plyr_lt .lt_more {position:absolute;top:11px;right:10px;display:block;width:25px;line-height:25px;color:#aaa;border-radius:3px;text-align:center;}
+.pic_plyr_lt .lt_more:hover {color:#777}
+.pic_plyr_lt ul:after {display:block;visibility:hidden;clear:both;content:""}
+.pic_plyr_lt ul {margin: 0 -10px}
+.pic_plyr_lt li {float:left;width:33.33%;padding:0 15px}
+.pic_plyr_lt li.gallery_li:nth-child(3n+1) {clear: both!important}
+.pic_plyr_lt li .lt_img {margin:5px 0;display:block}
+.pic_plyr_lt li .lt_img img, .pic_plyr_lt li .lt_img video {width:100%;height:auto}
+
+.pic_plyr_lt li .img-wrap {display:block;position:relative;height:0;overflow:hidden;padding-bottom:56.25%;margin:10px 0;}
+.pic_plyr_lt li .img-wrap .img-item {display:block;position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;}
+.pic_plyr_lt li .img-wrap .img-item img {display:block;border:0;width:100.5%;height:auto;margin:0px auto;}
+.pic_plyr_lt li .is-round-post-img { border-radius:10px; z-index:1; }
+
+.pic_plyr_lt li .post_content_overlay{position:absolute;top:15px;left:0px;transition-duration:0.2s;padding-left:15px;}
+.pic_plyr_lt li .entry_meta{line-height:1;}
+.pic_plyr_lt li .entry_meta span{padding:4px 10px 4px 10px;font-size:14px;letter-spacing:0.8px;text-transform:uppercase;border-radius:20px;position:relative;}
+.pic_plyr_lt li .entry_meta span::before{border:1px solid #fff;}
+.pic_plyr_lt li .bg_white{background-color: rgba( 255, 255, 255, 0.5 ); color: #fff;}
+
+.pic_plyr_lt li .bo_cate_link {display:inline-block;background:#e2eaf6;color:#3a8afd;font-weight:normal !important;height:20px;line-height:10px;padding:5px 8px;border-radius:5px;font-size:0.95em} /* 글제목줄 분류스타일 */
+.pic_plyr_lt li .bo_cate_link:hover {text-decoration:none}
+.pic_plyr_lt li .post-title{overflow:hidden; font-size:16px; line-height:22px; padding:0 5px; letter-spacing:-1px;}
+.pic_plyr_lt li .post-text {overflow:hidden; font-size:12px; line-height:18px; padding:0 5px; margin-top:4px;}
+.pic_plyr_lt li .post-text a {color:#888;}
+
+.pic_plyr_lt li a:hover {color:#a22121}
+.pic_plyr_lt li .fa-heart {color:#ff0000}
+.pic_plyr_lt li .fa-lock {display:inline-block;line-height:14px;width:16px;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
+.pic_plyr_lt li .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
+.pic_plyr_lt li .hot_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#ff0000;background:#ffb9b9;text-align:center;border-radius:2px;vertical-align:middle}
+.pic_plyr_lt li .fa-caret-right {color:#bbb}
+.pic_plyr_lt li .fa-download {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#daae37;background:#ffefb9;text-align:center;border-radius:2px;vertical-align:middle}
+.pic_plyr_lt li .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;vertical-align:middle}
+
+.pic_plyr_lt .profile_img img{border-radius:50%}
+
+.lt_info {padding:3px 5px;}
+.lt_info .lt_nick {}
+.lt_info .lt_date {color:#888}
+
+.pic_plyr_lt .empty_li {line-height:145px ;color:#666;text-align:center;padding:0}
+.pic_plyr_lt .empty_li:before {background:none;padding:0}
+
+.pic_plyr_lt .lt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
+.pic_plyr_lt .lt_more {position:absolute;top:11px;right:0;display:block;width:40px;line-height:25px;color:#3a8afd;border-radius:3px;text-align:center}
+.pic_plyr_lt .lt_more:hover {color:#777}
+
+
+.song-download,
+.song-play-icon .song-artist,
+.audioPodcast .bi-pause-circle,
+.audioPodcast:hover .song-release,
+.player-icon-show .song-release,
+.audioPodcast.player-icon-show .bi-play-circle {
+    display: none;
+}
+
+.player-icon-show .song-download,
+.audioPodcast:hover .song-download,
+.audioPodcast.player-icon-show .bi-pause-circle {
+    display: block;
+}
+
+/* flyr Video content design
+--------------------------------------------- */
+.pic_plyr_lt li .plyr__control--overlaid {--plyr-color-main: rgba( 255, 255, 255, 0.5 );}
+.pic_plyr_lt li .plyr--video .plyr__control:hover {
+    color: #404040;
+}
+
+.is_hover .plyr__controls {
+    margin-bottom: -85px;
+}
+
+.is_hover.gall_img:hover .plyr__controls,
+.is_hover .img-item:hover .plyr__controls {
+    margin-bottom: 0;
+	-webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.is_hover .plyr--video .plyr__control:hover {
+    color: #404040;
+}

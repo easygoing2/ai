@@ -1,0 +1,61 @@
+@charset "utf-8";
+
+/* 새글 목록 스킨 */
+.new_list {
+  margin-bottom: 20px;
+  background: #fff
+}
+
+.new_list .new_title {
+  display: block;
+  line-height: 45px;
+  font-size: 1.2em;
+  color: #253dbe;
+  margin-bottom: 15px
+}
+
+.new_list table {
+  width: 100%;
+  border-collapse: collapse
+}
+
+.new_list th {
+  padding: 8px;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  font-weight: bold
+}
+
+.new_list td {
+  padding: 8px;
+  border: 1px solid #ddd
+}
+
+.new_list td a {
+  color: #333;
+  text-decoration: none
+}
+
+.new_list td a:hover {
+  color: #007bff
+}
+
+.new_list .more_btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 15px
+}
+
+.new_list .more_btn:hover {
+  background-color: #0056b3
+}
+
+.new_list .empty_msg {
+  text-align: center;
+  padding: 50px 0;
+  color: #666
+}
