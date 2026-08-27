@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+/* 최근게시물 스킨 (new) */
+/* --------------------------------------------------------
+list
+----------------------------------------------------------*/
+#fnewlist {display:flex; flex-direction:column; width:100%; height:100%; overflow:auto;}
+.newboardList {}
+.newboardList .toolBox {display:flex; justify-content:space-between; align-items:center;}
+.newboardList .toolBox .title {font-size:20px; font-weight:600;}
+.newboardList .toolBox .tools {display:flex; align-items:center; gap:8px;}
+.newboardList .toolBox .tools button i {font-size:18px;}
+
+.newboardList .listWrap {padding:10px 0;}
+.newboardList .listWrap ul {display:flex; flex-direction:column; list-style:none; gap:10px;}
+.newboardList .listWrap ul li {display:flex; flex-wrap:wrap; align-items:center; width:100%; padding:10px 0; border:1px solid var(--ui-color-gray-200);}
+.newboardList .listWrap ul li .checkBox {display:flex; justify-content:center; align-items:center;}
+.newboardList .listWrap ul li .post {width:calc(100% - 60px);}
+.newboardList .listWrap ul li .post .title {width:100%; display:flex; align-items:center; margin-bottom:6px;}
+.newboardList .listWrap ul li .post .title a {display:block; font-weight:600; font-size:16px; line-height:1.2;}
+.newboardList .listWrap ul li .post .info {width:100%; display:flex; align-items:center;}
+.newboardList .listWrap ul li .post .info .group {margin:0 4px;}
+.newboardList .listWrap ul li .post .info .board {margin:0 4px;}
+.newboardList .listWrap ul li .post .info .group a,
+.newboardList .listWrap ul li .post .info .board a {padding:4px; border:1px solid var(--ui-color-gray-300); border-radius:4px; background:var(--ui-color-white); color:var(--ui-color-gray-600); font-size:12px;}
+.newboardList .listWrap ul li .post .info .name {margin:0 4px;}
+.newboardList .listWrap ul li .date {width:60px; text-align:right; color:var(--ui-color-gray-500);}
+
+/* --------------------------------------------------------
+검색 모달 버튼
+----------------------------------------------------------*/
+#searchPop .buttonWrap {display:flex; gap:12px; justify-content:flex-end; padding:20px 24px; border-top:1px solid var(--ui-color-gray-300); background:var(--ui-color-gray-50);}
+#searchPop .buttonWrap button {padding:12px 24px; border:1px solid var(--ui-color-gray-300); border-radius:8px; background:var(--ui-color-white); color:var(--ui-color-gray-600); font-size:14px; cursor:pointer; transition:all 0.2s ease;}
+#searchPop .buttonWrap button:hover {border-color:var(--color-prime); color:var(--color-prime);}
+#searchPop .buttonWrap button.bg-pr {background:var(--color-prime); color:var(--ui-color-white); border-color:var(--color-prime);}
+#searchPop .buttonWrap button.bg-pr:hover {opacity:0.9;}
+
+/* --------------------------------------------------------
+RESPONSE
+----------------------------------------------------------*/
+@media (max-width:768px) {
+	.newboardList .listWrap ul li .date {display:none;}
+	.newboardList .listWrap ul li .post {width: calc(100% - 0px);}
+}

@@ -1,0 +1,16 @@
+/* ========================================
+   MODULE- 게시판 통계
+======================================== */
+.boardInfo {display:flex; align-items:center; padding:4px; border:1px solid var(--layout-board-border); border-radius:var(--board-radius-lg); background:var(--layout-board-bg);}
+.boardInfo .boardStats {display:flex; gap:10px; margin:10px;}
+.boardInfo .boardStats .statItem {display:flex; flex-direction:column; align-items:center; gap:2px;}
+.boardInfo .boardStats .statItem .statLabel {color:var(--layout-gray-600); font-size:11px; font-weight:500;}
+.boardInfo .boardStats .statItem .statValue {color:var(--layout-gray-900); font-size:14px; font-weight:700;}
+.boardInfo .boardChart {flex:1; max-width:180px; height:50px; position:relative;}
+.boardInfo .boardChart canvas {max-width:100%; height:100%;}
+
+/* 태블릿 반응형 */
+@media (max-width: 1024px) {
+	.boardInfo {}
+	.boardInfo .boardChart {max-width:100%; width:100%;}
+}

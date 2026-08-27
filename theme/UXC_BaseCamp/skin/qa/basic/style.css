@@ -1,0 +1,328 @@
+@charset "utf-8";/* ----------------------------------------------
+QA 게시판 스킨 스타일
+* 기반:UXC_Flarumix 테마 UI 시스템
+* 참조:uxc_list 스킨 구조
+* 색상:UI.css 변수 시스템 활용
+* 디자인:모던 미니멀 카드 레이아웃
+------------------------------------------------*/
+/* ========================================
+   QA 목록 래퍼
+======================================== */
+.qaListWrap {position:relative;}
+/* ========================================
+   카테고리 영역
+======================================== */
+.qaListWrap .catagory {margin-bottom:var(--ui-padding-l);}
+.qaListWrap .catagory ul {display:flex; flex-wrap:wrap; margin:0; padding:0; list-style:none; gap:8px;}
+.qaListWrap .catagory ul li {margin:0;}
+.qaListWrap .catagory ul li a {display:block; padding:10px 16px; border:1px solid var(--ui-color-gray-300); border-radius:8px; background:var(--ui-color-white); color:var(--ui-color-gray-600); font-size:14px; font-weight:500; text-decoration:none; white-space:nowrap; }
+.qaListWrap .catagory ul li a:hover,
+.qaListWrap .catagory ul li a.on,
+.qaListWrap .catagory ul li a.selected {border-color:var(--color-prime); background:var(--color-prime); color:var(--ui-color-white);}
+/* QA 카테고리 활성 상태 - 그누보드 기본 클래스 */
+.qaListWrap .catagory ul li #bo_cate_on {border-color:var(--color-prime); background:var(--color-prime); color:var(--ui-color-white);}
+/* ========================================
+   도구 모음
+======================================== */
+.qaListWrap .toolBox {display:flex; justify-content:space-between; align-items:center; margin:20px 0; padding:16px;     border: 1px solid var(--ui-color-gray-200);
+    border-radius: 12px;
+    background: var(--ui-color-gray-50);}
+.qaListWrap .toolBox .tools {display:flex; align-items:center; gap:12px;}
+/* 전체 선택 체크박스 */
+.qaListWrap .toolBox .opt {display:flex; align-items:center;}
+.qaListWrap .toolBox .opt input[type="checkbox"] {margin:0;}
+/* 총계 정보 */
+.qaListWrap .toolBox .total {display:flex; align-items:center; color:var(--ui-color-gray-600); font-size:14px; gap:12px;}
+.qaListWrap .toolBox .total strong {color:var(--color-prime); font-weight:600;}
+/* 도구 버튼 */
+.qaListWrap .toolBox button {display:flex; align-items:center; padding:8px 12px; border:1px solid var(--ui-color-gray-300); border-radius:6px; background:var(--ui-color-white); color:var(--ui-color-gray-600); font-size:14px; cursor:pointer; gap:6px;}
+.qaListWrap .toolBox button:hover {border-color:var(--color-prime); color:var(--color-prime);}
+.qaListWrap .toolBox button i {font-size:16px;}
+/* ========================================
+   QA 목록 카드 레이아웃
+======================================== */
+.qaListWrap .listWrap {margin-bottom:var(--ui-padding-l);}
+.qaListWrap .listBox[data-board="qa_list"] {display:flex; flex-direction:column; margin-bottom:var(--ui-padding-l); gap:var(--ui-padding-s);}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox {display:flex; justify-content:space-between; align-items:center; color:inherit; text-decoration:none; border:1px solid var(--ui-color-gray-200);}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox:hover {box-shadow:0 4px 12px rgba(0, 0, 0, 0.08); transform:translateY(-2px);}
+/* 답변 상태별 스타일 */
+/* ========================================
+   카드 제목 영역
+======================================== */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox {display:flex; align-items:center; flex:1;gap:12px;}
+/* 체크박스 */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .checkBox {display:flex; align-items:center;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox:hover .titleBox .checkBox {}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .checkBox .opt {display:flex; align-items:center;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .checkBox input[type="checkbox"] {margin:0;}
+/* 사용자 정보 */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .user {display:flex; justify-content:center; align-items:center; width:32px; min-width:32px; height:32px; overflow:hidden; border-radius:50%; background:var(--ui-color-gray-300); transition:transform 0.2s ease;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox:hover .titleBox .user {transform:scale(1.1);}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .user img {width:100%; height:100%; object-fit:cover;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .user .profile_default {display:flex; justify-content:center; align-items:center; width:100%; height:100%; background:var(--color-prime); color:var(--ui-color-white); font-size:14px; font-weight:600; text-transform:uppercase;}
+/* 컨텐츠 정보 */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .contentInfo {display:flex; align-items:flex-start; flex-direction:column; flex:1;gap:6px;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .contentInfo .title {display:flex; align-items:center; color:var(--ui-color-gray-900); font-size:16px; font-weight:600; line-height:1.4; gap:8px;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox:hover .titleBox .contentInfo .title {color:var(--color-prime);}
+/* 카테고리 태그 */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .contentInfo .title .categoryTag {padding:2px 8px; border-radius:4px; background:var(--ui-color-info); color:var(--ui-color-white); font-size:11px; font-weight:500;}
+/* 제목 */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .contentInfo .title .subject {flex:1;}
+/* 파일 아이콘 */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .contentInfo .title .fileIcon {padding:2px 6px; border-radius:4px; background:var(--ui-color-warning); color:var(--ui-color-white); font-size:12px;}
+/* 추가 정보 */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .contentInfo .add {display:flex; align-items:center; opacity:0.7; color:var(--ui-color-gray-500); font-size:12px; gap:8px;transition:opacity 0.2s ease;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox:hover .titleBox .contentInfo .add {opacity:1;}
+/* ========================================
+   카드 정보 영역
+======================================== */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .infoBox {display:flex; align-items:center; opacity:0.8; gap:16px;transition:opacity 0.2s ease;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox:hover .infoBox {opacity:1;}
+/* 상태 박스 */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .infoBox .statusBox {display:flex; align-items:center;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .infoBox .statusBox .status {padding:6px 12px; border-radius:6px; font-size:12px; font-weight:600; white-space:nowrap;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .infoBox .statusBox .status.answered {background:var(--ui-color-success); color:var(--ui-color-white);}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox .infoBox .statusBox .status.waiting {background:var(--ui-color-warning); color:var(--ui-color-white);}
+/* ========================================
+   빈 목록 메시지
+======================================== */
+.qaListWrap .listBox[data-board="qa_list"] .cardBox.empty {justify-content:center; align-items:center; padding:60px 20px; color:var(--ui-color-gray-500); font-size:16px; text-align:center;/* UI.css의 bg-wh, round-m 클래스 적용으로 배경색과 라운딩 자동 적용 */}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox.empty .emptyMessage {display:flex; align-items:center; flex-direction:column; gap:8px;}
+.qaListWrap .listBox[data-board="qa_list"] .cardBox.empty .emptyMessage i {opacity:0.5; font-size:32px;}
+/* ========================================
+   페이징
+======================================== */
+.qaListWrap .listFooter {margin-bottom:var(--ui-padding-l); text-align:center;}
+/* ========================================
+   관리 버튼
+======================================== */
+.qaListWrap .admBtn {display:flex; justify-content:center; padding:20px 0;}
+.qaListWrap .admBtn .buttonWrap {display:flex; align-items:center; gap:12px;}
+.qaListWrap .admBtn .buttonWrap .button {display:flex; align-items:center; padding:12px 20px; border:1px solid var(--ui-color-gray-300); border-radius:8px; background:var(--ui-color-white); color:var(--ui-color-gray-600); font-size:14px; font-weight:500; text-decoration:none; cursor:pointer; gap:8px;}
+.qaListWrap .admBtn .buttonWrap .button:hover {border-color:var(--color-prime); color:var(--color-prime);}
+.qaListWrap .admBtn .buttonWrap .button.warning {border-color:var(--ui-color-danger); color:var(--ui-color-danger);}
+.qaListWrap .admBtn .buttonWrap .button.warning:hover {background:var(--ui-color-danger); color:var(--ui-color-white);}
+.qaListWrap .admBtn .buttonWrap .button.prime {border-color:var(--color-prime); background:var(--color-prime); color:var(--ui-color-white);}
+.qaListWrap .admBtn .buttonWrap .button.prime:hover {opacity:0.9;}
+/* ========================================
+   반응형 디자인
+======================================== */
+@media (max-width:1024px) {
+    .qaListWrap .admBtn {align-items:stretch; flex-direction:column; gap:16px;}
+    .qaListWrap .admBtn .buttonWrap {justify-content:center;}
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox .infoBox {gap:12px;}
+}
+@media (max-width:768px) {
+    .qaListWrap .toolBox {align-items:stretch; flex-direction:column; text-align:center; gap:16px;}
+    .qaListWrap .toolBox .tools {flex-wrap:wrap; justify-content:center;}
+    .qaListWrap .catagory ul {justify-content:center;}
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox {align-items:stretch; flex-direction:column; gap:12px;/* padding은 UI.css의 padding-m 클래스로 자동 조정됨 */}
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox {gap:8px;}
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox .infoBox {text-align:center; align-self:stretch;}
+}
+@media (max-width:480px) {
+    .qaListWrap .admBtn {padding:12px;}
+    .qaListWrap .toolBox {padding:12px;}
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox {padding:12px 14px;}
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .contentInfo .title {font-size:14px;}
+    .qaListWrap .admBtn .buttonWrap {flex-direction:column;}
+    .qaListWrap .admBtn .buttonWrap .button {justify-content:center; width:100%;}
+}
+/* ========================================
+   접근성 향상 (모션 감소 사용자)
+======================================== */
+@media (prefers-reduced-motion:reduce) {
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox {transition:none;}
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox:hover {transform:none;}
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .checkBox,
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .user,
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox .titleBox .contentInfo .add,
+    .qaListWrap .listBox[data-board="qa_list"] .cardBox .infoBox {transition:none;}
+}
+
+/* ========================================
+   QA 작성 페이지 스타일
+======================================== */
+.qaWriteWrap {position:relative;}
+.qaWriteWrap .boardWrite {}
+
+/* writeBox 및 insertBox 간격 조정 */
+.qaWriteWrap .boardWrite .boardWriteBody .writeBox {}
+.qaWriteWrap .boardWrite .boardWriteBody .insertBox .item.title {color:var(--ui-color-gray-700); font-weight:600; font-size:16px;}
+.qaWriteWrap .boardWrite .boardWriteBody .insertBox .item.title strong {color:var(--ui-color-gray-900);}
+.qaWriteWrap .boardWrite .boardWriteBody .insertBox .helpText {color:var(--ui-color-gray-500); font-size:12px; margin-bottom:12px; line-height:1.4;}
+
+/* 파일 업로드 스타일 개선 */
+.item.file {display:flex; align-items:center; border:1px solid var(--ui-color-gray-200); border-radius:8px; padding:12px; background:var(--ui-color-white); gap:10px; margin-bottom:10px;}
+.item.file input[type="file"] {padding:0 !important; height:unset; border:0; border-radius:0;}
+.item.file .lb_icon {display:flex; align-items:center; gap:8px; color:var(--ui-color-gray-600); font-size:14px; font-weight:500;}
+.item.file .lb_icon i {font-size:18px; color:var(--color-prime);}
+
+/* 체크박스 옵션 스타일 */
+.qaWriteWrap .opt {margin-top:8px;}
+.qaWriteWrap .opt .text {color:var(--ui-color-gray-600); font-size:14px;}
+
+/* 버튼 래퍼 */
+.qaWriteWrap .boardWrite .boardWriteBody .insertBox .btnWrap {display:flex; justify-content:center; gap:12px; margin-top:var(--ui-padding-l); padding-top:var(--ui-padding-l); border-top:1px solid var(--ui-color-gray-200);}
+
+/* 에디터 영역 조정 */
+.qaWriteWrap .boardWrite .boardWriteBody .writeBox .item textarea {min-height:200px; resize:vertical;}
+
+/* 반응형 디자인 */
+@media (max-width:768px) {
+    .qaWriteWrap {padding:var(--ui-padding-m);}
+    .qaWriteWrap .boardWrite .boardWriteBody .writeBox,
+    .qaWriteWrap .boardWrite .boardWriteBody .insertBox {padding:16px;}
+    .qaWriteWrap .boardWrite .boardWriteBody .insertBox .btnWrap {flex-direction:column;}
+    .qaWriteWrap .boardWrite .boardWriteBody .insertBox .btnWrap .button {width:100%; justify-content:center;}
+}
+
+@media (max-width:480px) {
+    .qaWriteWrap {padding:12px;}
+    .qaWriteWrap .boardWrite .boardWriteHeader h3 {font-size:24px;}
+    .qaWriteWrap .boardWrite .boardWriteBody .writeBox,
+    .qaWriteWrap .boardWrite .boardWriteBody .insertBox {padding:12px;}
+}
+
+/* ========================================
+   QA 상세보기 페이지 스타일
+======================================== */
+.qaViewWrap {position:relative;}
+
+/* 헤더 영역 */
+.qaViewWrap .boardViewHeader {margin-bottom:var(--ui-padding-m);}
+.qaViewWrap .boardViewHeader .btnGroupWrap {display:flex; justify-content:space-between; align-items:center; gap:16px;}
+.qaViewWrap .boardViewHeader .btnGroupWrap .btnGroup {display:flex; align-items:center; gap:8px;}
+
+/* 상세보기 본문 영역 */
+.qaViewWrap .boardViewBody {}
+
+/* infoBox 스타일 */
+.qaViewWrap .boardViewBody .infoBox {display:flex; justify-content:space-between; align-items:center; padding:16px; border-bottom:1px solid var(--ui-color-gray-200); margin-bottom:20px;}
+.qaViewWrap .boardViewBody .infoBox .info {display:flex; align-items:center; gap:12px;}
+.qaViewWrap .boardViewBody .infoBox .info .pfImg {width:40px; height:40px; overflow:hidden; border-radius:50%; background:var(--ui-color-gray-200);}
+.qaViewWrap .boardViewBody .infoBox .info .pfImg img {width:100%; height:100%; object-fit:cover;}
+.qaViewWrap .boardViewBody .infoBox .info .pfData .pfName strong {color:var(--ui-color-gray-900); font-size:16px; font-weight:600;}
+.qaViewWrap .boardViewBody .infoBox .info .pfData .pdInfo {display:flex; align-items:center; margin-top:4px; gap:8px;}
+.qaViewWrap .boardViewBody .infoBox .info .pfData .postData {display:flex; align-items:center; color:var(--ui-color-gray-500); font-size:13px; margin-top:4px; gap:12px;}
+.qaViewWrap .boardViewBody .infoBox .info .pfData .postData span {display:flex; align-items:center; gap:4px;}
+.qaViewWrap .boardViewBody .infoBox .info .pfData .postData .status {padding:3px 8px; border-radius:4px; font-size:12px; font-weight:500;}
+.qaViewWrap .boardViewBody .infoBox .info .pfData .postData .status.complete {background:var(--ui-color-success); color:var(--ui-color-white);}
+.qaViewWrap .boardViewBody .infoBox .info .pfData .postData .status.waiting {background:var(--ui-color-warning); color:var(--ui-color-white);}
+.qaViewWrap .boardViewBody .infoBox .catagory {color:var(--ui-color-gray-600); font-size:14px;}
+.qaViewWrap .boardViewBody .infoBox .catagory i {margin-right:4px;}
+
+/* viewContent 스타일 */
+.qaViewWrap .boardViewBody .viewContent {margin-bottom:30px;}
+.qaViewWrap .boardViewBody .viewContent .viewContentBox .title {display:block; color:var(--ui-color-gray-900); font-size:24px; font-weight:700; line-height:1.3; margin-bottom:20px;}
+.qaViewWrap .boardViewBody .viewContent .viewContentBox #bo_v_img {margin-bottom:20px;}
+.qaViewWrap .boardViewBody .viewContent .viewContentBox #bo_v_img img {max-width:100%; height:auto; border-radius:8px;}
+.qaViewWrap .boardViewBody .viewContent .viewContentBox .viewContText {color:var(--ui-color-gray-700); font-size:16px; line-height:1.6;}
+.qaViewWrap .boardViewBody .viewContent .viewContentBox .viewContText .content {min-height:150px;}
+
+/* viewTools 스타일 */
+.qaViewWrap .boardViewBody .viewTools {}
+
+/* 파일 박스 */
+.qaViewWrap .boardViewBody .viewTools .fileBox {background:var(--ui-color-gray-50); border-radius:8px; padding:16px; margin-bottom:20px;}
+.qaViewWrap .boardViewBody .viewTools .fileBox h2 {font-size:16px; font-weight:600; margin-bottom:12px;}
+.qaViewWrap .boardViewBody .viewTools .fileBox ul {margin:0; padding:0; list-style:none;}
+.qaViewWrap .boardViewBody .viewTools .fileBox ul li {padding:8px 0; border-bottom:1px solid var(--ui-color-gray-200);}
+.qaViewWrap .boardViewBody .viewTools .fileBox ul li:last-child {border-bottom:none;}
+.qaViewWrap .boardViewBody .viewTools .fileBox ul li i {color:var(--color-prime); margin-right:8px;}
+.qaViewWrap .boardViewBody .viewTools .fileBox ul li a {color:var(--ui-color-gray-700); text-decoration:none;}
+.qaViewWrap .boardViewBody .viewTools .fileBox ul li a:hover {color:var(--color-prime);}
+.qaViewWrap .boardViewBody .viewTools .fileBox ul li .dataInfo {color:var(--ui-color-gray-500); font-size:12px; margin-left:24px;}
+
+/* 연관 질문 박스 */
+.qaViewWrap .boardViewBody .viewTools .relatedBox {background:var(--ui-color-info-light); border-radius:8px; padding:16px; margin-bottom:20px;}
+.qaViewWrap .boardViewBody .viewTools .relatedBox .relatedTitle {color:var(--ui-color-info); font-size:16px; font-weight:600; margin-bottom:12px;}
+.qaViewWrap .boardViewBody .viewTools .relatedBox ul {margin:0; padding:0; list-style:none;}
+.qaViewWrap .boardViewBody .viewTools .relatedBox ul li {padding:6px 0;}
+.qaViewWrap .boardViewBody .viewTools .relatedBox ul li a {color:var(--ui-color-gray-700); text-decoration:none;}
+.qaViewWrap .boardViewBody .viewTools .relatedBox ul li a:hover {color:var(--color-prime);}
+
+/* 연관 질문 카드 */
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox {margin-bottom:20px;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox h2 {font-size:18px; font-weight:600; margin-bottom:16px; color:var(--ui-color-gray-900);}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox h2 i {color:var(--color-prime); margin-right:6px;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCards {display:flex; flex-direction:column; gap:12px;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard {display:block; text-decoration:none; border:1px solid var(--ui-color-gray-200); transition:all 0.2s ease;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard:hover {box-shadow:0 4px 12px rgba(0, 0, 0, 0.08); transform:translateY(-2px); border-color:var(--color-prime);}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardHeader {display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardHeader .categoryTag {display:inline-block; padding:4px 8px; border-radius:4px; background:var(--ui-color-info); color:var(--ui-color-white); font-size:11px; font-weight:500;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardHeader .status {padding:4px 8px; border-radius:4px; font-size:12px; font-weight:500;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardHeader .status.answered {background:var(--ui-color-success); color:var(--ui-color-white);}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardHeader .status.waiting {background:var(--ui-color-warning); color:var(--ui-color-white);}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardBody .title {font-size:16px; font-weight:600; color:var(--ui-color-gray-900); margin-bottom:8px; line-height:1.4;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard:hover .cardBody .title {color:var(--color-prime);}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardBody .date {color:var(--ui-color-gray-500); font-size:13px;}
+.qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardBody .date i {margin-right:4px;}
+
+/* 추가질문 박스 */
+.qaViewWrap .boardViewBody .viewTools .addQuestionBox {text-align:center; margin:20px 0;}
+
+/* ========================================
+   답변 폼 스타일
+======================================== */
+.qaAnswerFormWrap {margin-top:30px; padding:20px; background:var(--ui-color-gray-50); border-radius:12px;}
+.qaAnswerFormWrap .answerFormHeader {margin-bottom:20px;}
+.qaAnswerFormWrap .answerFormHeader h2 {font-size:20px; font-weight:600; color:var(--ui-color-gray-900);}
+.qaAnswerFormWrap .answerFormHeader h2 i {color:var(--color-prime); margin-right:8px;}
+
+.qaAnswerFormWrap .answerFormBody {}
+.qaAnswerFormWrap .answerFormBody .writeBox {margin-bottom:20px;}
+.qaAnswerFormWrap .answerFormBody .writeBox .item {margin-bottom:10px;}
+.qaAnswerFormWrap .answerFormBody .insertBox {}
+
+/* 답변 대기 메시지 */
+.qaAnswerFormWrap .answerWaitingBox {text-align:center; padding:40px;}
+.qaAnswerFormWrap .answerWaitingBox .waitingMsg {color:var(--ui-color-gray-600); font-size:16px;}
+.qaAnswerFormWrap .answerWaitingBox .waitingMsg i {font-size:24px; color:var(--ui-color-warning); margin-right:8px;}
+
+/* ========================================
+   답변 보기 스타일
+======================================== */
+.qaAnswerWrap {margin-top:30px; background:var(--ui-color-success-light); border-radius:12px;}
+.qaAnswerWrap .answerHeader {display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;}
+.qaAnswerWrap .answerHeader h2 {font-size:20px; font-weight:600; color:var(--ui-color-gray-900);}
+.qaAnswerWrap .answerHeader h2 i {color:var(--ui-color-success); margin-right:8px;}
+.qaAnswerWrap .answerHeader .answerInfo {display:flex; align-items:center; gap:16px;}
+.qaAnswerWrap .answerHeader .answerInfo .datetime {color:var(--ui-color-gray-600); font-size:14px;}
+.qaAnswerWrap .answerHeader .answerInfo .answerActions {position:relative;}
+.qaAnswerWrap .answerHeader .answerInfo .answerActions .more_opt_list {position:absolute; top:100%; right:0; display:none; min-width:120px; background:var(--ui-color-white); border:1px solid var(--ui-color-gray-200); border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:4px; z-index:10;}
+.qaAnswerWrap .answerHeader .answerInfo .answerActions .more_opt_list li {list-style:none;}
+.qaAnswerWrap .answerHeader .answerInfo .answerActions .more_opt_list li a {display:block; padding:8px 16px; color:var(--ui-color-gray-700); text-decoration:none; font-size:14px;}
+.qaAnswerWrap .answerHeader .answerInfo .answerActions .more_opt_list li a:hover {background:var(--ui-color-gray-50);}
+.qaAnswerWrap .answerHeader .answerInfo .answerActions .more_opt_list li a i {margin-right:6px;}
+
+.qaAnswerWrap .answerContent {}
+.qaAnswerWrap .answerContent .answerContentBox {}
+.qaAnswerWrap .answerContent .answerContentBox .title {display:block; color:var(--ui-color-gray-900); font-size:18px; font-weight:600; margin-bottom:16px;}
+.qaAnswerWrap .answerContent .answerContentBox #bo_v_img {margin-bottom:16px;}
+.qaAnswerWrap .answerContent .answerContentBox .viewContText .content {color:var(--ui-color-gray-700); font-size:15px; line-height:1.6;}
+
+.qaAnswerWrap .answerFooter {text-align:center; margin-top:20px; padding-top:20px; border-top:1px solid var(--ui-color-gray-200);}
+
+/* ========================================
+   반응형 디자인 - 상세보기
+======================================== */
+@media (max-width:768px) {
+    .qaViewWrap .boardViewHeader .btnGroupWrap {flex-direction:column; align-items:stretch;}
+    .qaViewWrap .boardViewHeader .btnGroupWrap .btnGroup {justify-content:center;}
+    .qaViewWrap .boardViewBody .infoBox {flex-direction:column; text-align:center; gap:16px;}
+    .qaViewWrap .boardViewBody .infoBox .info {flex-direction:column;}
+    .qaViewWrap .boardViewBody .viewContent .viewContentBox .title {font-size:20px;}
+    .qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardHeader {flex-wrap:wrap; gap:8px;}
+    .qaViewWrap .boardViewBody .viewTools .relatedCardBox .relatedCard .cardBody .title {font-size:14px;}
+    
+    .qaAnswerWrap .answerHeader {flex-direction:column; align-items:flex-start; gap:12px;}
+    .qaAnswerFormWrap {padding:16px;}
+    .qaAnswerWrap {padding:16px;}
+}
+
+@media (max-width:480px) {
+    .qaViewWrap .boardViewHeader .btnGroupWrap .btnGroup .button .text {display:none;}
+    .qaViewWrap .boardViewBody .viewContent .viewContentBox .title {font-size:18px;}
+    .qaViewWrap .boardViewBody .viewContent .viewContentBox .viewContText {font-size:14px;}
+}

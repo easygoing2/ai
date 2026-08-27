@@ -1,0 +1,67 @@
+@charset "utf-8";
+
+/* Swiper 컨테이너 */
+.uxc_slide_box .swiper {width:100%;}
+
+/* 슬라이드 아이템 - 박스 스타일 추가 */
+.uxc_slide_box .swiper-slide {display:flex; flex-direction:column; width:auto; height:100%; padding:10px; background:var(--board-white); border:1px solid var(--board-gray-300); border-radius:var(--board-radius-lg); box-sizing:border-box; }
+.uxc_slide_box .swiper-slide:hover {border-color:var(--color-prime); box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+
+/* 이미지 영역 */
+.uxc_slide_box .slide_img {display:block; position:relative; overflow:hidden; border-radius:var(--board-radius); background:var(--board-gray-100); aspect-ratio:2/1;}
+.uxc_slide_box .slide_img img {width:100%; height:100%; object-fit:cover; max-width:600px; max-height:300px;}
+
+.uxc_slide_box .slide_img:hover {opacity:0.8;}
+
+/* 정보 영역 */
+.uxc_slide_box .slide_info {padding:12px 0 0;}
+.uxc_slide_box .slide_info > a {display:block; font-size:14px; font-weight:600; min-height:42px; color:var(--board-gray-900); line-height:1.5; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical;}
+.uxc_slide_box .slide_info > a:hover {color:var(--color-prime);}
+.uxc_slide_box .slide_info strong {font-weight:600;}
+
+/* 아이콘 - Boxicons */
+.uxc_slide_box .bx-lock-alt {font-size:14px; color:var(--board-gray-600); margin-right:4px;}
+
+/* 뱃지 스타일 - 가이드라인 준수 */
+.uxc_slide_box .new_icon {display:inline-block; width:16px; height:16px; line-height:16px; font-size:10px; font-weight:700; color:var(--board-white-only); background:var(--color-prime); text-align:center; border-radius:2px; vertical-align:middle; margin-left:4px; opacity:0.8;}
+.uxc_slide_box .hot_icon {display:inline-block; width:16px; height:16px; line-height:16px; font-size:10px; font-weight:700; color:var(--board-white-only); background:var(--board-danger); text-align:center; border-radius:2px; vertical-align:middle; margin-left:4px; opacity:0.8;}
+.uxc_slide_box .swiper-slide:hover .new_icon, .uxc_slide_box .swiper-slide:hover .hot_icon {opacity:1; transform:scale(1.1);}
+
+/* 댓글 수 */
+.uxc_slide_box .lt_cmt {display:inline-block; padding:2px 8px; background:var(--board-gray-100); color:var(--board-gray-600); font-size:11px; font-weight:400; line-height:1.2; border-radius:12px; vertical-align:middle; margin-left:6px;}
+.uxc_slide_box .slide_info > a:hover .lt_cmt {background:var(--color-prime); color:var(--board-white-only);}
+
+/* 메타 정보 */
+.uxc_slide_box .lt_info {display:flex; gap:4px; margin-top:8px; font-size:12px; color:var(--board-gray-500);}
+.uxc_slide_box .lt_info > span i {font-size:14px;}
+.uxc_slide_box .lt_board,
+.uxc_slide_box .lt_nick,
+.uxc_slide_box .lt_date {color:var(--board-gray-500); font-size:11px; display:flex; align-items:center; gap:4px;}
+
+/* Swiper 페이지네이션 커스텀 */
+.uxc_slide_box .swiper-pagination {position:relative; margin-top:20px;}
+.uxc_slide_box .swiper-pagination-bullet {width:8px; height:8px; background:var(--board-gray-300); opacity:1;}
+.uxc_slide_box .swiper-pagination-bullet-active {background:var(--color-prime); width:24px; border-radius:4px;}
+
+/* Swiper 네비게이션 버튼 커스텀 */
+.uxc_slide_box .swiper-button-prev,
+.uxc_slide_box .swiper-button-next {width:40px; height:40px; background:var(--board-white); border:1px solid var(--board-gray-200); border-radius:50%; box-shadow:0 2px 8px rgba(0,0,0,0.1); top:50%; transform:translate(0, -100%);}
+.uxc_slide_box .swiper-button-prev:hover,
+.uxc_slide_box .swiper-button-next:hover {background:var(--color-prime); border-color:var(--color-prime);}
+.uxc_slide_box .swiper-button-prev::after,
+.uxc_slide_box .swiper-button-next::after {display:none;}
+.uxc_slide_box .swiper-button-prev i,
+.uxc_slide_box .swiper-button-next i {font-size:24px; color:var(--board-gray-700);}
+.uxc_slide_box .swiper-button-prev:hover i,
+.uxc_slide_box .swiper-button-next:hover i {color:var(--board-white);}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .uxc_slide_box .slide_info > a {font-size:13px;}
+    .uxc_slide_box .lt_info {font-size:11px;}
+}
+
+/* 접근성 - 모션 감소 */
+@media (prefers-reduced-motion: reduce) {
+    .uxc_slide_box * {transition:none !important; transform:none !important;}
+}

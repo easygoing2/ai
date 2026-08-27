@@ -1,0 +1,94 @@
+/* --------------------------------------------------------
+PAGE CONTENT
+----------------------------------------------------------*/
+.ctt_admin {}
+.ctt_admin a {display:block; font-size:20px;}
+.ctt_admin a .bx {font-size:30px;}
+.pageWrap {width:100%; overflow:auto; max-width:1000px; margin:0 auto;}
+.pageWrap .pageHeaderWrap {display:flex; justify-content:center; align-items:center; height:80px; border-bottom:1px solid var(--border-sub-color); background:var(--bg-third-color);}
+.pageWrap .pageHeaderWrap .pageHeader {}
+.pageWrap .pageHeaderWrap .pageHeader h2 {font-size:24px; font-weight:700;}
+
+.pageWrap .pageBody {margin:0 auto; }
+.pageWrap .pageBody .pageContent {padding:25px 0; font-size:14px; font-weight:400; line-height:1.65; color:var(--layout-gray-900);}
+.pageWrap .pageBody .pageContent > p {margin-bottom:14px; font-size:14px; line-height:1.65;}
+
+/* 그룹 섹션 스타일 */
+.pageWrap .pageBody .pageContent .group {margin:25px 0;}
+.pageWrap .pageBody .pageContent .group h3 {margin-bottom:12px; font-size:17px; font-weight:700; color:var(--layout-gray-900);}
+.pageWrap .pageBody .pageContent .group p {margin-bottom:12px; font-size:14px; line-height:1.65;}
+.pageWrap .pageBody .pageContent .group > ul {margin-top:10px;}
+
+/* 리스트 스타일 */
+.pageWrap .pageBody .pageContent ul {list-style:none; padding-left:0;}
+.pageWrap .pageBody .pageContent ul li {position:relative; margin-bottom:6px; padding-left:20px; font-size:14px; line-height:1.65;}
+.pageWrap .pageBody .pageContent ul li:before {content:"•"; position:absolute; left:6px; color:var(--color-prime);}
+
+/* 중첩 리스트 */
+.pageWrap .pageBody .pageContent ul ul {margin-top:6px; margin-bottom:6px;}
+.pageWrap .pageBody .pageContent ul ul li {font-size:13px; color:var(--layout-gray-700);}
+
+/* 순서 있는 리스트 */
+.pageWrap .pageBody .pageContent ol {padding-left:20px; list-style:decimal;}
+.pageWrap .pageBody .pageContent ol li {margin-bottom:6px; font-size:14px; line-height:1.65;}
+
+/* 링크 스타일 */
+.pageWrap .pageBody .pageContent a {color:var(--color-prime); text-decoration:none;}
+.pageWrap .pageBody .pageContent a:hover {text-decoration:underline;}
+
+/* 이미지 스타일 */
+.pageWrap .pageBody .pageContent .img {display:flex; align-items:center; flex-direction:column; margin:25px 0;}
+
+/* 라이선스 페이지 전용 스타일 */
+.license-wrapper {color:var(--layout-gray-900); line-height:1.8;}
+.license-subtitle {margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid var(--layout-gray-200); color:var(--layout-gray-600); font-size:13px;}
+.license-intro {margin-bottom:25px; padding:15px; border-radius:var(--layout-radius-sm); background:var(--layout-gray-50); color:var(--layout-gray-700); font-size:13px; line-height:1.6;}
+
+/* 라이선스 섹션 */
+.license-section {margin-bottom:25px;}
+.license-section-title {margin-bottom:15px; color:var(--layout-gray-900); font-size:16px; font-weight:600;}
+
+/* 라이선스 리스트 */
+.license-list {margin:0; padding:0; list-style:none;}
+.license-list > li {margin-bottom:15px;}
+.license-list-title {margin-bottom:6px; color:var(--layout-gray-800); font-size:14px; font-weight:600;}
+.license-list-content {margin:0; padding-left:16px; list-style:none;}
+.license-list-content li {position:relative; margin-bottom:4px; padding-left:14px; color:var(--layout-gray-700); font-size:13px; line-height:1.6;}
+.license-list-content li:before {content:"•"; position:absolute; left:0; color:var(--color-prime);}
+
+/* 경고 및 하이라이트 박스 */
+.license-warning {margin:15px 0; padding:15px; border-left:3px solid var(--layout-danger); border-radius:var(--layout-radius-sm); background:var(--layout-gray-50);}
+.license-highlight {margin:15px 0; padding:15px; border-left:3px solid var(--color-prime); border-radius:var(--layout-radius-sm); background:var(--layout-gray-50);}
+
+/* 푸터 */
+.license-footer {margin-top:40px; padding-top:15px; border-top:1px solid var(--layout-gray-200); color:var(--layout-gray-600); font-size:12px; text-align:center;}
+
+/* 다크모드 */
+:root.darkMode .license-intro,
+:root.darkMode .license-warning,
+:root.darkMode .license-highlight {
+    background: var(--layout-gray-100);
+}
+
+/* 라이선스 비교 테이블 */
+.license-table {width:100%; margin:25px 0; border-collapse:collapse; border:1px solid var(--layout-gray-300); border-radius:var(--layout-radius-sm);}
+.license-table th,
+.license-table td {padding:12px 15px; text-align:center; border:1px solid var(--layout-gray-300);}
+.license-table thead {background:var(--layout-gray-50);}
+.license-table th {font-weight:700; color:var(--layout-gray-900); font-size:15px;}
+.license-table td {color:var(--layout-gray-700); font-size:13px; line-height:1.5;}
+.license-table tr:first-child th {border-top:none;}
+.license-table tr:last-child td {border-bottom:none;}
+.license-table td:first-child,
+.license-table th:first-child {border-left:none; text-align:left; padding-left:20px;}
+.license-table td:last-child,
+.license-table th:last-child {border-right:none;}
+.license-table .highlight {color:var(--color-prime); font-weight:600;}
+.license-table .muted {color:var(--layout-gray-500); font-size:11px;}
+.license-table .price {font-size:20px; font-weight:700; color:var(--layout-gray-900);}
+.license-table .price-free {color:var(--color-prime);}
+.license-table .check {color:var(--color-prime); font-size:18px;}
+.license-table .na {color:var(--layout-gray-400);}
+.license-table .badge {display:inline-block; padding:3px 10px; background:var(--color-prime); color:#fff; border-radius:20px; font-size:11px; font-weight:600; margin-left:6px;}
+.license-table tr:hover td {background:var(--layout-gray-50);}
+

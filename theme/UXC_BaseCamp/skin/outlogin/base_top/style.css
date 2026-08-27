@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+.outloginUser {position:relative;}
+.outloginUser:has(.outloginUserMenu.on) #userMenuOnf i {transform:rotate(180deg);}
+.outloginUser .userInfo {display:flex; align-items:center; gap:8px;}
+.outloginUser .userInfo #userMenuOnf {display:flex; align-items:center; margin:0; padding:0; border:none; background:none; cursor:pointer; gap:8px;}
+.outloginUser .userInfo #userMenuOnf i {font-size:16px; line-height:1; transition:transform 0.3s ease;}
+.outloginUser .outloginUserMenu {display:flex; align-items:flex-start; flex-direction:column; position:absolute; z-index:1000; top:40px; right:0; min-width:140px; padding:8px 0; border:1px solid var(--layout-dropdown-border); border-radius:8px; background:var(--layout-dropdown-bg); opacity:0; box-shadow:0 4px 12px rgba(0, 0, 0, 0.1); list-style:none; transform:translateY(-10px); transition:all 0.3s ease;pointer-events:none;}
+
+.outloginUser .outloginUserMenu.on {top:44px; opacity:1; pointer-events:unset;}
+.outloginUser .outloginUserMenu a {display:flex; width:100%; padding:8px 12px;}
+.outloginUser .outloginUserMenu a i {display:flex; justify-content:center; min-width:24px;}

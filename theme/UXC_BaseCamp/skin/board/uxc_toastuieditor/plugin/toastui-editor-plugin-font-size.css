@@ -1,0 +1,268 @@
+/**
+ * TOAST UI Editor Font Size Plugin Styles
+ * @version 1.0.0
+ */
+
+/* 툴바 버튼 스타일 */
+.toastui-editor-toolbar-icons.fontSize,
+.toastui-editor-toolbar-icons.font-size-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 0 8px;
+    background: none !important;
+    border: none;
+    cursor: pointer;
+    height: 100%;
+    min-width: 40px;
+}
+
+.toastui-editor-toolbar-icons.fontSize:hover,
+.toastui-editor-toolbar-icons.font-size-button:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.toastui-editor-toolbar-icons.fontSize:active,
+.toastui-editor-toolbar-icons.font-size-button:active {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 다크 모드 툴바 버튼 */
+.toastui-editor-dark .toastui-editor-toolbar-icons.fontSize:hover,
+.toastui-editor-dark .toastui-editor-toolbar-icons.font-size-button:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.toastui-editor-dark .toastui-editor-toolbar-icons.fontSize:active,
+.toastui-editor-dark .toastui-editor-toolbar-icons.font-size-button:active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 드롭다운 컨테이너 */
+.toastui-editor-font-size-dropdown {
+    position: fixed;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    min-width: 150px;
+    max-width: 200px;
+    z-index: 9999;
+}
+
+/* 다크 모드 드롭다운 */
+.toastui-editor-dark .toastui-editor-font-size-dropdown,
+body.darkMode .toastui-editor-font-size-dropdown {
+    background: #2e2e2e;
+    border-color: #444;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* 폰트 사이즈 목록 */
+.toastui-editor-font-size-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* 스크롤바 스타일 */
+.toastui-editor-font-size-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.toastui-editor-font-size-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.toastui-editor-font-size-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.toastui-editor-font-size-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 다크 모드 스크롤바 */
+.toastui-editor-dark .toastui-editor-font-size-list::-webkit-scrollbar-track,
+body.darkMode .toastui-editor-font-size-list::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.toastui-editor-dark .toastui-editor-font-size-list::-webkit-scrollbar-thumb,
+body.darkMode .toastui-editor-font-size-list::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+.toastui-editor-dark .toastui-editor-font-size-list::-webkit-scrollbar-thumb:hover,
+body.darkMode .toastui-editor-font-size-list::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* 폰트 사이즈 아이템 */
+.toastui-editor-font-size-item {
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.toastui-editor-font-size-item:hover {
+    background-color: #f0f0f0;
+}
+
+.toastui-editor-font-size-item:active {
+    background-color: #e0e0e0;
+}
+
+/* 다크 모드 아이템 */
+.toastui-editor-dark .toastui-editor-font-size-item,
+body.darkMode .toastui-editor-font-size-item {
+    color: #ccc;
+}
+
+.toastui-editor-dark .toastui-editor-font-size-item:hover,
+body.darkMode .toastui-editor-font-size-item:hover {
+    background-color: #3a3a3a;
+}
+
+.toastui-editor-dark .toastui-editor-font-size-item:active,
+body.darkMode .toastui-editor-font-size-item:active {
+    background-color: #454545;
+}
+
+/* 커스텀 입력 래퍼 */
+.toastui-editor-font-size-input-wrapper {
+    padding: 8px 16px;
+    border-top: 1px solid #e1e1e1;
+    margin-top: 8px;
+}
+
+.toastui-editor-dark .toastui-editor-font-size-input-wrapper,
+body.darkMode .toastui-editor-font-size-input-wrapper {
+    border-top-color: #444;
+}
+
+/* 커스텀 입력 필드 */
+.toastui-editor-font-size-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 14px;
+    background: #fff;
+    color: #333;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.toastui-editor-font-size-input:focus {
+    outline: none;
+    border-color: #4b96e6;
+    box-shadow: 0 0 0 2px rgba(75, 150, 230, 0.1);
+}
+
+.toastui-editor-font-size-input::placeholder {
+    color: #999;
+}
+
+/* 다크 모드 입력 필드 */
+.toastui-editor-dark .toastui-editor-font-size-input,
+body.darkMode .toastui-editor-font-size-input {
+    background: #1e1e1e;
+    border-color: #444;
+    color: #ccc;
+}
+
+.toastui-editor-dark .toastui-editor-font-size-input:focus,
+body.darkMode .toastui-editor-font-size-input:focus {
+    border-color: #5a9fd4;
+    box-shadow: 0 0 0 2px rgba(90, 159, 212, 0.2);
+}
+
+.toastui-editor-dark .toastui-editor-font-size-input::placeholder,
+body.darkMode .toastui-editor-font-size-input::placeholder {
+    color: #666;
+}
+
+/* 숫자 입력 스피너 제거 */
+.toastui-editor-font-size-input::-webkit-inner-spin-button,
+.toastui-editor-font-size-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.toastui-editor-font-size-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* 에디터 콘텐츠 영역의 폰트 사이즈 스타일 보존 */
+.toastui-editor-contents span[style*="font-size"],
+.ProseMirror span[style*="font-size"] {
+    /* 폰트 사이즈가 적용된 span 태그 유지 */
+    display: inline;
+}
+
+/* 뷰어에서도 폰트 사이즈 표시 */
+.toastui-editor-contents span[style*="font-size"],
+.toastui-editor-viewer span[style*="font-size"] {
+    /* 인라인 스타일 유지 */
+    display: inline;
+}
+
+/* 애니메이션 효과 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toastui-editor-font-size-dropdown {
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+    .toastui-editor-font-size-dropdown {
+        min-width: 120px;
+        max-width: 160px;
+    }
+    
+    .toastui-editor-font-size-item {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+/* 툴바 버튼 구분선 */
+.toastui-editor-toolbar-group .toastui-editor-toolbar-icons.fontSize {
+    position: relative;
+}
+
+.toastui-editor-toolbar-group .toastui-editor-toolbar-icons.fontSize::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 16px;
+    background-color: #e1e1e1;
+}
+
+.toastui-editor-dark .toastui-editor-toolbar-group .toastui-editor-toolbar-icons.fontSize::before {
+    background-color: #444;
+}

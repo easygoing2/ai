@@ -1,0 +1,113 @@
+@charset "utf-8";
+/* ----------------------------------------------
+LAYOUT.CSS - Theme Layout & Structure
+* writer : uxcamp
+* version : 1.0.0
+* last update : 2025.07.11
+* purpose : 레이아웃 구조 및 테마 시스템
+* license : © 2025 uxcamp. All rights reserved.
+------------------------------------------------*/
+:root {
+    /* === 브랜드 컬러 === */
+    --color-prime: #6f48ff; /* 모든 css에서 한번만 지정 */
+
+    /* === layout 영역별 색상 === */
+    /* 헤더 영역 */
+    --layout-header: #ffffff; /* 흰색 */
+    --layout-tnb: #fafafa;
+    --layout-header-border: #eeeeee;
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #ffffff;
+    --layout-container-bg: #ffffff;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #fafafa;
+    --layout-sidebar-border: #e0e0e0;
+    --layout-sidebar-border-dashed: #e0e0e0;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #f5f5f5;
+    --layout-footer-border: #e0e0e0;
+    --layout-footer-copyright-bg: #f5f5f5;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(15, 23, 42, 0.8);
+    --layout-searchpop-dim: rgba(15, 23, 42, 0.4);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #ffffff;
+    --layout-dropdown-border: #eeeeee;
+    --layout-dropdown-hover-bg: #f5f5f5;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #f5f5f5;
+    --layout-board-border: #eeeeee;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #e0e0e0;
+    --layout-snb-hover-bg: #f5f5f5;
+    --layout-snb-active-bg: #212121;
+    --layout-snb-active-color: #ffffff;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #f5f5f5;
+    --layout-demo-border: #ddd;
+
+}
+
+/* ========================================
+   다크모드 색상 시스템
+======================================== */
+:root.darkMode {
+    /* === 브랜드 컬러 === */
+    --color-prime: #8b5dff;
+
+    /* === layout 영역별 색상 (다크모드) === */
+    /* 헤더 영역 */
+    --layout-header: #000000; /* 검은색 */
+    --layout-tnb: #1a1a1a;
+    --layout-header-border: #333;
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #000000;
+    --layout-container-bg: #1a1a1a;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #1a1a1a;
+    --layout-sidebar-border: #333;
+    --layout-sidebar-border-dashed: #333;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #1a1a1a;
+    --layout-footer-border: #333;
+    --layout-footer-copyright-bg: #1a1a1a;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(0, 0, 0, 0.9);
+    --layout-searchpop-dim: rgba(0, 0, 0, 0.6);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #1a1a1a;
+    --layout-dropdown-border: #333;
+    --layout-dropdown-hover-bg: #2a2a2a;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #1a1a1a;
+    --layout-board-border: #333;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #333;
+    --layout-snb-hover-bg: #2a2a2a;
+    --layout-snb-active-bg: #ffffff;
+    --layout-snb-active-color: #1a1a1a;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #1a1a1a;
+    --layout-demo-border: #444;
+
+}

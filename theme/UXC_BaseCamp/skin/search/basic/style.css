@@ -1,0 +1,85 @@
+@charset "utf-8";
+
+/* --------------------------------------------------------
+검색 페이지 스타일
+----------------------------------------------------------*/
+.searchBoxWrap {display:flex; flex-direction:column; width:100%; gap:24px;}
+
+/* 검색어 하이라이트 */
+.sch_word {padding:2px 4px; border-radius:4px; background:var(--color-prime); font-weight: 600; color:var(--ui-color-white-only);}
+
+/* 검색 폼 */
+.searchFormBox {display:flex; justify-content:center; align-items:center; padding:24px; border:1px solid var(--ui-color-gray-200); border-radius:12px; background:var(--ui-color-white); gap:12px;}
+.searchFormBox select {width:140px;}
+.searchFormBox .inputWrap {max-width:400px; flex:1;}
+.searchFormBox .inputWrap input {}
+.searchFormBox .inputWrap input:focus {}
+.searchFormBox button {}
+.searchFormBox button:hover {background:var(--color-prime);}
+.searchFormBox .optBox {display:flex; margin-left:12px; gap:16px;}
+.searchFormBox .optBox .opt {display:flex; align-items:center; gap:6px;}
+.searchFormBox .optBox input[type="radio"] {margin:0;}
+.searchFormBox .optBox label {color:var(--ui-color-gray-600); font-size:14px; cursor:pointer;}
+
+/* 검색 정보 */
+.searchWrap .searchInfo {display:flex; justify-content:space-between; align-items:center; padding:20px 24px; border:1px solid var(--ui-color-gray-200); border-radius:12px; background:var(--ui-color-gray-50);}
+.searchWrap .searchInfo h3 {color:var(--ui-color-gray-900); font-size:18px; font-weight:600;}
+.searchWrap .searchInfo h3 strong {color:var(--color-prime); font-weight:700;}
+.searchWrap .searchInfo ul {display:flex; align-items:center; margin:0; padding:0; list-style:none; gap:16px;}
+.searchWrap .searchInfo ul li {color:var(--ui-color-gray-600); font-size:14px;}
+.searchWrap .empty_list {display:flex; justify-content:center; align-items:center; height:200px; color:var(--ui-color-gray-500); font-size:16px;}
+
+/* 검색 탭 */
+.searchTab {margin:20px 0;}
+.searchTab ul {display:flex; flex-wrap:wrap; margin:0; padding:0; list-style:none; gap:8px;}
+.searchTab ul li a {display:block; padding:10px 16px; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-white); color:var(--ui-color-gray-600); font-size:14px; font-weight:500; text-decoration:none; white-space:nowrap;}
+.searchTab ul li a:hover {}
+.searchTab ul li a.sch_on {border-color:var(--color-prime); background:var(--color-prime); color:var(--ui-color-white-only);}
+.searchTab ul li a .cnt_cmt {margin-left:6px; padding:2px 6px; border-radius:10px; background:var(--ui-color-gray-900); color:var(--ui-color-white); font-size:12px;}
+
+/* 검색 결과 리스트 */
+.searchListWrap {margin:0;}
+.searchListWrap .searchList {margin-bottom:32px;}
+.searchListWrap .searchList .title {display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding:16px 20px; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-gray-50);}
+.searchListWrap .searchList .title h2 a {color:var(--ui-color-gray-900); font-size:16px; font-weight:600; text-decoration:none;}
+.searchListWrap .searchList .title .sch_more {padding:6px 12px; border:1px solid var(--ui-color-gray-200); border-radius:16px; background:var(--ui-color-white); color:var(--ui-color-gray-600); font-size:13px; font-weight:500; text-decoration:none; transition:all 0.2s ease;}
+.searchListWrap .searchList .title .sch_more:hover {border-color:var(--color-prime); color:var(--color-prime);}
+.searchListWrap .searchList ul {display:flex; flex-direction:column; margin:0; padding:0; list-style:none; gap:12px;}
+.searchListWrap .searchList ul li {padding:20px; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-white);}
+.searchListWrap .searchList ul li:hover {box-shadow:0 4px 12px rgba(0, 0, 0, 0.1);}
+.searchListWrap .searchList ul li .sch_tit {display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;}
+.searchListWrap .searchList ul li .sch_tit a.sch_res_title {color:var(--ui-color-gray-900); font-size:16px; font-weight:600; text-decoration:none; line-height:1.4; flex:1;}
+.searchListWrap .searchList ul li .sch_tit a.sch_res_title:hover {color:var(--color-prime);}
+.searchListWrap .searchList ul li .sch_tit .pop_a {margin-left:8px; padding:4px 8px; border:1px solid var(--ui-color-gray-200); border-radius:4px; color:var(--ui-color-gray-500); font-size:12px; text-decoration:none; transition:all 0.2s ease;}
+.searchListWrap .searchList ul li .sch_tit .pop_a:hover {border-color:var(--color-prime); color:var(--color-prime);}
+.searchListWrap .searchList ul li p {margin:0 0 12px 0; color:var(--ui-color-gray-600); font-size:14px; line-height:1.5;}
+.searchListWrap .searchList ul li .sch_info {display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid var(--ui-color-gray-200); color:var(--ui-color-gray-500); font-size:13px;}
+.searchListWrap .searchList ul li .sch_info .sch_datetime {display:flex; align-items:center; gap:4px;}
+.searchListWrap .searchList ul li .sch_info .sch_datetime i {opacity:0.7;}
+
+/* --------------------------------------------------------
+RESPONSIVE
+----------------------------------------------------------*/
+@media (max-width:1024px) {
+    .searchBoxWrap {padding:16px; gap:20px;}
+    .searchFormBox {padding:20px; gap:10px;}
+}
+@media (max-width:768px) {
+    .searchBoxWrap {padding:12px; gap:16px;}
+    .searchFormBox {align-items:stretch; flex-direction:column; padding:16px; gap:12px;}
+    .searchFormBox select {width:100%;}
+    .searchFormBox .inputWrap {max-width:none;}
+    .searchFormBox button {width:100%;}
+    .searchFormBox .optBox {justify-content:center; margin-left:0;}
+    .searchWrap .searchInfo {flex-direction:column; text-align:center; gap:12px;}
+    .searchWrap .searchInfo ul {flex-wrap:wrap; justify-content:center; gap:8px;}
+    .searchListWrap .searchList .title {flex-direction:column; text-align:center; gap:12px;}
+    .searchListWrap .searchList ul li {padding:16px;}
+    .searchListWrap .searchList ul li .sch_tit {align-items:flex-start; flex-direction:column; gap:8px;}
+    .searchListWrap .searchList ul li .sch_info {align-items:flex-start; flex-direction:column; padding-top:8px; gap:8px;}
+}
+@media (max-width:480px) {
+    .searchBoxWrap {padding:8px;}
+    .searchFormBox {padding:12px;}
+    .searchListWrap .searchList ul li {padding:12px;}
+}

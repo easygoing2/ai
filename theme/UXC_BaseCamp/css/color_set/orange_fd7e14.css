@@ -1,0 +1,112 @@
+@charset "utf-8";
+/* ----------------------------------------------
+LAYOUT.CSS - Theme Layout & Structure
+* writer : uxcamp
+* version : 1.0.0
+* last update : 2025.01.18
+* purpose : Orange Theme - Sunset Glow
+* license : © 2025 uxcamp. All rights reserved.
+------------------------------------------------*/
+:root {
+    /* === 브랜드 컬러 === */
+    --color-prime: #fd7e14; /* Sunset Orange - 따뜻한 석양 오렌지 */
+
+    /* === layout 영역별 색상 === */
+    /* 헤더 영역 - 순수 무채색 */
+    --layout-header: #ffffff; 
+    --layout-tnb: #fafafa;    
+    --layout-header-border: #eeeeee;
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #fcfcfc; /* 순수 무채색 */
+    --layout-container-bg: #ffffff;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #f8f8f8;
+    --layout-sidebar-border: #e5e5e5;
+    --layout-sidebar-border-dashed: #e5e5e5;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #f5f5f5;
+    --layout-footer-border: #e5e5e5;
+    --layout-footer-copyright-bg: #f0f0f0;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(15, 23, 42, 0.8); /* 무채색 다크 팝업 */
+    --layout-searchpop-dim: rgba(15, 23, 42, 0.4);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #ffffff;
+    --layout-dropdown-border: #eeeeee;
+    --layout-dropdown-hover-bg: #fafafa;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #f5f5f5;
+    --layout-board-border: #eeeeee;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #e5e5e5;
+    --layout-snb-hover-bg: #fafafa;
+    --layout-snb-active-bg: var(--color-prime);
+    --layout-snb-active-color: #ffffff;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #f5f5f5;
+    --layout-demo-border: #dddddd;
+
+}
+/* ========================================
+   다크모드 색상 시스템
+======================================== */
+:root.darkMode {
+    /* === 브랜드 컬러 === */
+    --color-prime: #FF9F40; /* 다크모드에서 더 밝은 오렌지 */
+
+    /* === layout 영역별 색상 (다크모드) === */
+    /* 헤더 영역 - 중성 다크 */
+    --layout-header: #121212;
+    --layout-tnb: #1c1c1c;    
+    --layout-header-border: #303030;
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #121212;
+    --layout-container-bg: #1c1c1c;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #212121;
+    --layout-sidebar-border: #303030;
+    --layout-sidebar-border-dashed: #303030;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #000000; /* 오렌지에는 블랙 텍스트 */
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #212121;
+    --layout-footer-border: #303030;
+    --layout-footer-copyright-bg: #1c1c1c;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(18, 18, 18, 0.95);
+    --layout-searchpop-dim: rgba(18, 18, 18, 0.7);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #212121;
+    --layout-dropdown-border: #303030;
+    --layout-dropdown-hover-bg: #2a2a2a;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #212121;
+    --layout-board-border: #303030;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #303030;
+    --layout-snb-hover-bg: #2a2a2a;
+    --layout-snb-active-bg: var(--color-prime);
+    --layout-snb-active-color: #000000; /* 오렌지에는 블랙 텍스트 */
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #212121;
+    --layout-demo-border: #3a3a3a;
+
+}

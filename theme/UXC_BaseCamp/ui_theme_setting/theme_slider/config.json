@@ -1,0 +1,7 @@
+{
+    "name": "메인 슬라이더 관리",
+    "icon": "bx-slideshow",
+    "file": "uxc_theme_slider.php",
+    "order": 2,
+    "description": "메인 페이지에 표시되는 슬라이더를 추가, 수정, 삭제할 수 있습니다."
+}

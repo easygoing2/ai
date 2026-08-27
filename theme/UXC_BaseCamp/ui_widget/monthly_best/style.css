@@ -1,0 +1,22 @@
+.monthly-best-widget {padding:15px; border-radius:10px; background:var(--layout-white); border:1px solid var(--board-gray-300);}
+.monthly-best-widget .widget-period {position:absolute; top:8px; right:15px; padding:3px 10px; border-radius:15px; background:var(--layout-gray-100); color:var(--layout-gray-600); font-size:11px; z-index:1;}
+.monthly-best-widget .best-list {margin:0; padding:0; list-style:none;}
+.monthly-best-widget {position:relative;}
+.monthly-best-widget .best-list li {display:flex; align-items:flex-start; padding:8px 0; border-bottom:1px solid var(--layout-gray-100);}
+.monthly-best-widget .best-list li:last-child {border-bottom:none;}
+.monthly-best-widget .rank {display:flex; justify-content:center; align-items:center; flex-shrink:0; width:24px; height:24px; margin-right:10px; border-radius:6px; background:var(--color-prime); color:white; font-size:12px; font-weight:600;}
+.monthly-best-widget .best-list li:nth-child(1) .rank {background:#FFD700; color:#333;}
+.monthly-best-widget .best-list li:nth-child(2) .rank {background:#C0C0C0; color:#333;}
+.monthly-best-widget .best-list li:nth-child(3) .rank {background:#CD7F32; color:white;}
+.monthly-best-widget .item-content {flex:1; min-width:0;}
+.monthly-best-widget .item-title {display:block; color:var(--layout-gray-900); font-size:14px; text-decoration:none; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.monthly-best-widget .item-title:hover {color:var(--color-prime);}
+.monthly-best-widget .comment-count {margin-left:4px; color:var(--color-prime); font-size:12px;}
+.monthly-best-widget .item-info {display:flex; align-items:center; color:var(--layout-gray-500); margin-top:6px; gap:10px; font-size:12px;}
+.monthly-best-widget .info-left {display:flex; align-items:center; gap:6px;}
+.monthly-best-widget .board-name {font-weight:500;}
+.monthly-best-widget .divider {margin:0; color:var(--layout-gray-400);}
+.monthly-best-widget .stats {display:flex; align-items:center; gap:6px;}
+.monthly-best-widget .stats i {margin-right:1px; font-size:12px;}
+.monthly-best-widget .no-data {padding:30px 15px; color:var(--layout-gray-500); text-align:center;}
+.monthly-best-widget .no-data i {display:block; margin-bottom:8px; color:var(--layout-gray-400); font-size:36px;}

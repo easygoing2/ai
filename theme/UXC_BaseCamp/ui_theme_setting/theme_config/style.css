@@ -1,0 +1,178 @@
+@charset "utf-8";
+/* ========================================
+   테마 설정 스타일
+   * UI 컴포넌트 시스템 활용
+   * 관리자 페이지 느낌의 깔끔한 디자인
+======================================== */
+
+/* ========================================
+   기본 레이아웃
+======================================== */
+.themeConfigWrap {}
+
+/* ========================================
+   헤더 영역
+======================================== */
+/* .configHeader {text-align:center; margin-bottom:40px; padding-bottom:30px; border-bottom:2px solid var(--ui-color-gray-200);}
+.configTitle {display:flex; justify-content:center; align-items:center; gap:12px; margin-bottom:12px; color:var(--ui-color-gray-900); font-size:32px; font-weight:700;}
+.configTitle i {color:var(--color-prime); font-size:36px;}
+.configDesc {color:var(--ui-color-gray-600); font-size:16px; line-height:1.6;} */
+
+/* ========================================
+   섹션 스타일
+======================================== */
+.configSection {margin-bottom:40px;}
+.sectionHeader {display:flex; align-items:center; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--ui-color-gray-200);}
+.sectionTitle {display:flex; align-items:center; gap:8px; color:var(--ui-color-gray-800); font-size:20px; font-weight:600;}
+.sectionTitle i {color:var(--color-prime); font-size:24px;}
+
+/* ========================================
+   설정 박스
+======================================== */
+.configBox {background:var(--ui-color-white); border:1px solid var(--ui-color-gray-200); border-radius:12px; overflow:hidden;}
+.configItem {display:flex; align-items:center; padding:24px; border-bottom:1px solid var(--ui-color-gray-100);}
+.configItem:last-child {border-bottom:none;}
+
+/* 설정 라벨 */
+.configLabel {flex:0 0 300px; padding-right:30px;}
+.configLabel label {display:block; margin-bottom:6px; color:var(--ui-color-gray-900); font-size:15px; font-weight:600;}
+.configHelp {display:block; color:var(--ui-color-gray-500); font-size:13px; line-height:1.5;}
+
+/* 설정 입력 */
+.configInput {flex:1;}
+
+/* 라디오 그룹 */
+.radioGroup {display:flex; gap:20px; flex-wrap:wrap;}
+.radioGroup .opt {margin:0;}
+
+/* 아이콘 버튼 그룹 */
+.iconButtonGroup {display:flex; gap:10px; flex-wrap:wrap;}
+.iconButtonGroup input[type="radio"] {display:none;}
+.iconButtonGroup input[type="checkbox"] {display:none;}
+.iconButtonGroup .iconButton {position:relative; display:flex; justify-content:center; align-items:center; flex-direction:column; width:70px; height:70px; border:2px solid var(--ui-color-gray-300); border-radius:var(--board-radius-lg); background:var(--ui-color-white); cursor:pointer; transition:all 0.2s ease;}
+.iconButtonGroup .iconButton:hover {border-color:var(--ui-color-gray-400); background:var(--ui-color-gray-50);}
+.iconButtonGroup .iconButton i {margin-bottom:4px; color:var(--ui-color-gray-600); font-size:32px;}
+.iconButtonGroup .iconButton span {color:var(--ui-color-gray-700); font-size:12px; font-weight:500;}
+
+/* 체크박스 스타일 구분 표시 */
+.iconButtonGroup.checkBoxStyle .iconButton::before {content:''; position:absolute; top:-2px; right:-2px; width:14px; height:14px; border:2px solid var(--ui-color-gray-300); border-radius:3px; background:var(--ui-color-white); transition:all 0.2s;}
+.iconButtonGroup.checkBoxStyle input[type="checkbox"]:checked + .iconButton::before {background:var(--color-prime); border-color:var(--color-prime);}
+.iconButtonGroup.checkBoxStyle input[type="checkbox"]:checked + .iconButton::after {content:'\2713'; position:absolute; top:3px; right:5px; color:var(--ui-color-white-only); font-size:11px; font-weight:bold;}
+
+/* 선택 상태 스타일 */
+.iconButtonGroup input[type="radio"]:checked + .iconButton {border-color:var(--color-prime); background:var(--color-prime);}
+.iconButtonGroup input[type="checkbox"]:checked + .iconButton {border-color:var(--color-prime); background:var(--color-prime);}
+.iconButtonGroup input[type="radio"]:checked + .iconButton i,
+.iconButtonGroup input[type="radio"]:checked + .iconButton span {color:var(--ui-color-white-only);}
+.iconButtonGroup input[type="checkbox"]:checked + .iconButton i,
+.iconButtonGroup input[type="checkbox"]:checked + .iconButton span {color:var(--ui-color-white-only);}
+.iconButtonGroup input[type="radio"]:disabled + .iconButton {opacity:0.5; cursor:not-allowed;}
+.iconButtonGroup input[type="radio"]:disabled + .iconButton:hover {border-color:var(--ui-color-gray-300); background:var(--ui-color-white);}
+
+/* 체크박스 그룹 */
+.checkBoxGroup {display:flex; flex-direction:column; gap:15px;}
+.checkItem {display:flex; align-items:center;}
+.checkItem input[type="checkbox"] {width:20px; height:20px; margin:0; margin-right:12px; cursor:pointer;}
+.checkItem .checkLabel {display:flex; align-items:center; gap:8px; cursor:pointer; font-size:14px; color:var(--ui-color-gray-700);}
+.checkItem .checkLabel i {font-size:20px; color:var(--ui-color-gray-600);}
+.checkItem input[type="checkbox"]:checked ~ .checkLabel {color:var(--color-prime); font-weight:500;}
+.checkItem input[type="checkbox"]:checked ~ .checkLabel i {color:var(--color-prime);}
+
+/* 스위치 스타일 */
+.configInput .switch {margin:0;}
+
+/* 아이콘 선택 스타일 */
+.iconSelector {display:flex; align-items:center; gap:10px;}
+.iconPreview {display:flex; align-items:center; gap:10px; padding:10px 20px; border:1px solid var(--ui-color-gray-300); border-radius:8px; background:var(--ui-color-white); color:var(--ui-color-gray-700); font-size:14px; cursor:pointer; transition:all 0.2s;}
+.iconPreview:hover {border-color:var(--color-prime); color:var(--color-prime);}
+.iconPreview i {font-size:24px; color:var(--color-prime);}
+
+/* 텍스트 입력 스타일 */
+.full_input {width:100%; max-width:400px; padding:10px 15px; border:1px solid var(--ui-color-gray-300); border-radius:8px; font-size:14px;}
+.full_input:focus {border-color:var(--color-prime); outline:none;}
+
+/* 로고 업로드 스타일 */
+.logoUploadWrap {display:flex; flex-direction:column; gap:15px;}
+.logoPreview {position:relative; display:inline-block; padding:10px; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-gray-50);}
+.logoPreview img {max-height:40px; width:auto; display:block;}
+.logoRemove {position:absolute; top:10px; right:5px; width:24px; height:24px; background:var(--ui-color-danger-600); font-size:22px; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.3s;}
+.logoRemove:hover {background:var(--ui-color-danger-700); transform:scale(1.1);}
+.logoUploadBox {display:flex; flex-direction:column; gap:10px;}
+.logoUploadBox input[type="file"] {display:none;}
+.logoUploadBtn {display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:var(--color-prime); color:white; border-radius:8px; cursor:pointer; transition:all 0.3s; font-size:14px; font-weight:500;}
+.logoUploadBtn:hover {opacity:0.9; transform:translateY(-2px);}
+.uploadHelp {margin:0; color:var(--ui-color-gray-500); font-size:12px; line-height:1.5;}
+
+/* 모달 스타일 */
+.modal {position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); overflow:auto;}
+.modal-content {position:relative; width:90%; max-width:800px; margin:50px auto; background:var(--ui-color-white); border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.15);}
+.modal-header {display:flex; justify-content:space-between; align-items:center; padding:20px 30px; border-bottom:1px solid var(--ui-color-gray-200);}
+.modal-header h3 {margin:0; font-size:20px; font-weight:600;}
+.modal-close {padding:0; border:none; background:none; color:var(--ui-color-gray-500); font-size:28px; cursor:pointer; transition:color 0.2s;}
+.modal-close:hover {color:var(--ui-color-gray-700);}
+.modal-body {padding:30px;}
+
+/* 아이콘 검색 */
+.icon-search {margin-bottom:20px;}
+.icon-search input {width:100%; padding:12px 20px; border:1px solid var(--ui-color-gray-300); border-radius:8px; font-size:14px;}
+.icon-search input:focus {border-color:var(--color-prime); outline:none;}
+
+/* 아이콘 그리드 */
+.icon-grid {display:grid; grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:10px; max-height:400px; overflow-y:auto;}
+.icon-item {display:flex; flex-direction:column; align-items:center; gap:5px; padding:15px 10px; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-white); cursor:pointer; transition:all 0.2s;}
+.icon-item:hover {border-color:var(--color-prime); background:var(--ui-color-gray-50); transform:translateY(-2px);}
+.icon-item i {font-size:28px; color:var(--ui-color-gray-700);}
+.icon-item:hover i {color:var(--color-prime);}
+.icon-item span {font-size:11px; color:var(--ui-color-gray-600); text-align:center; word-break:break-all;}
+
+/* 셀렉트 박스 */
+.configInput select {width:100%; max-width:300px;}
+
+/* 컬러셋 선택 스타일 */
+.colorset-grid {display:flex; flex-wrap:wrap; gap:12px; max-width:800px;}
+.colorset-item {display:flex; flex-direction:column; align-items:center; gap:6px; padding:12px; border:2px solid transparent; border-radius:10px; background:var(--ui-color-white); cursor:pointer; transition:all 0.3s; flex:0 0 auto; min-width:80px;}
+.colorset-item:hover {background:var(--ui-color-gray-50); transform:translateY(-2px);}
+.colorset-item.active {border-color:var(--color-prime); background:var(--ui-color-gray-50);}
+.colorset-chip {position:relative; width:40px; height:40px; border-radius:50%; box-shadow:0 2px 6px rgba(0,0,0,0.15); transition:transform 0.2s;}
+.colorset-item:hover .colorset-chip {transform:scale(1.15);}
+.colorset-chip i {position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:white; font-size:18px; text-shadow:0 1px 2px rgba(0,0,0,0.3);}
+.colorset-name {font-size:12px; font-weight:600; color:var(--ui-color-gray-700); text-align:center;}
+
+/* 색상 선택기 */
+.colorPicker {display:flex; align-items:center; gap:12px;}
+.colorInput {width:50px; height:50px; padding:0; border:1px solid var(--ui-color-gray-300); border-radius:8px; cursor:pointer;}
+.colorText {width:120px; text-align:center; font-family:monospace;}
+
+/* ========================================
+   푸터 영역
+======================================== */
+.configFooter {display:flex; justify-content:center; gap:12px; margin-top:40px; padding-top:30px; border-top:2px solid var(--ui-color-gray-200);}
+
+/* ========================================
+   반응형 디자인
+======================================== */
+@media (max-width:768px) {
+    .themeConfigWrap {}
+    .configTitle {font-size:24px;}
+    .configTitle i {font-size:28px;}
+    .configDesc {font-size:14px;}
+    
+    .configItem {flex-direction:column; align-items:stretch; padding:20px;}
+    .configLabel {flex:none; padding-right:0; margin-bottom:16px;}
+    .configInput {width:100%;}
+    
+    .radioGroup {gap:16px;}
+    .configInput select {max-width:100%;}
+    
+    .configFooter {flex-direction:column;}
+    .configFooter .button {width:100%; justify-content:center;}
+}
+
+@media (max-width:480px) {
+    .sectionTitle {font-size:18px;}
+    .sectionTitle i {font-size:20px;}
+    
+    .configItem {padding:16px;}
+    .configLabel label {font-size:14px;}
+    .configHelp {font-size:12px;}
+}

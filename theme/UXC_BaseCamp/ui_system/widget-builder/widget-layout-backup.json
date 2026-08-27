@@ -1,0 +1,24 @@
+{
+    "grid_rows": [
+        {
+            "columns": [
+                {
+                    "width": 100,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery",
+                        "boards": [
+                            "gallery"
+                        ],
+                        "board": "gallery",
+                        "rows": 5,
+                        "subject_len": 40,
+                        "title": "테스트1",
+                        "show_more": true
+                    }
+                }
+            ]
+        }
+    ],
+    "updated_at": "2026-08-27T13:59:45+09:00"
+}

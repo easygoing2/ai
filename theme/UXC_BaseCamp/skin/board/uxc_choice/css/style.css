@@ -1,0 +1,144 @@
+@charset "utf-8";
+
+
+/* --------------------------------------------------------
+게시판 목록 스타일 - UXC LIST (테이블 형태)
+----------------------------------------------------------*/
+.boardListWrap {position:relative;}
+
+/* 게시물 목록 */
+[data-board="uxc_choice"] {display:flex; flex-direction:column; border-top:3px solid var(--board-gray-200);}
+
+/* 리스트 헤더 */
+[data-board="uxc_choice"] .listHeader {display:flex; align-items:center; padding:12px 0; background:var(--board-gray-50); border-bottom:1px solid var(--board-gray-300); font-size:14px; font-weight:600; color:var(--board-gray-800);}
+[data-board="uxc_choice"] .listHeader .col {text-align:center;}
+
+/* cardBox를 테이블 행처럼 스타일링 */
+[data-board="uxc_choice"] .cardBox {display:flex; align-items:center; position:relative; width:100%; padding:12px 0; border-bottom:1px solid var(--board-gray-200); gap:0; transition:background-color 0.2s ease;}
+[data-board="uxc_choice"] .cardBox:hover {background:var(--board-gray-50);}
+[data-board="uxc_choice"] .cardBox.bo_notice {background:var(--board-gray-50);}
+[data-board="uxc_choice"] .cardBox.active {background:var(--board-gray-100);}
+
+/* 컬럼 공통 스타일 */
+[data-board="uxc_choice"] .col {padding:0 8px; font-size:14px; color:var(--board-gray-700);}
+
+/* 컬럼별 너비 및 정렬 */
+[data-board="uxc_choice"] .col-check {width:40px; min-width:40px; text-align:center;}
+[data-board="uxc_choice"] .col-num {width:60px; min-width:60px; text-align:center; font-size:13px; color:var(--board-gray-500);}
+[data-board="uxc_choice"] .col-subject {flex:1; text-align:left; padding-left:15px; padding-right:15px;}
+[data-board="uxc_choice"] .col-name {text-align:center; font-size:13px;}
+[data-board="uxc_choice"] .col-date {width:100px; min-width:100px; text-align:center; font-size:13px; color:var(--board-gray-500);}
+[data-board="uxc_choice"] .col-hit {width:60px; min-width:60px; text-align:center; font-size:13px; color:var(--board-gray-500);}
+
+/* 제목 영역 스타일 */
+[data-board="uxc_choice"] .bo_tit {display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+[data-board="uxc_choice"] .bo_tit a {color:var(--board-gray-900); text-decoration:none; font-weight:500; transition:color 0.2s ease; font-size:15px; line-height:1.4;}
+[data-board="uxc_choice"] .bo_tit a:hover {color:var(--color-prime);}
+
+/* 공지사항 및 현재글 표시 */
+[data-board="uxc_choice"] .bo_notice_label,
+[data-board="uxc_choice"] .bo_current {display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600;}
+[data-board="uxc_choice"] .bo_notice_label {background:var(--color-prime); color:#fff;}
+[data-board="uxc_choice"] .bo_current {background:var(--color-prime); color:#fff;}
+
+/* 댓글 개수 표시 */
+[data-board="uxc_choice"] .comment_cnt {display:inline-flex; align-items:center; justify-content:center; min-width:20px; height:20px; padding:0 6px; margin-left:4px; background:var(--color-prime); color:#fff; border-radius:10px; font-size:11px; font-weight:600;}
+
+/* 카테고리 표시 */
+[data-board="uxc_choice"] .bo_cate_link {display:inline-block; padding:2px 8px; margin-left:6px; border:1px solid var(--board-gray-300); border-radius:4px; font-size:11px; color:var(--board-gray-600); background:var(--board-gray-50);}
+
+/* 아이콘 표시 */
+[data-board="uxc_choice"] .iconBox {display:inline-flex; align-items:center; justify-content:center; padding:2px 6px; margin-left:4px; border-radius:10px; font-size:10px; font-weight:600;}
+[data-board="uxc_choice"] .hot_icon {display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; margin-left:4px; border-radius:50%; font-size:10px; font-weight:700;}
+[data-board="uxc_choice"] .hot_icon {background:var(--board-warning); color:#fff;}
+[data-board="uxc_choice"] .file_icon,
+[data-board="uxc_choice"] .link_icon,
+[data-board="uxc_choice"] .secret_icon {margin-left:4px; font-size:14px;}
+[data-board="uxc_choice"] .file_icon {color:var(--board-gray-600);}
+[data-board="uxc_choice"] .link_icon {color:var(--board-gray-600);}
+[data-board="uxc_choice"] .secret_icon {color:var(--board-gray-500);}
+
+/* 빈 목록 */
+[data-board="uxc_choice"] .cardBox.empty {justify-content:center; padding:60px 20px; color:var(--board-gray-500); font-size:16px; font-weight:500;}
+
+/* 체크박스 스타일 */
+[data-board="uxc_choice"] .opt {display:flex; align-items:center; justify-content:center;}
+[data-board="uxc_choice"] .opt input[type="checkbox"] {margin:0;}
+
+/* 모바일 메타 정보 기본 숨김 */
+[data-board="uxc_choice"] .mobile-meta {display:none;}
+
+/* 페이지네이션 */
+.listFooter {text-align:center;}
+.listFooter .pagination {display:inline-flex; gap:8px; align-items:center;}
+
+/* 추가 버튼 스타일 */
+.boardListWrap .admBtn .buttonWrap button.warning {border-color:var(--board-danger); color:var(--board-danger);}
+.boardListWrap .admBtn .buttonWrap button.warning:hover {background:var(--board-danger); color:var(--board-white);}
+.boardListWrap .admBtn .buttonWrap button.prime {border-color:var(--color-prime); color:var(--color-prime);}
+.boardListWrap .admBtn .buttonWrap button.prime:hover {background:var(--color-prime); color:var(--board-white);}
+
+
+/* choice */
+.chosen-icon {display:inline-block; padding:4px 6px; border-radius:6px; background:#5cb85c; color:#fff; font-size:11px;}
+.boardViewWrap .boardViewBody .commentWrap .commentMedia .media .media-body.choice {border:1px solid var(--color-prime); background:var(--board-white);}
+.boardViewWrap .boardViewBody .commentWrap .commentMedia .media .media-body.choice .media-content .cmt_contents .chosen-badge .button {display:inline-flex; gap:4px;}
+
+
+/* --------------------------------------------------------
+반응형 디자인
+----------------------------------------------------------*/
+@media (max-width: 1024px) {
+    .boardListWrap .admBtn {flex-direction:column; gap:16px; align-items:stretch;}
+    .boardListWrap .admBtn .levelWrap {justify-content:center;}
+    
+    /* 태블릿에서 컬럼 너비 조정 */
+    [data-board="uxc_choice"] .col-name {width:80px; min-width:80px;}
+    [data-board="uxc_choice"] .col-date {width:80px; min-width:80px;}
+}
+@media (max-width: 768px) {
+    /* 모바일에서 카드형으로 변경 */
+    [data-board="uxc_choice"] .listHeader {display:none;}
+    [data-board="uxc_choice"] .cardBox {flex-direction:column; align-items:stretch; padding:16px 0; gap:8px;}
+    
+    /* PC용 컬럼 숨기기 */
+    [data-board="uxc_choice"] .col-num,
+    [data-board="uxc_choice"] .col-name,
+    [data-board="uxc_choice"] .col-date,
+    [data-board="uxc_choice"] .col-hit {display:none !important;}
+    
+    /* 체크박스와 제목만 표시 */
+    [data-board="uxc_choice"] .col-check {display:none;}
+    [data-board="uxc_choice"] .col-subject {width:100% !important; order:1; padding:0 !important;}
+    [data-board="uxc_choice"] .col-subject .bo_tit a {font-size:16px; font-weight:600;}
+    
+    /* 모바일 메타 정보 표시 */
+    [data-board="uxc_choice"] .mobile-meta {display:flex; order:2; gap:12px; align-items:center; font-size:13px; color:var(--board-gray-500); margin-top:8px;}
+    [data-board="uxc_choice"] .mobile-meta span {position:relative;}
+    [data-board="uxc_choice"] .mobile-meta span:not(:last-child)::after {content:'•'; position:absolute; right:-7px; color:var(--board-gray-400);}
+    
+    .boardListWrap .toolBox .tools {justify-content:center; flex-wrap:wrap;}
+    .boardListWrap .catagory ul {justify-content:center;}
+    
+    #searchPop .modalBox {width:95%; margin:20px;}
+    #searchPop .searchForm {flex-direction:column; gap:12px;}
+    #searchPop .searchForm select,
+    #searchPop .searchForm input {width:100%;}
+    #searchPop .buttonWrap {flex-direction:column;}
+    #searchPop .buttonWrap button {width:100%;}
+}
+@media (max-width: 480px) {
+    .boardListWrap .admBtn {padding:12px;}
+    .boardListWrap .toolBox {padding:12px;}
+    
+    /* 더 작은 화면에서 조정 */
+    [data-board="uxc_choice"] .col-subject .bo_tit a {font-size:15px;}
+    [data-board="uxc_choice"] .cardBox {padding:12px;}
+    [data-board="uxc_choice"] .mobile-meta {font-size:12px; gap:8px;}
+}
+
+/* 접근성 고려 */
+@media (prefers-reduced-motion: reduce) {
+  [data-board="uxc_choice"] .cardBox {animation:none; opacity:1; transform:none;}
+  [data-board="uxc_choice"] .cardBox:hover {transform:none; transition:box-shadow 0.2s ease;}
+}

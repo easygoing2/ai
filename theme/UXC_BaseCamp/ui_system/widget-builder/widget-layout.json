@@ -1,0 +1,58 @@
+{
+    "grid_rows": [
+        {
+            "columns": [
+                {
+                    "width": 100,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery",
+                        "boards": [
+                            "gallery"
+                        ],
+                        "board": "gallery",
+                        "rows": 5,
+                        "subject_len": 40,
+                        "title": "테스트1",
+                        "show_more": true
+                    }
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "width": 50,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery_box",
+                        "boards": [
+                            "gallery"
+                        ],
+                        "board": "gallery",
+                        "rows": 5,
+                        "subject_len": 40,
+                        "title": "uxc_gallery_box",
+                        "show_more": true
+                    }
+                },
+                {
+                    "width": 50,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_list",
+                        "boards": [
+                            "notice"
+                        ],
+                        "board": "notice",
+                        "rows": 5,
+                        "subject_len": 40,
+                        "title": "uxc_list",
+                        "show_more": true
+                    }
+                }
+            ]
+        }
+    ],
+    "updated_at": "2026-08-27T14:14:11+09:00"
+}
