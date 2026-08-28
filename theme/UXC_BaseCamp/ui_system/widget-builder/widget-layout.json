@@ -8,13 +8,13 @@
                         "type": "latest",
                         "skin": "theme\/uxc_slide_box",
                         "boards": [
-                            "ai_agent"
+                            "ai_agent_01"
                         ],
-                        "board": "ai_agent",
+                        "board": "ai_agent_01",
                         "rows": 10,
-                        "subject_len": 40,
+                        "subject_len": 80,
                         "title": "AI Agent",
-                        "show_more": true
+                        "show_more": false
                     }
                 }
             ]
@@ -107,5 +107,5 @@
             ]
         }
     ],
-    "updated_at": "2026-08-29T01:25:11+09:00"
+    "updated_at": "2026-08-29T02:52:18+09:00"
 }

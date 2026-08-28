@@ -1,7 +1,5 @@
 <?php
 // 동적으로 JavaScript 설정을 생성하는 PHP 파일
-header('Content-Type: application/javascript; charset=utf-8');
-header('Cache-Control: public, max-age=3600');
 
 // 그누보드 common.php 포함
 $common_path = '';
@@ -22,6 +20,10 @@ foreach ($check_paths as $path) {
 if ($common_path) {
     include_once($common_path);
 }
+
+// common.php에서 설정한 HTML Content-Type을 JavaScript용으로 덮어씁니다.
+header('Content-Type: application/javascript; charset=utf-8');
+header('Cache-Control: public, max-age=3600');
 
 $plugin_url = defined('G5_PLUGIN_URL') ? G5_PLUGIN_URL . '/editor/uxc_toastuieditor' : '';
 ?>
