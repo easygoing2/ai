@@ -8,12 +8,12 @@
                         "type": "latest",
                         "skin": "theme\/uxc_slide_box",
                         "boards": [
-                            "gallery"
+                            "ai_agent"
                         ],
-                        "board": "gallery",
+                        "board": "ai_agent",
                         "rows": 10,
                         "subject_len": 40,
-                        "title": "uxc_slide_box",
+                        "title": "AI Agent",
                         "show_more": true
                     }
                 }
@@ -27,12 +27,12 @@
                         "type": "latest",
                         "skin": "theme\/uxc_slide_box",
                         "boards": [
-                            "ai_agent"
+                            "ai_skill"
                         ],
-                        "board": "ai_agent",
-                        "rows": 8,
+                        "board": "ai_skill",
+                        "rows": 10,
                         "subject_len": 40,
-                        "title": "uxc_gallery_box",
+                        "title": "AI Skill",
                         "show_more": true
                     }
                 }
@@ -49,12 +49,31 @@
                             "gallery"
                         ],
                         "board": "gallery",
-                        "rows": 5,
+                        "rows": 20,
                         "subject_len": 40,
-                        "title": "uxc_gallery_box",
+                        "title": "Vector RAG",
                         "show_more": true
                     }
                 },
+                {
+                    "width": 50,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery_box",
+                        "boards": [
+                            "notice"
+                        ],
+                        "board": "notice",
+                        "rows": 5,
+                        "subject_len": 40,
+                        "title": "GRAPH RAG",
+                        "show_more": true
+                    }
+                }
+            ]
+        },
+        {
+            "columns": [
                 {
                     "width": 50,
                     "widget": {
@@ -66,26 +85,7 @@
                         "board": "notice",
                         "rows": 5,
                         "subject_len": 40,
-                        "title": "uxc_list",
-                        "show_more": true
-                    }
-                }
-            ]
-        },
-        {
-            "columns": [
-                {
-                    "width": 50,
-                    "widget": {
-                        "type": "latest",
-                        "skin": "theme\/uxc_list",
-                        "boards": [
-                            "graph"
-                        ],
-                        "board": "graph",
-                        "rows": 5,
-                        "subject_len": 40,
-                        "title": "uxc_webzine_01",
+                        "title": "공지사항",
                         "show_more": true
                     }
                 },
@@ -95,35 +95,17 @@
                         "type": "latest",
                         "skin": "theme\/uxc_list",
                         "boards": [
-                            "rag"
+                            "free"
                         ],
-                        "board": "rag",
+                        "board": "free",
                         "rows": 5,
                         "subject_len": 40,
-                        "title": "uxc_webzine_02",
+                        "title": "자유게시판",
                         "show_more": true
-                    }
-                }
-            ]
-        },
-        {
-            "columns": [
-                {
-                    "width": 50,
-                    "widget": {
-                        "type": "latest_posts\/widget_latest_posts",
-                        "title": "최신 글"
-                    }
-                },
-                {
-                    "width": 50,
-                    "widget": {
-                        "type": "recommend_best\/widget_recommend_best",
-                        "title": "추천 베스트"
                     }
                 }
             ]
         }
     ],
-    "updated_at": "2026-08-27T19:20:50+09:00"
+    "updated_at": "2026-08-29T01:25:11+09:00"
 }

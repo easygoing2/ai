@@ -1,0 +1,54 @@
+@charset "utf-8";
+
+@font-face { 
+    font-family: 'BMJUA'; 
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+/* 모든 요소에 BMJUA 폰트 적용 */
+*,
+html, 
+body,
+input, 
+textarea, 
+select, 
+button,
+table, 
+th, 
+td,
+h1, h2, h3, h4, h5, h6,
+p, 
+ul, 
+ol, 
+li, 
+dl, 
+dt, 
+dd,
+a, 
+strong, 
+em, 
+span, 
+label,
+blockquote, 
+cite, 
+address, 
+time, 
+mark, 
+small {
+    font-family: 'BMJUA', sans-serif;
+}
+
+/* 제목 요소들 굵기 설정 */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal; /* BMJUA는 단일 weight만 지원 */
+}
+
+/* 코드 요소들 - 고정폭 폰트 사용 */
+code, 
+pre, 
+kbd, 
+samp {
+    font-family: 'Courier New', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}

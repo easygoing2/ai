@@ -11,9 +11,28 @@
                             "ai_agent"
                         ],
                         "board": "ai_agent",
-                        "rows": 8,
+                        "rows": 10,
                         "subject_len": 40,
-                        "title": "uxc_gallery_box",
+                        "title": "AI Agent",
+                        "show_more": true
+                    }
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "width": 100,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_slide_box",
+                        "boards": [
+                            "ai_skill"
+                        ],
+                        "board": "ai_skill",
+                        "rows": 10,
+                        "subject_len": 40,
+                        "title": "AI Skill",
                         "show_more": true
                     }
                 }
@@ -30,9 +49,9 @@
                             "gallery"
                         ],
                         "board": "gallery",
-                        "rows": 5,
+                        "rows": 20,
                         "subject_len": 40,
-                        "title": "uxc_gallery_box",
+                        "title": "Vector RAG",
                         "show_more": true
                     }
                 },
@@ -40,67 +59,14 @@
                     "width": 50,
                     "widget": {
                         "type": "latest",
-                        "skin": "theme\/uxc_list",
+                        "skin": "theme\/uxc_gallery_box",
                         "boards": [
                             "notice"
                         ],
                         "board": "notice",
                         "rows": 5,
                         "subject_len": 40,
-                        "title": "uxc_list",
-                        "show_more": true
-                    }
-                }
-            ]
-        },
-        {
-            "columns": [
-                {
-                    "width": 50,
-                    "widget": {
-                        "type": "latest",
-                        "skin": "theme\/uxc_list",
-                        "boards": [
-                            "graph"
-                        ],
-                        "board": "graph",
-                        "rows": 5,
-                        "subject_len": 40,
-                        "title": "uxc_webzine_01",
-                        "show_more": true
-                    }
-                },
-                {
-                    "width": 50,
-                    "widget": {
-                        "type": "latest",
-                        "skin": "theme\/uxc_list",
-                        "boards": [
-                            "rag"
-                        ],
-                        "board": "rag",
-                        "rows": 5,
-                        "subject_len": 40,
-                        "title": "uxc_webzine_02",
-                        "show_more": true
-                    }
-                }
-            ]
-        },
-        {
-            "columns": [
-                {
-                    "width": 100,
-                    "widget": {
-                        "type": "latest",
-                        "skin": "theme\/uxc_slide_box",
-                        "boards": [
-                            "gallery"
-                        ],
-                        "board": "gallery",
-                        "rows": 10,
-                        "subject_len": 40,
-                        "title": "uxc_slide_box",
+                        "title": "GRAPH RAG",
                         "show_more": true
                     }
                 }
@@ -125,5 +91,5 @@
             ]
         }
     ],
-    "updated_at": "2026-08-27T19:20:28+09:00"
+    "updated_at": "2026-08-29T01:23:24+09:00"
 }
