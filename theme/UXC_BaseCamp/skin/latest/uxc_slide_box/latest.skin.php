@@ -9,8 +9,8 @@ if(file_exists(G5_PLUGIN_PATH.'/editor/uxc_toastuieditor/extend.toastuieditor.ph
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 0);
-$thumb_width = 230;
-$thumb_height = 115;
+$thumb_width = 600;
+$thumb_height = 300;
 $list_count = (is_array($list) && $list) ? count($list) : 0;
 
 // YouTube ID 추출 함수
@@ -24,9 +24,9 @@ if (!function_exists('extractYouTubeID')) {
 
 <?php $slide_id = 'uxc_slide_box_'.uniqid(); ?>
 <div class="uxc_slide_box" id="<?php echo $slide_id; ?>" data-latest="uxc_slide_box">
-    <div class="swiper">
-        <div class="swiper-wrapper">
-            <?php for ($i=0; $i<$list_count; $i++) {
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <?php for ($i=0; $i<$list_count; $i++) {
                 $img = '';
                 $thumb_created = false;
                 
@@ -123,14 +123,14 @@ if (!function_exists('extractYouTubeID')) {
                 // 멀티 게시판 지원: 위에서 정의한 item_bo_table 사용
                 $wr_href = get_pretty_url($item_bo_table, $list[$i]['wr_id']);
             ?>
-            <div class="swiper-slide">
-                <a href="<?php echo $wr_href; ?>" class="slide_img">
-                    <?php echo run_replace('thumb_image_tag', $img_content, $thumb); ?>
-                </a>
-                
-                <div class="slide_info">
-                    <a href="<?php echo $wr_href; ?>">
-                        <?php 
+      <div class="swiper-slide">
+        <a href="<?php echo $wr_href; ?>" class="slide_img">
+          <?php echo run_replace('thumb_image_tag', $img_content, $thumb); ?>
+        </a>
+
+        <div class="slide_info">
+          <a href="<?php echo $wr_href; ?>">
+            <?php 
                         if ($list[$i]['icon_secret']) echo "<i class=\"bx bx-lock-alt\" aria-hidden=\"true\"></i><span class=\"sound_only\">비밀글</span> ";
                         
                         if ($list[$i]['is_notice'])
@@ -143,66 +143,66 @@ if (!function_exists('extractYouTubeID')) {
                         
                         if ($list[$i]['comment_cnt']) echo "<span class=\"lt_cmt\">댓글 ".$list[$i]['comment_cnt']."</span>";
                         ?>
-                    </a>
-                    
-                    <div class="lt_info">
-                        <?php if (isset($list[$i]['bo_subject']) && $list[$i]['bo_subject']) { ?>
-                        <span class="lt_board"><i class='bx bx-folder'></i> <?php echo $list[$i]['bo_subject'] ?></span>
-                        <?php } ?>
-                        <span class="lt_nick"><i class='bx bx-user'></i> <?php echo $list[$i]['name'] ?></span>
-                        <span class="lt_date"><i class="bx bx-time"></i> <?php echo $list[$i]['datetime2'] ?></span>
-                        <?php if ($list[$i]['ca_name']) { ?>
-                        <span class="lt_cate"><?php echo $list[$i]['ca_name'] ?></span>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
+          </a>
+
+          <div class="lt_info">
+            <?php if (isset($list[$i]['bo_subject']) && $list[$i]['bo_subject']) { ?>
+            <span class="lt_board"><i class='bx bx-folder'></i> <?php echo $list[$i]['bo_subject'] ?></span>
             <?php } ?>
+            <span class="lt_nick"><i class='bx bx-user'></i> <?php echo $list[$i]['name'] ?></span>
+            <span class="lt_date"><i class="bx bx-time"></i> <?php echo $list[$i]['datetime2'] ?></span>
+            <?php if ($list[$i]['ca_name']) { ?>
+            <span class="lt_cate"><?php echo $list[$i]['ca_name'] ?></span>
+            <?php } ?>
+          </div>
         </div>
-        
-        <div class="swiper-pagination"></div>
-        
-        <!-- 네비게이션 버튼 -->
-        <div class="swiper-button-prev"><i class="bx bx-chevron-left"></i></div>
-        <div class="swiper-button-next"><i class="bx bx-chevron-right"></i></div>
+      </div>
+      <?php } ?>
     </div>
+
+    <div class="swiper-pagination"></div>
+
+    <!-- 네비게이션 버튼 -->
+    <div class="swiper-button-prev"><i class="bx bx-chevron-left"></i></div>
+    <div class="swiper-button-next"><i class="bx bx-chevron-right"></i></div>
+  </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Swiper가 이미 로드되어 있는지 확인
-    if (typeof Swiper !== 'undefined') {
-        const uxcSlideBoxSwiper = new Swiper('#<?php echo $slide_id; ?> .swiper', {
-            slidesPerView: 1,
-            spaceBetween: 10,
-            loop: true,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '#<?php echo $slide_id; ?> .swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '#<?php echo $slide_id; ?> .swiper-button-next',
-                prevEl: '#<?php echo $slide_id; ?> .swiper-button-prev',
-            },
-            breakpoints: {
-                480: {
-                    slidesPerView: 2,
-                    spaceBetween: 10
-                },
-                768: {
-                    slidesPerView: 3,
-                    spaceBetween: 10
-                },
-                1024: {
-                    slidesPerView: 4,
-                    spaceBetween: 10
-                }
-            }
-        });
-    }
+  // Swiper가 이미 로드되어 있는지 확인
+  if (typeof Swiper !== 'undefined') {
+    const uxcSlideBoxSwiper = new Swiper('#<?php echo $slide_id; ?> .swiper', {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '#<?php echo $slide_id; ?> .swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '#<?php echo $slide_id; ?> .swiper-button-next',
+        prevEl: '#<?php echo $slide_id; ?> .swiper-button-prev',
+      },
+      breakpoints: {
+        480: {
+          slidesPerView: 2,
+          spaceBetween: 10
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 10
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 10
+        }
+      }
+    });
+  }
 });
 </script>
