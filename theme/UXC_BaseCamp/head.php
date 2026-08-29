@@ -118,6 +118,7 @@ if(defined('_INDEX_')) { // index에서만 실행
         </div>
         <div class="tools" data-section="tnbRightTools">
           <div class="tnbRightItems" data-item="header_login">
+            <?php include G5_THEME_PATH.'/ui_module/ui_weather/weather.php'; ?>
             <?php echo outlogin('theme/base_top'); // 외부 로그인 ?>
           </div>
         </div>
