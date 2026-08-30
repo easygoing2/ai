@@ -14,7 +14,8 @@
 					if (empty($row) || !is_array($row)) continue;
 
 					$add_class = (isset($row['sub']) && is_array($row['sub']) && count($row['sub']) > 0) ? 'subdepth' : '';
-					$is_active = false;
+					$main_link = isset($row['me_link']) ? $row['me_link'] : '#';
+					$is_active = is_menu_active($main_link);
 			
 					$k = 0;
 					ob_start(); // 서브 메뉴 버퍼링 시작
@@ -67,7 +68,6 @@
 					$sub_output = ob_get_clean(); // 버퍼 저장
 					
 					// 메인메뉴 링크와 타겟 안전하게 가져오기
-					$main_link = isset($row['me_link']) ? $row['me_link'] : '#';
 					$main_target = isset($row['me_target']) ? $row['me_target'] : 'self';
 					$main_name = isset($row['me_name']) ? $row['me_name'] : '';
 				?>

@@ -28,10 +28,11 @@
                         if ($menu_level > 0 && $member_level < $menu_level) continue;
                         
                         $has_sub = (isset($row['sub']) && is_array($row['sub']) && count($row['sub']) > 0) ? true : false;
-                        $is_active = false;
                         $main_link = isset($row['me_link']) ? $row['me_link'] : '#';
                         $main_target = isset($row['me_target']) ? $row['me_target'] : 'self';
                         $main_name = isset($row['me_name']) ? $row['me_name'] : '';
+                        // 1depth 자체 페이지와 하위 2depth 페이지 모두 활성 상태로 표시
+                        $is_active = is_menu_active($main_link);
 
                         // 서브메뉴 active 체크를 위한 버퍼링
                         ob_start();
