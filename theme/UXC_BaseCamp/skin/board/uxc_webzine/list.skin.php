@@ -86,7 +86,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/css/style.css">
             <?php
             if (!function_exists('extractYouTubeID')) {
                 function extractYouTubeID($url) {
-                    preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^\&\?\/]+)/', $url, $matches);
+                    preg_match('/(?:youtube\.com\/(?:watch\?(?:[^#\s]*&)?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})(?=[?&#\/]|$)/i', $url, $matches);
                     return $matches[1] ?? '';
                 }
             }

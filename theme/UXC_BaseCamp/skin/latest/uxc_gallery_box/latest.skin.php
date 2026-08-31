@@ -16,7 +16,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
 // YouTube ID 추출 함수
 if (!function_exists('extractYouTubeID')) {
     function extractYouTubeID($url) {
-        preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^\&\?\/]+)/', $url, $matches);
+        preg_match('/(?:youtube\.com\/(?:watch\?(?:[^#\s]*&)?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})(?=[?&#\/]|$)/i', $url, $matches);
         return $matches[1] ?? '';
     }
 }

@@ -189,7 +189,7 @@ $next_href = ($next && isset($next['wr_id'])) ? get_pretty_url($bo_table, $next[
                     <?php
                         function extractYouTubeID($url) {
                             // 정규식을 사용해서 유튜브 영상 ID를 추출
-                            preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^\&\?\/]+)/', $url, $matches);
+                            preg_match('/(?:youtube\.com\/(?:watch\?(?:[^#\s]*&)?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})(?=[?&#\/]|$)/i', $url, $matches);
                             return $matches[1] ?? '';
                         }
                         $youtube_id = extractYouTubeID($view['wr_10'] ?? '');
