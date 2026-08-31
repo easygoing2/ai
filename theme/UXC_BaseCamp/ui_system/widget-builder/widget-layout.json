@@ -30,9 +30,12 @@
                         "skin": "theme\/uxc_gallery_box",
                         "boards": [
                             "ai_skill",
-                            "ai_skill_planning"
+                            "ai_skill_dev",
+                            "ai_skill_planning",
+                            "ai_skill_design",
+                            "ai_skill_maketing"
                         ],
-                        "board": "ai_skill,ai_skill_planning",
+                        "board": "ai_skill,ai_skill_dev,ai_skill_planning,ai_skill_design,ai_skill_maketing",
                         "rows": 15,
                         "subject_len": 40,
                         "title": "AI Skill",
@@ -110,5 +113,5 @@
             ]
         }
     ],
-    "updated_at": "2026-08-31T22:44:29+09:00"
+    "updated_at": "2026-09-01T00:46:33+09:00"
 }
