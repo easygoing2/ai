@@ -29,13 +29,14 @@
                         "type": "latest",
                         "skin": "theme\/uxc_slide_box",
                         "boards": [
-                            "ai_skill"
+                            "ai_skill",
+                            "ai_skill_planning"
                         ],
-                        "board": "ai_skill",
+                        "board": "ai_skill,ai_skill_planning",
                         "rows": 10,
                         "subject_len": 40,
                         "title": "AI Skill",
-                        "show_more": true
+                        "show_more": false
                     }
                 }
             ]
@@ -109,5 +110,5 @@
             ]
         }
     ],
-    "updated_at": "2026-08-29T20:07:51+09:00"
+    "updated_at": "2026-08-31T20:56:23+09:00"
 }

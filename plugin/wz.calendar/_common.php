@@ -1,0 +1,5 @@
+<?php
+include_once('../../common.php');
+include_once(G5_PLUGIN_PATH.'/wz.calendar/config.php');
+include_once(G5_PLUGIN_PATH.'/wz.calendar/calendar.lib.php');
+
