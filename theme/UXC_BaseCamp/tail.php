@@ -11,7 +11,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
   <div class="footerBarWrap">
     <div class="footerBar resWidth">
       <div class="link">
-        <a href="<?php echo get_pretty_url('content', 'company'); ?>">회사소개</a>
+        <a href="<?php echo get_pretty_url('content', 'company'); ?>">GNU AI</a>
         <a href="<?php echo get_pretty_url('content', 'privacy'); ?>">개인정보처리방침</a>
         <a href="<?php echo get_pretty_url('content', 'provision'); ?>">서비스이용약관</a>
       </div>

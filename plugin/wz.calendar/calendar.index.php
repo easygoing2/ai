@@ -6,9 +6,9 @@ include_once(G5_PLUGIN_PATH.'/wz.calendar/calendar.lib.php');
 
 $mb_id = wzc_require_member(false);
 
-add_stylesheet('<link rel="stylesheet" href="'.WZC_PLUGIN_URL.'/style.css?v='.WZC_VERSION.'">', 0);
+add_stylesheet('<link rel="stylesheet" href="'.WZC_PLUGIN_URL.'/style.css?v='.WZC_VERSION.'.'.(int)@filemtime(WZC_PLUGIN_PATH.'/style.css').'">', 0);
 add_javascript('<script src="'.WZC_PLUGIN_URL.'/vendor/sortable/Sortable.min.js?v=1.15.7"></script>', 20);
-add_javascript('<script src="'.WZC_PLUGIN_URL.'/calendar.js?v='.WZC_VERSION.'"></script>', 21);
+add_javascript('<script src="'.WZC_PLUGIN_URL.'/calendar.js?v='.WZC_VERSION.'.'.(int)@filemtime(WZC_PLUGIN_PATH.'/calendar.js').'"></script>', 21);
 
 if (!wzc_schema_installed()) {
     echo '<section class="wzc-system-message"><h2>내 캘린더 준비 중</h2><p>캘린더 DB 설치가 필요합니다.</p>';
@@ -35,8 +35,11 @@ unset($calendar_cell);
 
 $categories = wzc_get_categories($mb_id);
 $preference = wzc_get_preference($mb_id);
-$events = wzc_get_events($mb_id, $calendar->month_start, $calendar->month_end);
-$events_by_date = wzc_events_by_date($mb_id, $events, $calendar->month_start, $calendar->month_end);
+$grid_start = $calendar->cells[0]['date'];
+$grid_end = $calendar->cells[count($calendar->cells) - 1]['date'];
+$events = wzc_get_events($mb_id, $grid_start, $grid_end);
+$events_by_date = wzc_events_by_date($mb_id, $events, $grid_start, $grid_end);
+$event_layout = wzc_event_layout_by_date($events_by_date, $calendar->cells);
 $events_per_day = max(1, min(10, (int)$preference['wp_events_per_day']));
 $default_category = (int)$preference['wp_default_category'];
 if ($default_category && !wzc_category_owned($mb_id, $default_category)) $default_category = 0;
@@ -51,15 +54,25 @@ $month_url = function($year, $month, $day = '') use ($calendar_url) {
 $event_json = array();
 foreach ($events as $event) $event_json[(int)$event['we_ix']] = wzc_event_public_data($event);
 
-$render_event = function($event, $index) use ($events_per_day) {
+$render_event = function($event) use ($events_per_day) {
     $data = wzc_event_public_data($event);
     $json = htmlspecialchars(json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), ENT_QUOTES, 'UTF-8');
     $color = preg_match('/^#[0-9a-fA-F]{6}$/', $data['color']) ? $data['color'] : '#6f48ff';
-    $overflow = $index >= $events_per_day ? ' is-overflow' : '';
-    $time = !$data['all_day'] && $data['start_time'] ? '<span class="wzc-event-time">'.htmlspecialchars($data['start_time'], ENT_QUOTES, 'UTF-8').'</span>' : '';
-    echo '<article class="wzc-event'.$overflow.'" data-event-id="'.(int)$data['id'].'" data-category-id="'.(int)$data['category_id'].'" data-event="'.$json.'" style="--wzc-event-color:'.htmlspecialchars($color, ENT_QUOTES, 'UTF-8').'">';
+    $lane = isset($event['_layout_lane']) ? (int)$event['_layout_lane'] : 0;
+    $classes = array('wzc-event');
+    if ($lane >= $events_per_day) $classes[] = 'is-overflow';
+    if ($data['start_date'] !== $data['end_date']) $classes[] = 'is-multiday';
+    if (!empty($event['_segment_start'])) $classes[] = 'is-segment-start';
+    if (!empty($event['_segment_end'])) $classes[] = 'is-segment-end';
+    if (!empty($event['_event_start'])) $classes[] = 'is-event-start';
+    if (!empty($event['_event_end'])) $classes[] = 'is-event-end';
+    if (!empty($event['_show_title'])) $classes[] = 'has-label';
+    $show_label = !empty($event['_show_title']);
+    $time = $show_label && !empty($event['_event_start']) && !$data['all_day'] && $data['start_time'] ? '<span class="wzc-event-time">'.htmlspecialchars($data['start_time'], ENT_QUOTES, 'UTF-8').'</span>' : '';
+    $title = $show_label ? '<span class="wzc-event-title">'.htmlspecialchars($data['title'], ENT_QUOTES, 'UTF-8').'</span>' : '<span class="wzc-event-title" aria-hidden="true"></span>';
+    echo '<article class="'.implode(' ', $classes).'" data-event-id="'.(int)$data['id'].'" data-category-id="'.(int)$data['category_id'].'" data-event="'.$json.'" style="--wzc-event-color:'.htmlspecialchars($color, ENT_QUOTES, 'UTF-8').';--wzc-event-lane:'.($lane + 1).'">';
     echo '<button type="button" class="wzc-drag-handle" aria-label="'.htmlspecialchars($data['title'], ENT_QUOTES, 'UTF-8').' 일정 이동"><i class="bx bx-grid-vertical"></i></button>';
-    echo '<button type="button" class="wzc-event-open">'.$time.'<span class="wzc-event-title">'.htmlspecialchars($data['title'], ENT_QUOTES, 'UTF-8').'</span></button>';
+    echo '<button type="button" class="wzc-event-open" aria-label="'.htmlspecialchars($data['title'], ENT_QUOTES, 'UTF-8').' 일정 열기">'.$time.$title.'</button>';
     echo '</article>';
 };
 ?>
@@ -107,21 +120,23 @@ $render_event = function($event, $index) use ($events_per_day) {
             if ($cell['selected']) $classes[] = 'is-selected';
             if ($cell['weekday'] === 0) $classes[] = 'is-sunday';
             if ($cell['weekday'] === 6) $classes[] = 'is-saturday';
-            $date_events = isset($events_by_date[$cell['date']]) ? $events_by_date[$cell['date']] : array();
+            $date_events = isset($event_layout[$cell['date']]) ? $event_layout[$cell['date']] : array();
+            $hidden_event_count = 0;
+            foreach ($date_events as $date_event) if ((int)$date_event['_layout_lane'] >= $events_per_day) $hidden_event_count++;
+            $cell_year = (int)substr($cell['date'], 0, 4);
+            $cell_month = (int)substr($cell['date'], 5, 2);
         ?>
         <section class="<?php echo implode(' ', $classes); ?>" role="gridcell" data-date="<?php echo htmlspecialchars($cell['date'], ENT_QUOTES, 'UTF-8'); ?>">
-            <?php if ($cell['current_month']) { ?>
             <div class="wzc-day-header">
-                <a href="<?php echo $month_url($calendar->year, $calendar->month, $cell['date']); ?>" class="wzc-day-number" aria-label="<?php echo htmlspecialchars($cell['date'], ENT_QUOTES, 'UTF-8'); ?> 일정 보기"><?php echo (int)$cell['day']; ?></a>
+                <a href="<?php echo $month_url($cell_year, $cell_month, $cell['date']); ?>" class="wzc-day-number" aria-label="<?php echo htmlspecialchars($cell['date'], ENT_QUOTES, 'UTF-8'); ?> 일정 보기"><?php echo (int)$cell['day']; ?></a>
                 <?php if ($cell['today']) { ?><span class="wzc-today-label">오늘</span><?php } ?>
                 <button type="button" class="wzc-day-add" data-add-event="<?php echo htmlspecialchars($cell['date'], ENT_QUOTES, 'UTF-8'); ?>" aria-label="<?php echo htmlspecialchars($cell['date'], ENT_QUOTES, 'UTF-8'); ?> 일정 추가"><i class="bx bx-plus"></i></button>
             </div>
             <div class="wzc-event-list" data-date="<?php echo htmlspecialchars($cell['date'], ENT_QUOTES, 'UTF-8'); ?>">
-                <?php foreach ($date_events as $index => $event) $render_event($event, $index); ?>
+                <?php foreach ($date_events as $event) $render_event($event); ?>
             </div>
-            <?php if (count($date_events) > $events_per_day) { ?>
-            <button type="button" class="wzc-more" data-more-count="<?php echo count($date_events) - $events_per_day; ?>">+<?php echo count($date_events) - $events_per_day; ?>개 더보기</button>
-            <?php } ?>
+            <?php if ($hidden_event_count > 0) { ?>
+            <button type="button" class="wzc-more" data-more-count="<?php echo $hidden_event_count; ?>">+<?php echo $hidden_event_count; ?>개 더보기</button>
             <?php } ?>
         </section>
         <?php } ?>

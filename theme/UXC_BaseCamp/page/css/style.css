@@ -36,6 +36,77 @@ PAGE CONTENT
 .pageWrap .pageBody .pageContent a {color:var(--color-prime); text-decoration:none;}
 .pageWrap .pageBody .pageContent a:hover {text-decoration:underline;}
 
+/* 약관 및 개인정보 처리방침 */
+.policy-content .policy-table-wrap {width:100%; margin:14px 0; overflow-x:auto; border:1px solid var(--layout-gray-300); border-radius:var(--layout-radius-sm);}
+.policy-content .policy-table {width:100%; min-width:680px; border:0; border-collapse:collapse; table-layout:fixed;}
+.policy-content .policy-table caption {overflow:hidden; position:absolute; width:1px; height:1px; margin:-1px; clip:rect(0, 0, 0, 0);}
+.policy-content .policy-table th,
+.policy-content .policy-table td {padding:12px 14px; border-right:1px solid var(--layout-gray-200); border-bottom:1px solid var(--layout-gray-200); color:var(--layout-gray-800); font-size:13px; line-height:1.6; text-align:left; vertical-align:top; word-break:keep-all; overflow-wrap:anywhere;}
+.policy-content .policy-table thead th {background:var(--layout-gray-50); color:var(--layout-gray-900); font-weight:700;}
+.policy-content .policy-table tbody th {width:18%; background:var(--layout-gray-50); color:var(--layout-gray-900); font-weight:600;}
+.policy-content .policy-table th:last-child,
+.policy-content .policy-table td:last-child {border-right:0;}
+.policy-content .policy-table tr:last-child th,
+.policy-content .policy-table tr:last-child td {border-bottom:0;}
+.policy-content .policy-effective-date {margin-top:40px; padding-top:18px; border-top:1px solid var(--layout-gray-200); text-align:right;}
+
+@media (max-width: 720px) {
+    .pageWrap .pageBody .pageContent {padding:20px 16px;}
+    .policy-content .policy-table {min-width:620px;}
+    .policy-content .policy-table th,
+    .policy-content .policy-table td {padding:10px 12px; font-size:12px;}
+}
+
+/* GNU AI 소개 페이지 */
+.company-page .company-content {padding:42px 0 60px;}
+.company-page .company-hero {position:relative; display:grid; grid-template-columns:minmax(0, 1.35fr) minmax(270px, .65fr); gap:42px; min-height:390px; padding:56px; overflow:hidden; border:1px solid var(--layout-gray-200); border-radius:24px; background:linear-gradient(145deg, var(--ui-color-white) 0%, var(--layout-gray-50) 100%); box-shadow:0 20px 50px rgba(18, 25, 38, .07); box-sizing:border-box;}
+.company-page .company-hero:before {content:""; position:absolute; top:-140px; right:-110px; width:360px; height:360px; border-radius:50%; background:var(--color-prime); opacity:.08;}
+.company-page .company-hero:after {content:""; position:absolute; bottom:-170px; left:32%; width:320px; height:320px; border-radius:50%; border:70px solid var(--color-prime); opacity:.035;}
+.company-page .company-hero-copy {position:relative; z-index:2; align-self:center;}
+.company-page .company-eyebrow {display:inline-flex; align-items:center; gap:8px; margin:0 0 18px; padding:7px 12px; border-radius:999px; background:color-mix(in srgb, var(--color-prime) 10%, var(--ui-color-white)); color:var(--color-prime); font-size:11px; font-weight:700; letter-spacing:.12em; line-height:1;}
+.company-page .company-eyebrow .bx {font-size:17px;}
+.company-page .company-hero h3 {margin:0 0 22px; color:var(--layout-gray-900); font-size:34px; font-weight:750; line-height:1.34; letter-spacing:-.045em; word-break:keep-all;}
+.company-page .company-lead {max-width:590px; margin:0; color:var(--layout-gray-700); font-size:17px; line-height:1.85; word-break:keep-all;}
+.company-page .company-note {display:flex; align-items:center; gap:9px; margin:23px 0 0; color:var(--layout-gray-800); font-size:14px; font-weight:600;}
+.company-page .company-note:before {content:""; width:24px; height:2px; border-radius:2px; background:var(--color-prime);}
+.company-page .company-hero-visual {position:relative; z-index:1; min-height:275px; align-self:center;}
+.company-page .company-ai-mark {position:absolute; top:50%; left:50%; display:flex; align-items:center; justify-content:center; flex-direction:column; width:138px; height:138px; border:1px solid color-mix(in srgb, var(--color-prime) 30%, transparent); border-radius:34px; background:var(--color-prime); color:var(--ui-color-white-only); box-shadow:0 22px 40px color-mix(in srgb, var(--color-prime) 25%, transparent); transform:translate(-50%, -50%) rotate(-4deg);}
+.company-page .company-ai-mark .bx {font-size:45px; line-height:1;}
+.company-page .company-ai-mark strong {margin-top:7px; font-size:18px; letter-spacing:.12em;}
+.company-page .company-orbit {position:absolute; top:50%; left:50%; border:1px solid color-mix(in srgb, var(--color-prime) 22%, var(--layout-gray-200)); border-radius:50%; transform:translate(-50%, -50%);}
+.company-page .company-orbit-one {width:220px; height:220px;}
+.company-page .company-orbit-two {width:290px; height:290px; border-style:dashed; opacity:.7;}
+.company-page .company-float-icon {position:absolute; display:flex; align-items:center; justify-content:center; width:48px; height:48px; border:1px solid var(--layout-gray-200); border-radius:16px; background:var(--ui-color-white); color:var(--color-prime); box-shadow:0 12px 28px rgba(18, 25, 38, .11);}
+.company-page .company-float-icon .bx {font-size:25px;}
+.company-page .company-float-icon-one {top:9%; left:8%; transform:rotate(-8deg);}
+.company-page .company-float-icon-two {top:13%; right:2%; transform:rotate(7deg);}
+.company-page .company-float-icon-three {right:9%; bottom:5%; transform:rotate(-5deg);}
+.company-page .company-values {display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px; margin-top:18px;}
+.company-page .company-value-card {display:flex; align-items:center; gap:16px; min-height:108px; padding:21px 22px; border:1px solid var(--layout-gray-200); border-radius:16px; background:var(--ui-color-white); transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease; box-sizing:border-box;}
+.company-page .company-value-card:hover {border-color:color-mix(in srgb, var(--color-prime) 36%, var(--layout-gray-200)); box-shadow:0 12px 28px rgba(18, 25, 38, .06); transform:translateY(-2px);}
+.company-page .company-value-icon {display:flex; flex:0 0 44px; align-items:center; justify-content:center; width:44px; height:44px; border-radius:14px; background:color-mix(in srgb, var(--color-prime) 10%, var(--ui-color-white)); color:var(--color-prime);}
+.company-page .company-value-icon .bx {font-size:23px;}
+.company-page .company-value-card h4 {margin:0 0 5px; color:var(--layout-gray-900); font-size:15px; font-weight:700;}
+.company-page .company-value-card p {margin:0; color:var(--layout-gray-600); font-size:12px; line-height:1.55; word-break:keep-all;}
+
+@media (max-width: 860px) {
+    .company-page .company-content {padding:28px 20px 44px;}
+    .company-page .company-hero {grid-template-columns:1fr; gap:20px; padding:42px;}
+    .company-page .company-hero-visual {min-height:250px;}
+}
+
+@media (max-width: 640px) {
+    .company-page .company-content {padding:20px 16px 36px;}
+    .company-page .company-hero {gap:12px; min-height:0; padding:30px 24px; border-radius:18px;}
+    .company-page .company-hero h3 {font-size:27px;}
+    .company-page .company-lead {font-size:15px; line-height:1.75;}
+    .company-page .company-note {align-items:flex-start; font-size:13px; line-height:1.6;}
+    .company-page .company-note:before {margin-top:10px;}
+    .company-page .company-hero-visual {min-height:215px; transform:scale(.88);}
+    .company-page .company-values {grid-template-columns:1fr; gap:10px;}
+    .company-page .company-value-card {min-height:88px; padding:17px 18px;}
+}
+
 /* 이미지 스타일 */
 .pageWrap .pageBody .pageContent .img {display:flex; align-items:center; flex-direction:column; margin:25px 0;}
 

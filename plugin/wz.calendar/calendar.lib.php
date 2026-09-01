@@ -436,6 +436,97 @@ function wzc_events_by_date($mb_id, $events, $month_start, $month_end) {
     return $by_date;
 }
 
+/**
+ * Keep an event on the same visual lane while it crosses dates in a week.
+ *
+ * The calendar still renders one draggable event node per date, but the shared
+ * lane and segment flags let CSS join those nodes into a single continuous bar.
+ */
+function wzc_event_layout_by_date($events_by_date, $cells) {
+    $layout = array();
+    $cell_count = count($cells);
+
+    for ($week_offset = 0; $week_offset < $cell_count; $week_offset += 7) {
+        $week_cells = array_slice($cells, $week_offset, 7);
+        if (count($week_cells) < 7) break;
+
+        $week_start = $week_cells[0]['date'];
+        $week_end = $week_cells[6]['date'];
+        $week_events = array();
+
+        foreach ($week_cells as $cell) {
+            $date = $cell['date'];
+            $date_events = isset($events_by_date[$date]) ? $events_by_date[$date] : array();
+            foreach ($date_events as $position => $event) {
+                $event_id = (int)$event['we_ix'];
+                if (isset($week_events[$event_id])) continue;
+
+                $segment_start = max($event['we_start_date'], $week_start);
+                $segment_end = min($event['we_end_date'], $week_end);
+                $start_column = wzc_date_diff_days($week_start, $segment_start);
+                $end_column = wzc_date_diff_days($week_start, $segment_end);
+                $week_events[$event_id] = array(
+                    'event' => $event,
+                    'start_column' => $start_column,
+                    'end_column' => $end_column,
+                    'sort' => isset($event['_sort']) ? (int)$event['_sort'] : 100000,
+                    'position' => (int)$position
+                );
+            }
+        }
+
+        $week_events = array_values($week_events);
+        usort($week_events, function($a, $b) {
+            if ($a['sort'] !== $b['sort']) return $a['sort'] <=> $b['sort'];
+            if ($a['position'] !== $b['position']) return $a['position'] <=> $b['position'];
+            $a_span = $a['end_column'] - $a['start_column'];
+            $b_span = $b['end_column'] - $b['start_column'];
+            if ($a_span !== $b_span) return $b_span <=> $a_span;
+            if ($a['start_column'] !== $b['start_column']) return $a['start_column'] <=> $b['start_column'];
+            return (int)$a['event']['we_ix'] <=> (int)$b['event']['we_ix'];
+        });
+
+        $occupied = array();
+        foreach ($week_events as $item) {
+            $lane = 0;
+            while (true) {
+                $available = true;
+                for ($column = $item['start_column']; $column <= $item['end_column']; $column++) {
+                    if (!empty($occupied[$lane][$column])) {
+                        $available = false;
+                        break;
+                    }
+                }
+                if ($available) break;
+                $lane++;
+            }
+
+            for ($column = $item['start_column']; $column <= $item['end_column']; $column++) {
+                $occupied[$lane][$column] = true;
+                $date = $week_cells[$column]['date'];
+                $copy = $item['event'];
+                $copy['_display_date'] = $date;
+                $copy['_layout_lane'] = $lane;
+                $copy['_segment_start'] = $column === $item['start_column'];
+                $copy['_segment_end'] = $column === $item['end_column'];
+                $copy['_event_start'] = $date === $copy['we_start_date'];
+                $copy['_event_end'] = $date === $copy['we_end_date'];
+                $copy['_show_title'] = $column === $item['start_column'];
+                $layout[$date][] = $copy;
+            }
+        }
+    }
+
+    foreach ($layout as &$items) {
+        usort($items, function($a, $b) {
+            return (int)$a['_layout_lane'] <=> (int)$b['_layout_lane'];
+        });
+    }
+    unset($items);
+
+    return $layout;
+}
+
 function wzc_valid_event_ids_for_date($mb_id, $date) {
     global $g5;
     $mb = sql_escape_string($mb_id);
