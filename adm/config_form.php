@@ -462,7 +462,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
 }
 ?>
 
-<form name="fconfigform" id="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
+<form name="fconfigform" id="fconfigform" method="post" action="./config_form_update.php" onsubmit="return fconfigform_submit(this);">
     <input type="hidden" name="token" value="" id="token">
 
     <section id="anc_cf_basic">
@@ -1685,6 +1685,8 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     }
         
     function fconfigform_submit(f) {
+        f.action = "./config_form_update.php";
+
         var current_user_ip = "<?php echo $_SERVER['REMOTE_ADDR']; ?>";
         var cf_intercept_ip_val = f.cf_intercept_ip.value;
         
@@ -1711,7 +1713,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             }
         }
 
-        f.action = "./config_form_update.php";
         return true;
     }
     

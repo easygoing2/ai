@@ -1,6 +1,5 @@
 <?php
 include_once('./_common.php');
-include_once(G5_EDITOR_LIB);
 
 if($w != '' && $w != 'u' && $w != 'r') {
     alert('올바른 방법으로 이용해 주십시오.');
@@ -13,6 +12,17 @@ if($is_guest)
     alert('회원이시라면 로그인 후 이용해 보십시오.', './login.php?url='.urlencode(G5_BBS_URL.'/qalist.php'));
 
 $qaconfig = get_qa_config();
+
+$qa_editor_lib = G5_EDITOR_LIB;
+if (!empty($qaconfig['qa_select_editor']) && preg_match('/^[a-zA-Z0-9_-]+$/', $qaconfig['qa_select_editor'])) {
+    $selected_editor_lib = G5_EDITOR_PATH . '/' . $qaconfig['qa_select_editor'] . '/editor.lib.php';
+    if (is_file($selected_editor_lib)) {
+        $config['cf_editor'] = $qaconfig['qa_select_editor'];
+        $qa_editor_lib = $selected_editor_lib;
+    }
+}
+include_once($qa_editor_lib);
+
 $token = _token();
 set_session('ss_qa_write_token', $token);
 

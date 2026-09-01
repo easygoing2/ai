@@ -167,6 +167,8 @@ QA 게시판 스킨 스타일
 
 /* 에디터 영역 조정 */
 .qaWriteWrap .boardWrite .boardWriteBody .writeBox .item textarea {min-height:200px; resize:vertical;}
+.qaWriteWrap .boardWrite .boardWriteBody .writeBox .item textarea.smarteditor2 {display:none;}
+.qaWriteWrap .toastui-editor-defaultUI {border-radius:8px; overflow:hidden;}
 
 /* 반응형 디자인 */
 @media (max-width:768px) {

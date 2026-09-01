@@ -2,6 +2,35 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
+if (isset($config['cf_editor']) && $config['cf_editor'] === 'uxc_toastuieditor') {
+    include_once(G5_PLUGIN_PATH.'/editor/uxc_toastuieditor/board_common.php');
+}
+
+if (!function_exists('uxc_qa_editor_content')) {
+    function uxc_qa_editor_content($raw_content, $converted_content)
+    {
+        $markdown_marker = '<!--TOASTUI_EDITOR_MARKDOWN-->';
+        $html_marker = '<!--TOASTUI_EDITOR_HTML-->';
+
+        if (strpos($raw_content, $markdown_marker) === 0) {
+            $markdown = ltrim(substr($raw_content, strlen($markdown_marker)), "\r\n");
+
+            return '<div class="content qa-markdown-content" style="opacity:0">'
+                . '<textarea class="qa-markdown-source" style="display:none">' . htmlspecialchars($markdown, ENT_QUOTES, 'UTF-8') . '</textarea>'
+                . '<div class="qa-markdown-viewer toastui-editor-contents"></div>'
+                . '</div>';
+        }
+
+        if (strpos($raw_content, $html_marker) === 0) {
+            $html = ltrim(substr($raw_content, strlen($html_marker)), "\r\n");
+
+            return '<div class="content">' . get_view_thumbnail(conv_content($html, 1)) . '</div>';
+        }
+
+        return '<div class="content">' . get_view_thumbnail($converted_content) . '</div>';
+    }
+}
+
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 ?>
@@ -108,9 +137,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
                 <div class="viewContText">
                     <!-- content  -->
-                     <div class="content">
-                         <?php echo get_view_thumbnail($view['content']); ?>
-                     </div>
+                    <?php echo uxc_qa_editor_content($view['qa_content'], $view['content']); ?>
                 </div>
                 
             </div>
@@ -191,6 +218,46 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     
 
 </div>
+
+<?php if (isset($config['cf_editor']) && $config['cf_editor'] === 'uxc_toastuieditor') { ?>
+<script>
+(function() {
+    function renderQaMarkdown(attempt) {
+        if (!window.toastui || !window.toastui.Editor) {
+            if (attempt < 100) {
+                window.setTimeout(function() { renderQaMarkdown(attempt + 1); }, 50);
+            }
+            return;
+        }
+
+        document.querySelectorAll('.qa-markdown-content').forEach(function(container) {
+            if (container.dataset.rendered === 'true') return;
+
+            var source = container.querySelector('.qa-markdown-source');
+            var viewer = container.querySelector('.qa-markdown-viewer');
+            if (!source || !viewer) return;
+
+            new toastui.Editor({
+                el: viewer,
+                viewer: true,
+                initialValue: source.value,
+                usageStatistics: false
+            });
+
+            container.dataset.rendered = 'true';
+            container.style.opacity = '1';
+            if (document.documentElement.classList.contains('darkMode')) {
+                container.classList.add('toastui-editor-dark');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        renderQaMarkdown(0);
+    });
+})();
+</script>
+<?php } ?>
 
 <script>
 $(function() {

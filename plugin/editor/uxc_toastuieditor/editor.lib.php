@@ -37,8 +37,8 @@ function editor_html($id, $content, $is_dhtml_editor=true)
     }
     
     // 수정 모드에서 HTML 엔티티 디코드
-    if ($w == 'u' && $id == 'wr_content') {
-        if (strpos($content, '&lt;') !== false) {
+    if (in_array($id, array('wr_content', 'qa_content'), true)) {
+        if ($w == 'u' && strpos($content, '&lt;') !== false) {
             // HTML 엔티티가 있는 경우 디코드
             $content = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         }

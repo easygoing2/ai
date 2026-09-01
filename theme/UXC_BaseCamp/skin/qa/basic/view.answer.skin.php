@@ -46,9 +46,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             ?>
 
             <div class="viewContText">
-                <div class="content">
-                    <?php echo get_view_thumbnail(conv_content($answer['qa_content'], $answer['qa_html'])); ?>
-                </div>
+                <?php echo uxc_qa_editor_content($answer['qa_content'], conv_content($answer['qa_content'], $answer['qa_html'])); ?>
             </div>
 
             <?php if(isset($answer['download_count']) && $answer['download_count']) { ?>
