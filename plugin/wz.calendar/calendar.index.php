@@ -241,12 +241,82 @@ $render_event = function($event) use ($events_per_day) {
         <input type="date" name="end_date" id="wzcEndDate" required>
       </div>
       <div class="wzc-field wzc-time-field">
-        <label for="wzcStartTime">시작 시간</label>
-        <input type="time" name="start_time" id="wzcStartTime">
+        <label for="wzcStartTimeTrigger">시작 시간</label>
+        <div class="wzc-time-picker" data-time-picker>
+          <input type="hidden" name="start_time" id="wzcStartTime">
+          <button type="button" class="wzc-time-trigger is-empty" id="wzcStartTimeTrigger" data-time-trigger
+            aria-haspopup="dialog" aria-expanded="false">
+            <span data-time-display>시간 선택</span><i class="bx bx-time-five" aria-hidden="true"></i>
+          </button>
+          <div class="wzc-time-panel" data-time-panel role="dialog" aria-label="시작 시간 선택" hidden>
+            <div class="wzc-time-panel-head"><strong>시간 선택</strong><span>오전·오후</span></div>
+            <div class="wzc-time-period" role="group" aria-label="오전 또는 오후">
+              <button type="button" data-time-period="am">오전</button>
+              <button type="button" data-time-period="pm">오후</button>
+            </div>
+            <div class="wzc-time-controls">
+              <div class="wzc-time-unit">
+                <span>시</span>
+                <button type="button" data-time-adjust="hour" data-time-delta="1" aria-label="한 시간 증가"><i class="bx bx-chevron-up"></i></button>
+                <input type="text" inputmode="numeric" maxlength="2" value="12" data-time-hour aria-label="시">
+                <button type="button" data-time-adjust="hour" data-time-delta="-1" aria-label="한 시간 감소"><i class="bx bx-chevron-down"></i></button>
+              </div>
+              <b class="wzc-time-colon" aria-hidden="true">:</b>
+              <div class="wzc-time-unit">
+                <span>분</span>
+                <button type="button" data-time-adjust="minute" data-time-delta="5" aria-label="5분 증가"><i class="bx bx-chevron-up"></i></button>
+                <input type="text" inputmode="numeric" maxlength="2" value="00" data-time-minute aria-label="분">
+                <button type="button" data-time-adjust="minute" data-time-delta="-5" aria-label="5분 감소"><i class="bx bx-chevron-down"></i></button>
+              </div>
+            </div>
+            <div class="wzc-time-panel-actions">
+              <button type="button" class="wzc-time-text-button" data-time-now>현재 시간</button>
+              <button type="button" class="wzc-time-text-button" data-time-clear>초기화</button>
+              <span></span>
+              <button type="button" class="wzc-btn wzc-btn-ghost wzc-btn-small" data-time-cancel>취소</button>
+              <button type="button" class="wzc-btn wzc-btn-primary wzc-btn-small" data-time-apply>확인</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="wzc-field wzc-time-field">
-        <label for="wzcEndTime">종료 시간</label>
-        <input type="time" name="end_time" id="wzcEndTime">
+        <label for="wzcEndTimeTrigger">종료 시간</label>
+        <div class="wzc-time-picker" data-time-picker>
+          <input type="hidden" name="end_time" id="wzcEndTime">
+          <button type="button" class="wzc-time-trigger is-empty" id="wzcEndTimeTrigger" data-time-trigger
+            aria-haspopup="dialog" aria-expanded="false">
+            <span data-time-display>시간 선택</span><i class="bx bx-time-five" aria-hidden="true"></i>
+          </button>
+          <div class="wzc-time-panel" data-time-panel role="dialog" aria-label="종료 시간 선택" hidden>
+            <div class="wzc-time-panel-head"><strong>시간 선택</strong><span>오전·오후</span></div>
+            <div class="wzc-time-period" role="group" aria-label="오전 또는 오후">
+              <button type="button" data-time-period="am">오전</button>
+              <button type="button" data-time-period="pm">오후</button>
+            </div>
+            <div class="wzc-time-controls">
+              <div class="wzc-time-unit">
+                <span>시</span>
+                <button type="button" data-time-adjust="hour" data-time-delta="1" aria-label="한 시간 증가"><i class="bx bx-chevron-up"></i></button>
+                <input type="text" inputmode="numeric" maxlength="2" value="12" data-time-hour aria-label="시">
+                <button type="button" data-time-adjust="hour" data-time-delta="-1" aria-label="한 시간 감소"><i class="bx bx-chevron-down"></i></button>
+              </div>
+              <b class="wzc-time-colon" aria-hidden="true">:</b>
+              <div class="wzc-time-unit">
+                <span>분</span>
+                <button type="button" data-time-adjust="minute" data-time-delta="5" aria-label="5분 증가"><i class="bx bx-chevron-up"></i></button>
+                <input type="text" inputmode="numeric" maxlength="2" value="00" data-time-minute aria-label="분">
+                <button type="button" data-time-adjust="minute" data-time-delta="-5" aria-label="5분 감소"><i class="bx bx-chevron-down"></i></button>
+              </div>
+            </div>
+            <div class="wzc-time-panel-actions">
+              <button type="button" class="wzc-time-text-button" data-time-now>현재 시간</button>
+              <button type="button" class="wzc-time-text-button" data-time-clear>초기화</button>
+              <span></span>
+              <button type="button" class="wzc-btn wzc-btn-ghost wzc-btn-small" data-time-cancel>취소</button>
+              <button type="button" class="wzc-btn wzc-btn-primary wzc-btn-small" data-time-apply>확인</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="wzc-field wzc-field-full wzc-location-field">
         <label for="wzcLocation">장소</label>

@@ -28,6 +28,7 @@
         var orderActions = document.getElementById('wzcOrderActions');
         var toast = document.getElementById('wzcToast');
         var toastTimer = null;
+        var timePickers = Array.prototype.slice.call(eventForm.querySelectorAll('[data-time-picker]'));
 
         function api(path, payload) {
             payload = payload || {};
@@ -76,6 +77,154 @@
 
         if (toast) toast.querySelector('.wzc-toast-close').addEventListener('click', hideToast);
 
+        function padTime(value) {
+            return String(value).padStart(2, '0');
+        }
+
+        function timeParts(value) {
+            var match = /^(\d{2}):(\d{2})$/.exec(value || '');
+            var now = new Date();
+            var hour24 = match ? Math.max(0, Math.min(23, Number(match[1]))) : now.getHours();
+            var minute = match ? Math.max(0, Math.min(59, Number(match[2]))) : now.getMinutes();
+            return {
+                period: hour24 >= 12 ? 'pm' : 'am',
+                hour: hour24 % 12 || 12,
+                minute: minute
+            };
+        }
+
+        function updateTimePeriod(picker, period) {
+            picker.dataset.period = period === 'pm' ? 'pm' : 'am';
+            picker.querySelectorAll('[data-time-period]').forEach(function (button) {
+                var active = button.getAttribute('data-time-period') === picker.dataset.period;
+                button.classList.toggle('is-active', active);
+                button.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+        }
+
+        function setTimeDraft(picker, parts) {
+            updateTimePeriod(picker, parts.period);
+            picker.querySelector('[data-time-hour]').value = padTime(parts.hour);
+            picker.querySelector('[data-time-minute]').value = padTime(parts.minute);
+        }
+
+        function syncTimePicker(picker) {
+            var input = picker.querySelector('input[type="hidden"]');
+            var trigger = picker.querySelector('[data-time-trigger]');
+            var display = picker.querySelector('[data-time-display]');
+            var value = input.value || '';
+            if (!value) {
+                display.textContent = '시간 선택';
+                trigger.classList.add('is-empty');
+                return;
+            }
+            var parts = timeParts(value);
+            display.textContent = (parts.period === 'pm' ? '오후 ' : '오전 ') + padTime(parts.hour) + ':' + padTime(parts.minute);
+            trigger.classList.remove('is-empty');
+        }
+
+        function syncTimePickers() {
+            timePickers.forEach(syncTimePicker);
+        }
+
+        function closeTimePicker(picker) {
+            var panel = picker.querySelector('[data-time-panel]');
+            panel.hidden = true;
+            picker.querySelector('[data-time-trigger]').setAttribute('aria-expanded', 'false');
+            picker.classList.remove('is-open');
+        }
+
+        function closeTimePickers(except) {
+            timePickers.forEach(function (picker) {
+                if (picker !== except) closeTimePicker(picker);
+            });
+        }
+
+        function normalizeTimeNumber(input, min, max) {
+            var value = parseInt(String(input.value).replace(/\D/g, ''), 10);
+            if (!Number.isFinite(value)) value = min;
+            value = Math.max(min, Math.min(max, value));
+            input.value = padTime(value);
+            return value;
+        }
+
+        timePickers.forEach(function (picker) {
+            var input = picker.querySelector('input[type="hidden"]');
+            var trigger = picker.querySelector('[data-time-trigger]');
+            var panel = picker.querySelector('[data-time-panel]');
+            var hourInput = picker.querySelector('[data-time-hour]');
+            var minuteInput = picker.querySelector('[data-time-minute]');
+
+            trigger.addEventListener('click', function () {
+                var opening = panel.hidden;
+                closeTimePickers(opening ? picker : null);
+                if (!opening) return;
+                setTimeDraft(picker, timeParts(input.value));
+                panel.hidden = false;
+                trigger.setAttribute('aria-expanded', 'true');
+                picker.classList.add('is-open');
+                window.setTimeout(function () { hourInput.focus(); }, 20);
+            });
+
+            picker.querySelectorAll('[data-time-period]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    updateTimePeriod(picker, button.getAttribute('data-time-period'));
+                });
+            });
+
+            picker.querySelectorAll('[data-time-adjust]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var isHour = button.getAttribute('data-time-adjust') === 'hour';
+                    var target = isHour ? hourInput : minuteInput;
+                    var min = isHour ? 1 : 0;
+                    var max = isHour ? 12 : 59;
+                    var range = max - min + 1;
+                    var current = normalizeTimeNumber(target, min, max);
+                    var delta = Number(button.getAttribute('data-time-delta')) || 0;
+                    target.value = padTime(((current - min + delta) % range + range) % range + min);
+                });
+            });
+
+            [hourInput, minuteInput].forEach(function (field) {
+                field.addEventListener('input', function () {
+                    field.value = field.value.replace(/\D/g, '').slice(0, 2);
+                });
+                field.addEventListener('blur', function () {
+                    normalizeTimeNumber(field, field === hourInput ? 1 : 0, field === hourInput ? 12 : 59);
+                });
+            });
+
+            picker.querySelector('[data-time-now]').addEventListener('click', function () {
+                var now = new Date();
+                setTimeDraft(picker, timeParts(padTime(now.getHours()) + ':' + padTime(now.getMinutes())));
+            });
+
+            picker.querySelector('[data-time-clear]').addEventListener('click', function () {
+                input.value = '';
+                syncTimePicker(picker);
+                closeTimePicker(picker);
+                trigger.focus();
+            });
+
+            picker.querySelector('[data-time-cancel]').addEventListener('click', function () {
+                closeTimePicker(picker);
+                trigger.focus();
+            });
+
+            picker.querySelector('[data-time-apply]').addEventListener('click', function () {
+                var hour12 = normalizeTimeNumber(hourInput, 1, 12);
+                var minute = normalizeTimeNumber(minuteInput, 0, 59);
+                var hour24 = hour12 % 12 + (picker.dataset.period === 'pm' ? 12 : 0);
+                input.value = padTime(hour24) + ':' + padTime(minute);
+                input.dispatchEvent(new Event('change', {bubbles: true}));
+                syncTimePicker(picker);
+                closeTimePicker(picker);
+                trigger.focus();
+            });
+        });
+
+        syncTimePickers();
+
         function openModal(modal) {
             if (!modal) return;
             modal.classList.add('is-open');
@@ -89,6 +238,7 @@
 
         function closeModal(modal) {
             if (!modal) return;
+            closeTimePickers();
             modal.classList.remove('is-open');
             modal.setAttribute('aria-hidden', 'true');
             if (!document.querySelector('.wzc-modal.is-open')) document.body.classList.remove('wzc-modal-open');
@@ -98,13 +248,26 @@
             button.addEventListener('click', function () { closeModal(button.closest('.wzc-modal')); });
         });
         document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') document.querySelectorAll('.wzc-modal.is-open').forEach(closeModal);
+            if (event.key !== 'Escape') return;
+            var openTimePicker = eventForm.querySelector('.wzc-time-picker.is-open');
+            if (openTimePicker) {
+                closeTimePicker(openTimePicker);
+                openTimePicker.querySelector('[data-time-trigger]').focus();
+                return;
+            }
+            document.querySelectorAll('.wzc-modal.is-open').forEach(closeModal);
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('[data-time-picker]')) closeTimePickers();
         });
 
         function setTimeFields() {
             var allDay = eventForm.elements.all_day.checked;
             eventForm.querySelectorAll('.wzc-time-field input').forEach(function (input) { input.disabled = allDay; });
+            eventForm.querySelectorAll('[data-time-trigger]').forEach(function (button) { button.disabled = allDay; });
             eventForm.querySelectorAll('.wzc-time-field').forEach(function (field) { field.style.opacity = allDay ? '.45' : '1'; });
+            if (allDay) closeTimePickers();
         }
 
         function setYoutubeFormMode(enabled) {
@@ -126,6 +289,7 @@
             eventModal.querySelector('#wzcEventModalTitle').textContent = '일정 추가';
             activeDisplayDate = date || config.selectedDay;
             setYoutubeFormMode(false);
+            syncTimePickers();
             setTimeFields();
         }
 
@@ -151,6 +315,7 @@
                 : '일정 상세 및 수정';
             activeDisplayDate = displayDate || eventData.start_date;
             setYoutubeFormMode(isYoutubeWatch);
+            syncTimePickers();
             setTimeFields();
         }
 
