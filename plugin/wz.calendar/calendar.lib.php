@@ -564,6 +564,80 @@ function wzc_save_date_order($mb_id, $date, $submitted_ids) {
     return true;
 }
 
+/**
+ * Create a member-owned event without producing an HTTP response.
+ *
+ * This is used by trusted internal integrations such as the YouTube watch
+ * tracker. The caller may already have an open transaction, so this function
+ * deliberately does not start, commit, or roll back one.
+ */
+function wzc_create_member_event($mb_id, $data, $source = array()) {
+    global $g5;
+    if (!$mb_id || !wzc_schema_installed()) return array('success' => false, 'code' => 'NOT_INSTALLED');
+    $calendar_config = wzc_get_config();
+    if (empty($calendar_config['wcf_use'])) return array('success' => false, 'code' => 'CALENDAR_DISABLED');
+
+    $title = wzc_plain_text(isset($data['title']) ? $data['title'] : '', 255);
+    $content = trim((string)(isset($data['content']) ? $data['content'] : ''));
+    $location = wzc_plain_text(isset($data['location']) ? $data['location'] : '', 255);
+    $category_id = isset($data['category_id']) ? (int)$data['category_id'] : 0;
+    $start_date = isset($data['start_date']) ? (string)$data['start_date'] : '';
+    $end_date = isset($data['end_date']) ? (string)$data['end_date'] : $start_date;
+    $all_day = !empty($data['all_day']) ? 1 : 0;
+    $start_time = isset($data['start_time']) ? substr((string)$data['start_time'], 0, 5) : '';
+    $end_time = isset($data['end_time']) ? substr((string)$data['end_time'], 0, 5) : '';
+    $link_url = wzc_clean_url(isset($data['link_url']) ? $data['link_url'] : '');
+
+    if ($title === '') return array('success' => false, 'code' => 'INVALID_TITLE');
+    if (mb_strlen($content, 'UTF-8') > 60000) return array('success' => false, 'code' => 'INVALID_CONTENT');
+    if (!wzc_valid_date($start_date) || !wzc_valid_date($end_date) || $start_date > $end_date) return array('success' => false, 'code' => 'INVALID_DATE');
+    if ((int)substr($start_date, 0, 4) < 1970 || (int)substr($end_date, 0, 4) > 2100) return array('success' => false, 'code' => 'INVALID_DATE');
+    if (wzc_event_day_count($start_date, $end_date) > 366) return array('success' => false, 'code' => 'INVALID_RANGE');
+    if (!$all_day && (!wzc_valid_time($start_time) || !wzc_valid_time($end_time))) return array('success' => false, 'code' => 'INVALID_TIME');
+    if (!$all_day && $start_date === $end_date && $start_time && $end_time && $start_time > $end_time) return array('success' => false, 'code' => 'INVALID_TIME');
+    if ($link_url === false) return array('success' => false, 'code' => 'INVALID_LINK');
+    if (!wzc_category_owned($mb_id, $category_id)) return array('success' => false, 'code' => 'INVALID_CATEGORY');
+
+    $mb_sql = sql_escape_string($mb_id);
+    $count = sql_fetch("SELECT COUNT(*) AS cnt FROM `{$g5['wzc_event_table']}` WHERE mb_id='{$mb_sql}' AND we_deleted_at IS NULL", false);
+    if ((int)$count['cnt'] >= (int)$calendar_config['wcf_max_events']) return array('success' => false, 'code' => 'MAX_EVENTS');
+
+    $title_sql = sql_escape_string($title);
+    $content_sql = sql_escape_string($content);
+    $location_sql = sql_escape_string($location);
+    $link_sql = sql_escape_string((string)$link_url);
+    $start_sql = sql_escape_string($start_date);
+    $end_sql = sql_escape_string($end_date);
+    $category_sql = $category_id ? (string)$category_id : 'NULL';
+    $start_time_sql = (!$all_day && $start_time) ? "'".sql_escape_string($start_time).":00'" : 'NULL';
+    $end_time_sql = (!$all_day && $end_time) ? "'".sql_escape_string($end_time).":00'" : 'NULL';
+
+    $insert = "INSERT INTO `{$g5['wzc_event_table']}` SET
+        mb_id='{$mb_sql}', wc_ix={$category_sql}, we_title='{$title_sql}', we_content='{$content_sql}',
+        we_start_date='{$start_sql}', we_end_date='{$end_sql}', we_all_day={$all_day},
+        we_start_time={$start_time_sql}, we_end_time={$end_time_sql}, we_location='{$location_sql}',
+        we_link_url='{$link_sql}', we_version=1, we_created_at=NOW(), we_updated_at=NOW()";
+    if (!sql_query($insert, false)) return array('success' => false, 'code' => 'INSERT_FAILED');
+    $event_id = (int)sql_insert_id();
+
+    for ($date = $start_date; $date <= $end_date; $date = wzc_date_add($date, 1)) {
+        $ordered_ids = wzc_valid_event_ids_for_date($mb_id, $date);
+        if (!wzc_save_date_order($mb_id, $date, $ordered_ids)) {
+            sql_query("DELETE FROM `{$g5['wzc_event_order_table']}` WHERE mb_id='{$mb_sql}' AND we_ix={$event_id}", false);
+            sql_query("DELETE FROM `{$g5['wzc_event_table']}` WHERE mb_id='{$mb_sql}' AND we_ix={$event_id}", false);
+            return array('success' => false, 'code' => 'ORDER_FAILED');
+        }
+    }
+
+    return array(
+        'success' => true,
+        'code' => 'CREATED',
+        'event_id' => $event_id,
+        'source_type' => isset($source['source_type']) ? (string)$source['source_type'] : '',
+        'source_id' => isset($source['source_id']) ? (int)$source['source_id'] : 0
+    );
+}
+
 function wzc_event_public_data($event) {
     return array(
         'id' => (int)$event['we_ix'],

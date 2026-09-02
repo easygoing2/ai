@@ -205,15 +205,17 @@ if (!function_exists('get_recent_comment_profiles')) {
                     <?php 
                     // 유튜브 영상 처리
                     if ($list[$i]['wr_10']) {
-                        function extractYouTubeID($url) {
-                            preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^\&\?\/]+)/', $url, $matches);
-                            return $matches[1] ?? '';
+                        if (!function_exists('extractYouTubeID')) {
+                            function extractYouTubeID($url) {
+                                preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^\&\?\/]+)/', $url, $matches);
+                                return $matches[1] ?? '';
+                            }
                         }
                         $youtube_id = extractYouTubeID($list[$i]['wr_10']);
                         
                         if ($youtube_id) {
                     ?>
-                    <div class="blog-youtube">
+                    <div class="blog-youtube" data-wzy-bo-table="<?php echo htmlspecialchars($bo_table, ENT_QUOTES, 'UTF-8'); ?>" data-wzy-wr-id="<?php echo (int)$list[$i]['wr_id']; ?>" data-wzy-video-id="<?php echo htmlspecialchars($youtube_id, ENT_QUOTES, 'UTF-8'); ?>">
                         <iframe width="100%" height="400" src="https://www.youtube.com/embed/<?php echo $youtube_id; ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <?php 

@@ -83,6 +83,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/css/style.css">
             ?>
             <?php
                 for ($i=0; $i<count($list); $i++) {
+                    $youtube_id = !empty($list[$i]['wr_10']) ? extractYouTubeID($list[$i]['wr_10']) : '';
                     $thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], 640, 360, false, true);
                     if($thumb['src']) {
                         // 1순위: 첨부파일 썸네일
@@ -150,7 +151,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/css/style.css">
 
             ?>
 
-            <div class="cardBox bg-wh padding-s round-m <?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php if ($wr_id == $list[$i]['wr_id']) echo "active"; ?>">
+            <div class="cardBox bg-wh padding-s round-m <?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php if ($wr_id == $list[$i]['wr_id']) echo "active"; ?>"<?php if (!empty($youtube_id)) { ?> data-wzy-bo-table="<?php echo htmlspecialchars($bo_table, ENT_QUOTES, 'UTF-8'); ?>" data-wzy-wr-id="<?php echo (int)$list[$i]['wr_id']; ?>" data-wzy-video-id="<?php echo htmlspecialchars($youtube_id, ENT_QUOTES, 'UTF-8'); ?>" data-wzy-mode="badge"<?php } ?>>
                 <!-- checkBox -->
                 <?php if ($is_checkbox) { ?>
                 <div class="checkBox">

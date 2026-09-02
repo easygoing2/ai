@@ -41,6 +41,7 @@ if (!$event_id) {
 $old_event = $event_id ? wzc_event_for_member($mb_id, $event_id) : null;
 if ($event_id && !$old_event) wzc_json_response(false, array('message' => '일정을 찾을 수 없습니다.', 'code' => 'NOT_FOUND'), 404);
 if ($event_id && $version !== (int)$old_event['we_version']) wzc_json_response(false, array('message' => '다른 기기에서 일정이 변경되었습니다. 새로고침 후 다시 시도해 주세요.', 'code' => 'VERSION_CONFLICT'), 409);
+$creating = !$event_id;
 
 $mb_sql = sql_escape_string($mb_id);
 $title_sql = sql_escape_string($title);
@@ -67,35 +68,49 @@ if ($event_id) {
         wzc_json_response(false, array('message' => '일정 저장 중 충돌이 발생했습니다.', 'code' => 'VERSION_CONFLICT'), 409);
     }
 } else {
-    $sql = "INSERT INTO `{$g5['wzc_event_table']}` SET
-        mb_id='{$mb_sql}', wc_ix={$category_sql}, we_title='{$title_sql}', we_content='{$content_sql}',
-        we_start_date='{$start_sql}', we_end_date='{$end_sql}', we_all_day={$all_day},
-        we_start_time={$start_time_sql}, we_end_time={$end_time_sql},
-        we_location='{$location_sql}', we_link_url='{$link_sql}', we_version=1,
-        we_created_at=NOW(), we_updated_at=NOW()";
-    if (!sql_query($sql, false)) {
+    $created = wzc_create_member_event($mb_id, array(
+        'title' => $title,
+        'content' => $content,
+        'location' => $location,
+        'category_id' => $category_id,
+        'start_date' => $start_date,
+        'end_date' => $end_date,
+        'all_day' => $all_day,
+        'start_time' => $start_time,
+        'end_time' => $end_time,
+        'link_url' => $link_url
+    ));
+    if (empty($created['success'])) {
         sql_query('ROLLBACK', false);
+        if (isset($created['code']) && $created['code'] === 'MAX_EVENTS') {
+            wzc_json_response(false, array('message' => '등록할 수 있는 개인 일정 개수를 초과했습니다.', 'code' => 'MAX_EVENTS'), 409);
+        }
         wzc_json_response(false, array('message' => '일정을 저장하지 못했습니다.'), 500);
     }
-    $event_id = (int)sql_insert_id();
+    $event_id = (int)$created['event_id'];
 }
 
-$dates_to_sort = array();
-if ($old_event) for ($date = $old_event['we_start_date']; $date <= $old_event['we_end_date']; $date = wzc_date_add($date, 1)) $dates_to_sort[$date] = true;
-for ($date = $start_date; $date <= $end_date; $date = wzc_date_add($date, 1)) $dates_to_sort[$date] = true;
-$date_orders = array();
-foreach (array_keys($dates_to_sort) as $date) $date_orders[$date] = wzc_valid_event_ids_for_date($mb_id, $date);
-if (!sql_query("DELETE FROM `{$g5['wzc_event_order_table']}` WHERE mb_id='{$mb_sql}' AND we_ix={$event_id}", false)) {
-    sql_query('ROLLBACK', false);
-    wzc_json_response(false, array('message' => '일정 순서를 저장하지 못했습니다.'), 500);
-}
-foreach (array_keys($dates_to_sort) as $date) {
-    if (!wzc_save_date_order($mb_id, $date, $date_orders[$date])) {
+if (!$creating) {
+    $dates_to_sort = array();
+    if ($old_event) for ($date = $old_event['we_start_date']; $date <= $old_event['we_end_date']; $date = wzc_date_add($date, 1)) $dates_to_sort[$date] = true;
+    for ($date = $start_date; $date <= $end_date; $date = wzc_date_add($date, 1)) $dates_to_sort[$date] = true;
+    $date_orders = array();
+    foreach (array_keys($dates_to_sort) as $date) $date_orders[$date] = wzc_valid_event_ids_for_date($mb_id, $date);
+    if (!sql_query("DELETE FROM `{$g5['wzc_event_order_table']}` WHERE mb_id='{$mb_sql}' AND we_ix={$event_id}", false)) {
         sql_query('ROLLBACK', false);
         wzc_json_response(false, array('message' => '일정 순서를 저장하지 못했습니다.'), 500);
     }
+    foreach (array_keys($dates_to_sort) as $date) {
+        if (!wzc_save_date_order($mb_id, $date, $date_orders[$date])) {
+            sql_query('ROLLBACK', false);
+            wzc_json_response(false, array('message' => '일정 순서를 저장하지 못했습니다.'), 500);
+        }
+    }
 }
-sql_query('COMMIT', false);
+if (!sql_query('COMMIT', false)) {
+    sql_query('ROLLBACK', false);
+    wzc_json_response(false, array('message' => '일정 저장을 완료하지 못했습니다.'), 500);
+}
 
 $saved = wzc_event_for_member($mb_id, $event_id);
 wzc_json_response(true, array('message' => '일정을 저장했습니다.', 'event' => wzc_event_public_data($saved)));

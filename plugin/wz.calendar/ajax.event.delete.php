@@ -22,5 +22,9 @@ if (!$ok || mysqli_affected_rows($GLOBALS['connect_db']) !== 1) {
 }
 sql_query("DELETE FROM `{$g5['wzc_event_order_table']}` WHERE mb_id='{$mb_sql}' AND we_ix={$event_id}", false);
 for ($date = $event['we_start_date']; $date <= $event['we_end_date']; $date = wzc_date_add($date, 1)) wzc_save_date_order($mb_id, $date, array());
-sql_query('COMMIT', false);
+run_event('wzc_event_deleted', $mb_id, $event_id);
+if (!sql_query('COMMIT', false)) {
+    sql_query('ROLLBACK', false);
+    wzc_json_response(false, array('message' => '일정 삭제를 완료하지 못했습니다.'), 500);
+}
 wzc_json_response(true, array('message' => '일정을 휴지통으로 이동했습니다.'));
