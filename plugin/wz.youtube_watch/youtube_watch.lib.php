@@ -322,7 +322,7 @@ function wzy_watch_public_data($row, $include_ranges = false) {
 
 function wzy_calendar_event_title($subject, $percent, $completed = false) {
     $subject = wzy_plain_subject($subject);
-    $prefix = $completed ? '[시청완료] ' : '['.max(0, min(100, (int)$percent)).'% 시청] ';
+    $prefix = $completed ? '[시청완료] ' : '['.max(0, min(100, (int)$percent)).'%] ';
     return $prefix.$subject;
 }
 

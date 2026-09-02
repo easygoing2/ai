@@ -1,4 +1,5 @@
-.wzc-calendar {
+.wzc-calendar,
+.wzc-modal {
     --wzc-primary: var(--color-prime, #6f48ff);
     --wzc-primary-soft: color-mix(in srgb, var(--wzc-primary) 10%, transparent);
     --wzc-text: var(--ui-color-gray-900, #111827);
@@ -6,6 +7,9 @@
     --wzc-line: var(--ui-color-gray-200, #e5e7eb);
     --wzc-soft: var(--ui-color-gray-50, #f8fafc);
     --wzc-surface: var(--ui-color-white, #fff);
+}
+
+.wzc-calendar {
     margin: 8px 0 48px;
     color: var(--wzc-text);
     font-size: 14px;
@@ -703,6 +707,10 @@
     flex-direction: column;
     min-width: 0;
     gap: 7px;
+}
+
+.wzc-field[hidden] {
+    display: none;
 }
 
 .wzc-field-full {

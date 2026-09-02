@@ -107,6 +107,12 @@
             eventForm.querySelectorAll('.wzc-time-field').forEach(function (field) { field.style.opacity = allDay ? '.45' : '1'; });
         }
 
+        function setYoutubeFormMode(enabled) {
+            eventForm.querySelectorAll('.wzc-time-field, .wzc-location-field').forEach(function (field) {
+                field.hidden = enabled;
+            });
+        }
+
         function resetEventForm(date) {
             eventForm.reset();
             eventForm.elements.event_id.value = '0';
@@ -119,6 +125,7 @@
             orderActions.hidden = true;
             eventModal.querySelector('#wzcEventModalTitle').textContent = '일정 추가';
             activeDisplayDate = date || config.selectedDay;
+            setYoutubeFormMode(false);
             setTimeFields();
         }
 
@@ -138,8 +145,12 @@
             eventForm.elements.link_url.value = eventData.link_url || '';
             deleteButton.hidden = false;
             orderActions.hidden = false;
-            eventModal.querySelector('#wzcEventModalTitle').textContent = '일정 상세 및 수정';
+            var isYoutubeWatch = eventData.source_type === 'youtube_watch';
+            eventModal.querySelector('#wzcEventModalTitle').textContent = isYoutubeWatch
+                ? '유튜브 강의 시청 기록'
+                : '일정 상세 및 수정';
             activeDisplayDate = displayDate || eventData.start_date;
+            setYoutubeFormMode(isYoutubeWatch);
             setTimeFields();
         }
 

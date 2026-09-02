@@ -653,6 +653,7 @@ function wzc_event_public_data($event) {
         'end_time' => $event['we_end_time'] ? substr($event['we_end_time'], 0, 5) : '',
         'location' => $event['we_location'],
         'link_url' => $event['we_link_url'],
+        'source_type' => isset($event['_source_type']) ? (string)$event['_source_type'] : '',
         'version' => (int)$event['we_version']
     );
 }
