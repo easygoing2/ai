@@ -51,18 +51,15 @@ if ($wr_content == '') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';
 }
 
-$wr_link1 = '';
-if (isset($_POST['wr_link1'])) {
-    $wr_link1 = substr($_POST['wr_link1'],0,1000);
-    $wr_link1 = trim(strip_tags($wr_link1));
-    $wr_link1 = preg_replace("#[\\\]+$#", "", $wr_link1);
-}
+for ($i=1; $i<=G5_LINK_COUNT; $i++) {
+    $link_field = 'wr_link'.$i;
+    ${$link_field} = '';
 
-$wr_link2 = '';
-if (isset($_POST['wr_link2'])) {
-    $wr_link2 = substr($_POST['wr_link2'],0,1000);
-    $wr_link2 = trim(strip_tags($wr_link2));
-    $wr_link2 = preg_replace("#[\\\]+$#", "", $wr_link2);
+    if (isset($_POST[$link_field])) {
+        ${$link_field} = substr($_POST[$link_field], 0, 1000);
+        ${$link_field} = trim(strip_tags(${$link_field}));
+        ${$link_field} = preg_replace("#[\\\]+$#", "", ${$link_field});
+    }
 }
 
 $msg = implode('<br>', $msg);
@@ -275,8 +272,14 @@ if ($w == '' || $w == 'r') {
                      wr_seo_title = '$wr_seo_title',
                      wr_link1 = '$wr_link1',
                      wr_link2 = '$wr_link2',
+                     wr_link3 = '$wr_link3',
+                     wr_link4 = '$wr_link4',
+                     wr_link5 = '$wr_link5',
                      wr_link1_hit = 0,
                      wr_link2_hit = 0,
+                     wr_link3_hit = 0,
+                     wr_link4_hit = 0,
+                     wr_link5_hit = 0,
                      wr_hit = 0,
                      wr_good = 0,
                      wr_nogood = 0,
@@ -397,6 +400,9 @@ if ($w == '' || $w == 'r') {
                      wr_seo_title = '$wr_seo_title',
                      wr_link1 = '{$wr_link1}',
                      wr_link2 = '{$wr_link2}',
+                     wr_link3 = '{$wr_link3}',
+                     wr_link4 = '{$wr_link4}',
+                     wr_link5 = '{$wr_link5}',
                      mb_id = '{$mb_id}',
                      wr_name = '{$wr_name}',
                      wr_email = '{$wr_email}',
