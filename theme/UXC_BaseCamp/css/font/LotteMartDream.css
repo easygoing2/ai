@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+@font-face { font-family: 'LotteMartDream'; font-style: normal; font-weight: 600; src:
+    url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff'); }
+@font-face { font-family: 'LotteMartDream'; font-style: normal; font-weight: 700; src:
+    url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff') format('woff'); }
+@font-face { font-family: 'LotteMartDream'; font-style: normal; font-weight: 300; src:
+    url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff'); }
+
+/* 모든 요소에 LotteMartDream 폰트 적용 */
+*,
+html, 
+body,
+input, 
+textarea, 
+select, 
+button,
+table, 
+th, 
+td,
+h1, h2, h3, h4, h5, h6,
+p, 
+ul, 
+ol, 
+li, 
+dl, 
+dt, 
+dd,
+a, 
+strong, 
+em, 
+span, 
+label,
+blockquote, 
+cite, 
+address, 
+time, 
+mark, 
+small {
+    font-family: "LotteMartDream", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+/* 제목 요소들 굵기 설정 */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+/* 코드 요소들 - 고정폭 폰트 사용 */
+code, 
+pre, 
+kbd, 
+samp {
+    font-family: 'Courier New', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+.lottemartdream * { font-family: 'LotteMartDream', sans-serif; }

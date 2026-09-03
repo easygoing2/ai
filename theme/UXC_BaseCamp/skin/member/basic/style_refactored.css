@@ -1,0 +1,578 @@
+@charset "utf-8";
+
+/* ========================================
+   UXC_Flarumix 회원 스킨 스타일시트 (리팩토링)
+   
+   목차:
+   1. CSS 변수 정의
+   2. 공통 컴포넌트
+   3. 레이아웃 구조
+   4. 페이지별 스타일
+   5. 반응형 디자인
+======================================== */
+
+/* ========================================
+   1. CSS 변수 정의
+======================================== */
+:root {
+    /* 공통 간격 */
+    --gap-xs: 8px;
+    --gap-sm: 12px;
+    --gap-md: 16px;
+    --gap-lg: 20px;
+    --gap-xl: 24px;
+    --gap-xxl: 32px;
+    
+    /* 공통 패딩 */
+    --padding-sm: 12px 16px;
+    --padding-md: 16px 20px;
+    --padding-lg: 20px 24px;
+    
+    /* 공통 border-radius */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    /* 폰트 크기 */
+    --font-xs: 12px;
+    --font-sm: 13px;
+    --font-md: 14px;
+    --font-lg: 16px;
+    --font-xl: 18px;
+    --font-xxl: 24px;
+    --font-title: 28px;
+}
+
+/* ========================================
+   2. 공통 컴포넌트
+======================================== */
+
+/* 공통 폼 요소 - UI 컴포넌트 시스템 상속 */
+.frm_input {
+    width: 100%;
+}
+
+textarea.frm_input {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* 공통 섹션 스타일 */
+.section {
+    background: var(--ui-color-white);
+    border: 1px solid var(--ui-color-gray-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.section:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.section-header {
+    padding: var(--padding-md);
+    background: var(--ui-color-gray-50);
+    border-bottom: 1px solid var(--ui-color-gray-100);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    margin: 0;
+    color: var(--ui-color-gray-800);
+    font-size: var(--font-lg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.section-title i {
+    color: var(--color-prime);
+    font-size: var(--font-xl);
+}
+
+.section-content {
+    padding: var(--gap-lg);
+}
+
+/* 공통 버튼 영역 */
+.button-area {
+    display: flex;
+    gap: var(--gap-sm);
+    justify-content: center;
+}
+
+.button-area .button {
+    min-width: 180px;
+}
+
+/* 공통 체크박스 스타일 */
+.opt-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.opt-wrapper .checkText {
+    color: var(--ui-color-gray-600);
+    font-size: var(--font-md);
+    transition: all 0.2s ease;
+}
+
+.opt-wrapper input[type="checkbox"]:checked ~ .checkText {
+    color: var(--ui-color-gray-900);
+    font-weight: 500;
+}
+
+/* ========================================
+   3. 레이아웃 구조
+======================================== */
+
+/* 기본 mbskin 레이아웃 */
+.mbskin {
+    position: relative;
+    width: 360px;
+    margin: 100px auto 0;
+    text-align: center;
+}
+
+.mbskin .mbskin_box {
+    border: 1px solid var(--ui-color-gray-200);
+    background: var(--ui-color-white);
+}
+
+.mbskin h1 {
+    margin: 60px 0 30px;
+    font-size: 2em;
+}
+
+/* ========================================
+   4. 페이지별 스타일
+======================================== */
+
+/* 4-1. 로그인 페이지 */
+.loginBoxWrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 99;
+    inset: 0;
+    overflow: auto;
+    background: var(--ui-color-gray-200);
+}
+
+.loginWrap {
+    display: flex;
+    justify-content: center;
+}
+
+.loginBox {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* 로그인 폼 상속 구조 개선 */
+.loginBox .memberBox {
+    /* memberBox 기본 스타일 */
+}
+
+.loginBox .memberBox h1 {
+    display: block;
+    margin-bottom: var(--gap-lg);
+    color: var(--color-prime);
+    font-size: var(--font-xl);
+    line-height: 1;
+    font-weight: bold;
+}
+
+.loginBox .memberBox .loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.loginBox .memberBox .loginForm fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* 4-2. 회원가입 약관 */
+.registerWrap {
+    max-width: 720px;
+    margin: 60px auto;
+    padding: 0 var(--gap-lg);
+}
+
+/* 회원가입 헤더 */
+.registerWrap .registerHeader {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.registerWrap .registerHeader .registerTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-sm);
+    margin-bottom: var(--gap-lg);
+    color: var(--ui-color-gray-900);
+    font-size: var(--font-title);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.registerWrap .registerHeader .registerTitle i {
+    font-size: 32px;
+    color: var(--color-prime);
+}
+
+/* 약관 박스 */
+.registerWrap .agreeBox {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+    margin-bottom: var(--gap-xl);
+}
+
+.registerWrap .agreeBox .agreeItem {
+    /* section 클래스 상속으로 중복 제거 */
+    @extend .section;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.registerWrap .agreeBox .agreeItem:hover {
+    border-color: var(--ui-color-gray-300);
+}
+
+/* 약관 헤더 - section-header 상속 */
+.registerWrap .agreeBox .agreeHeader {
+    @extend .section-header;
+}
+
+.registerWrap .agreeBox .agreeTitle {
+    @extend .section-title;
+}
+
+/* 약관 내용 */
+.registerWrap .agreeBox .agreeContent {
+    @extend .section-content;
+}
+
+.registerWrap .agreeBox .agreeContent textarea {
+    width: 100%;
+    height: 200px;
+    padding: var(--gap-md);
+    border: 1px solid var(--ui-color-gray-200);
+    border-radius: var(--radius-sm);
+    background: var(--ui-color-gray-50);
+    color: var(--ui-color-gray-700);
+    font-size: var(--font-sm);
+    line-height: 1.7;
+    resize: none;
+    font-family: inherit;
+}
+
+/* 전체 동의 */
+.registerWrap .agreeAll {
+    padding: var(--padding-md);
+    background: var(--ui-color-gray-50);
+    border: 1px solid var(--ui-color-gray-200);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--gap-xxl);
+}
+
+.registerWrap .agreeAll .opt {
+    @extend .opt-wrapper;
+    justify-content: center;
+}
+
+.registerWrap .agreeAll .checkText {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* 버튼 영역 */
+.registerWrap .buttonArea {
+    @extend .button-area;
+}
+
+/* 4-3. 회원가입 폼 */
+.memberFormWrap {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px var(--gap-lg);
+}
+
+/* 폼 헤더 재사용 */
+.memberFormWrap .memberFormHeader {
+    @extend .registerHeader;
+}
+
+.memberFormWrap .memberFormTitle {
+    @extend .registerTitle;
+}
+
+/* 폼 컨테이너 */
+.memberFormWrap .memberFormContainer {
+    @extend .section;
+    margin-bottom: var(--gap-xxl);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* 폼 섹션 */
+.memberFormWrap .formSection {
+    border-bottom: 1px solid var(--ui-color-gray-100);
+}
+
+.memberFormWrap .formSection:last-child {
+    border-bottom: none;
+}
+
+.memberFormWrap .formSection .sectionHeader {
+    @extend .section-header;
+}
+
+.memberFormWrap .formSection .sectionTitle {
+    @extend .section-title;
+}
+
+.memberFormWrap .formSection .sectionContent {
+    @extend .section-content;
+}
+
+/* 폼 그룹 */
+.memberFormWrap .formGroup {
+    margin-bottom: var(--gap-xl);
+}
+
+.memberFormWrap .formGroup:last-child {
+    margin-bottom: 0;
+}
+
+.memberFormWrap .formRow {
+    display: flex;
+    gap: var(--gap-md);
+    margin-bottom: var(--gap-xl);
+}
+
+.memberFormWrap .formRow:last-child {
+    margin-bottom: 0;
+}
+
+.memberFormWrap .formRow .formGroup {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* 라벨 */
+.memberFormWrap .formLabel {
+    display: block;
+    margin-bottom: var(--gap-xs);
+    color: var(--ui-color-gray-700);
+    font-size: var(--font-sm);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.memberFormWrap .formLabel.required::after {
+    content: '*';
+    color: var(--ui-color-danger);
+    margin-left: 4px;
+}
+
+/* 본인인증 섹션 */
+.memberFormWrap .certSection {
+    margin-bottom: var(--gap-xl);
+    padding: var(--gap-lg);
+    background: var(--ui-color-gray-50);
+    border: 1px solid var(--ui-color-gray-200);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.memberFormWrap .certButtons {
+    display: flex;
+    gap: var(--gap-xs);
+    justify-content: center;
+    margin-bottom: var(--gap-sm);
+    flex-wrap: wrap;
+}
+
+/* 주소 입력 */
+.memberFormWrap .addressWrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+}
+
+.memberFormWrap .addressRow {
+    display: flex;
+    gap: var(--gap-xs);
+}
+
+.memberFormWrap .addressRow .zipcode {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+/* 옵션 섹션 */
+.memberFormWrap .optSection {
+    margin-top: var(--gap-xl);
+    padding-top: var(--gap-xl);
+    border-top: 1px solid var(--ui-color-gray-200);
+}
+
+.memberFormWrap .optSection .opt {
+    @extend .opt-wrapper;
+    margin-bottom: var(--gap-sm);
+}
+
+.memberFormWrap .optSection .opt:last-child {
+    margin-bottom: 0;
+}
+
+/* 폼 버튼 */
+.memberFormWrap .formButtons {
+    @extend .button-area;
+    padding: var(--gap-xxl) var(--gap-xl);
+    background: var(--ui-color-gray-50);
+    border-top: 1px solid var(--ui-color-gray-100);
+    margin: calc(var(--gap-xxl) * -1) calc(var(--gap-lg) * -1) 0;
+}
+
+/* 4-4. 마이페이지 */
+.mypageWrap {
+    background: transparent;
+}
+
+/* 프로필 박스 */
+.mypageWrap .profileBox {
+    @extend .section;
+    margin-bottom: var(--gap-xl);
+}
+
+.mypageWrap .profileBox .titleBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--gap-lg);
+    gap: var(--gap-lg);
+}
+
+/* 통계/메뉴 박스 */
+.mypageWrap .statsBox,
+.mypageWrap .menuBox {
+    margin-bottom: var(--gap-xxl);
+}
+
+.mypageWrap .statsGrid,
+.mypageWrap .menuList {
+    display: grid;
+    gap: var(--gap-sm);
+}
+
+.mypageWrap .statsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.mypageWrap .menuList {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* 통계/메뉴 아이템 - cardBox 활용 */
+.mypageWrap .statItem,
+.mypageWrap .menuItem {
+    display: block;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.mypageWrap .statItem:hover,
+.mypageWrap .menuItem:hover {
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   5. 반응형 디자인
+======================================== */
+@media (max-width: 768px) {
+    /* 공통 반응형 */
+    .button-area {
+        flex-direction: column;
+    }
+    
+    .button-area .button {
+        width: 100%;
+    }
+    
+    /* 회원가입 반응형 */
+    .registerWrap {
+        padding: var(--gap-lg);
+    }
+    
+    .registerWrap .registerHeader .registerTitle {
+        font-size: var(--font-xxl);
+    }
+    
+    /* 폼 반응형 */
+    .memberFormWrap {
+        padding: var(--gap-lg);
+    }
+    
+    .memberFormWrap .formRow {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .memberFormWrap .addressRow {
+        flex-direction: column;
+    }
+    
+    .memberFormWrap .addressRow .zipcode {
+        width: 100%;
+    }
+    
+    .memberFormWrap .certButtons {
+        flex-direction: column;
+    }
+    
+    .memberFormWrap .certButtons .button {
+        width: 100%;
+    }
+    
+    /* 마이페이지 반응형 */
+    .mypageWrap .profileBox .titleBox {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .mypageWrap .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .mypageWrap .menuList {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 타이틀 크기 조정 */
+    .registerWrap .registerHeader .registerTitle,
+    .memberFormWrap .memberFormTitle {
+        font-size: var(--font-xl);
+    }
+    
+    .registerWrap .registerHeader .registerTitle i,
+    .memberFormWrap .memberFormTitle i {
+        font-size: var(--font-xxl);
+    }
+    
+    /* 통계 그리드 조정 */
+    .mypageWrap .statsGrid {
+        gap: var(--gap-xs);
+    }
+}

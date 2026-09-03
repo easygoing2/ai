@@ -1,0 +1,47 @@
+/* ========================================
+   WIDGET- pointranking
+======================================== */
+/* 메인 컨테이너 - 최소한의 스타일 */
+.widget_pointranking {overflow:hidden;}
+
+/* 랭킹 리스트 */
+.widget_pointranking .point_ranking_list {list-style:none; margin:0; padding:0;}
+.widget_pointranking .ranking_item {display:flex; align-items:center; gap:16px; padding:16px 0; border-bottom:1px solid var(--board-gray-200);}
+.widget_pointranking .ranking_item:hover {background:var(--board-gray-50);}
+.widget_pointranking .ranking_item:last-child {border-bottom:none;}
+
+/* 랭킹 번호 */
+.widget_pointranking .rank_number {flex:0 0 30px; text-align:center; font-weight:700; font-size:14px; color:var(--board-gray-600);}
+.widget_pointranking .rank_number i {font-size:24px;}
+.widget_pointranking .rank_number .rank-1 {color:#FFD700;} /* 금메달 */
+.widget_pointranking .rank_number .rank-2 {color:#C0C0C0;} /* 은메달 */
+.widget_pointranking .rank_number .rank-3 {color:#CD7F32;} /* 동메달 */
+
+/* 회원 정보 */
+.widget_pointranking .member_info {flex:1; min-width:0;}
+.widget_pointranking .member_nick {display:block; font-size:14px; font-weight:600; color:var(--board-gray-900); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.widget_pointranking .member_level {display:flex; align-items:center; gap:4px; font-size:12px; color:var(--board-gray-500); margin-top:4px;}
+.widget_pointranking .member_level i {font-size:12px;}
+
+/* 포인트 정보 */
+.widget_pointranking .point_value {display:flex; align-items:baseline; gap:2px;}
+.widget_pointranking .point_value strong {font-size:16px; font-weight:700; color:var(--color-prime);}
+.widget_pointranking .point_unit {font-size:12px; color:var(--board-gray-500);}
+
+/* 빈 랭킹 */
+.widget_pointranking .empty_ranking {padding:60px 20px; text-align:center; color:var(--board-gray-500);}
+.widget_pointranking .empty_ranking i {font-size:48px; color:var(--board-gray-300); display:block; margin-bottom:12px;}
+.widget_pointranking .empty_ranking p {margin:0; font-size:14px;}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .widget_pointranking .ranking_item {padding:12px 0;}
+    .widget_pointranking .member_nick {font-size:13px;}
+    .widget_pointranking .point_value strong {font-size:14px;}
+}
+
+@media (max-width: 480px) {
+    .widget_pointranking .ranking_item {gap:12px;}
+    .widget_pointranking .rank_number {flex:0 0 24px;}
+    .widget_pointranking .rank_number i {font-size:20px;}
+}

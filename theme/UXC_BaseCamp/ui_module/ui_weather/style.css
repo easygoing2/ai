@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+/* UXCamp header weather widget */
+.weatherWidget {flex:0 0 auto;white-space:nowrap}
+.weatherLoading {display:flex;align-items:center;gap:8px;color:var(--ui-color-gray-500);font-size:12px}
+.weatherLoading i {font-size:16px}
+
+.weatherContent {display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.weatherMain {display:flex;align-items:center;gap:6px}
+.weatherIcon {font-size:22px;color:var(--ui-color-warning)}
+.weatherIcon.bx-sun,.weatherIcon.bxs-sun {color:var(--ui-color-warning)}
+.weatherIcon.bx-cloud-sun {color:var(--ui-color-gray-500)}
+.weatherIcon.bx-cloud {color:var(--ui-color-gray-400)}
+.weatherIcon.bx-cloud-rain {color:var(--ui-color-info)}
+.weatherIcon.bx-cloud-snow {color:var(--ui-color-lightblue)}
+.weatherIcon.bx-cloud-lightning {color:var(--ui-color-purple)}
+
+.weatherTemp {display:flex;align-items:center;gap:4px}
+.weatherTemp .greetingText {font-size:12px}
+.tempValue {font-size:18px;font-weight:700;color:var(--ui-color-gray-900);line-height:1}
+.tempLocation {margin-top:2px;font-size:12px;color:var(--ui-color-gray-600)}
+
+.weatherDetails {display:flex;align-items:center;gap:12px;padding-left:10px;border-left:1px solid var(--ui-color-gray-200)}
+.weatherDetail {display:flex;align-items:center;gap:4px;font-size:12px;color:var(--ui-color-gray-600)}
+.weatherDetail i {font-size:14px}
+.weatherDesc {font-weight:600;color:var(--ui-color-gray-700)}
+.weatherError {padding:10px;color:var(--ui-color-gray-500);font-size:12px}
+
+@keyframes weather-spin {from {transform:rotate(0deg)} to {transform:rotate(360deg)}}
+.weatherWidget .bx-spin {animation:weather-spin 1s linear infinite}
+
+@media (max-width:1200px) {
+  .weatherWidget {display:none}
+}

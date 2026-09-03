@@ -1,0 +1,79 @@
+@charset "utf-8";/* ----------------------------------------------
+LAYOUY.CSS
+* writer : uxcamp
+* email : master@uxcamp.net
+* license : © 2025 uxcamp. All rights reserved.
+* version : 1.0.0
+* last update : 2025.06.20
+------------------------------------------------*/
+
+/* mainContentWrap */
+
+.container .contentWrap .kvWrap[data-section="mainKvWrap"] {width:100%; display:flex; gap:20px;}
+.container .contentWrap .kvWrap[data-section="mainKvWrap"] .mainkv {width: calc(100% - 0px);height:260px;background:#e6e6e6;border-radius:20px;}
+.container .contentWrap .kvWrap[data-section="mainKvWrap"] .eventkv {width:320px; height:260px; background:#e6e6e6; border-radius:20px;}
+
+/* Main Slider */
+.kvWrap[data-section="main_kv"] {position:relative; width:100%; margin-bottom:40px;}
+.kvWrap[data-section="main_kv"] .mainSwiper {width:100%; height:600px; border-radius:20px; overflow:hidden;}
+.kvWrap[data-section="main_kv"] .swiper-slide {height:100%;}
+
+/* Slide Item */
+.slideItem {position:relative; width:100%; height:100%; background-size:cover; background-position:center; background-repeat:no-repeat;}
+.slideOverlay {position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:1;}
+.slideContent {position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; z-index:2;}
+.slideInner {text-align:center; padding:20px;}
+
+/* Slide Text */
+.slideTitle {margin:0 0 20px 0; font-size:48px; font-weight:700; line-height:1.2;}
+.slideTitle.white {color:var(--ui-color-white-only);}
+.slideTitle.black {color:var(--ui-color-gray-900);}
+.slideSubtitle {margin:0 0 30px 0; font-size:20px; line-height:1.5;}
+.slideSubtitle.white {color:var(--ui-color-white-only);}
+.slideSubtitle.black {color:var(--ui-color-gray-700);}
+.slideButton {display:inline-block;}
+
+/* Swiper Navigation */
+.kvWrap[data-section="main_kv"] .swiper-button-prev,
+.kvWrap[data-section="main_kv"] .swiper-button-next {width:50px; height:50px; background:rgba(255,255,255,0.9); border-radius:50%; color:var(--ui-color-gray-900);}
+.kvWrap[data-section="main_kv"] .swiper-button-prev::after,
+.kvWrap[data-section="main_kv"] .swiper-button-next::after {display:none;}
+.kvWrap[data-section="main_kv"] .swiper-button-prev i,
+.kvWrap[data-section="main_kv"] .swiper-button-next i {font-size:28px; line-height:50px;}
+.kvWrap[data-section="main_kv"] .swiper-button-prev:hover,
+.kvWrap[data-section="main_kv"] .swiper-button-next:hover {background:var(--ui-color-white-only);}
+
+/* Swiper Pagination */
+.kvWrap[data-section="main_kv"] .swiper-pagination {bottom:30px;}
+.kvWrap[data-section="main_kv"] .swiper-pagination-bullet {width:10px; height:10px; background:rgba(255,255,255,0.5); opacity:1;}
+.kvWrap[data-section="main_kv"] .swiper-pagination-bullet-active {background:var(--ui-color-white-only); width:30px; border-radius:5px;}
+
+/* Responsive */
+@media (max-width:1200px) {
+    .kvWrap[data-section="main_kv"] .mainSwiper {height:500px;}
+    .slideTitle {font-size:40px;}
+    .slideSubtitle {font-size:18px;}
+}
+
+@media (max-width:768px) {
+    .kvWrap[data-section="main_kv"] .mainSwiper {height:400px; border-radius:12px;}
+    .slideTitle {font-size:32px; margin-bottom:16px;}
+    .slideSubtitle {font-size:16px; margin-bottom:24px;}
+    .kvWrap[data-section="main_kv"] .swiper-button-prev,
+    .kvWrap[data-section="main_kv"] .swiper-button-next {width:40px; height:40px;}
+    .kvWrap[data-section="main_kv"] .swiper-button-prev i,
+    .kvWrap[data-section="main_kv"] .swiper-button-next i {font-size:24px; line-height:40px;}
+}
+
+@media (max-width:480px) {
+    .kvWrap[data-section="main_kv"] .mainSwiper {height:300px;}
+    .slideTitle {font-size:24px;}
+    .slideSubtitle {font-size:14px;}
+    .slideButton {font-size:14px; padding:8px 20px;}
+}
+
+.container .contentWrap .contentGroupBox {margin-top: 40px;}
+.container .contentWrap .contentGroupBox .contentGroup {display:flex;flex-direction:column;gap: 10px;margin-top: 40px;}
+
+
+

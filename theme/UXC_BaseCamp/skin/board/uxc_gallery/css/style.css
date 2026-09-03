@@ -1,0 +1,68 @@
+@charset "utf-8";
+
+
+
+/* --------------------------------------------------------
+게시판 목록 스타일 - UXC GALLERY
+* board.css 변수 시스템 사용
+----------------------------------------------------------*/
+.boardListWrap {position:relative;}
+
+/* galleryTadi list */
+[data-board="gallery_default"] {display:grid;grid-template-columns:repeat(auto-fill, minmax(325px, auto)); grid-gap:20px; scrollbar-width:none;-webkit-box-pack:center;}
+[data-board="gallery_default"] .cardBox {display:flex; flex-direction:column; position:relative; gap:10px; border-radius:8px; background:var(--board-white); transition:all 0.3s ease; box-shadow:0 0px 0px 1px var(--board-gray-300); opacity:0; transform:translateY(20px); animation:fadeInUp 0.6s ease forwards;}
+[data-board="gallery_default"] .cardBox.active,
+[data-board="gallery_default"] .cardBox:hover {z-index:1; transform:translateY(-8px) scale(1.02); box-shadow:0 0px 0px 1px var(--color-prime);}
+[data-board="gallery_default"] .cardBox .checkBox {position:absolute; z-index:1; top:20px; right:20px; opacity:0; transform:scale(0.8); transition:all 0.2s ease;}
+[data-board="gallery_default"] .cardBox:hover .checkBox {opacity:1; transform:scale(1);}
+[data-board="gallery_default"] .cardBox .thumb {display:flex; align-items:center; position:relative; overflow:hidden; background:var(--ui-color-white-only); border-radius:10px; border:1px solid var(--board-gray-200);}
+[data-board="gallery_default"] .cardBox .thumb .labelBox {position:absolute; z-index:1; top:6px; left:6px;}
+[data-board="gallery_default"] .cardBox:hover .thumb .labelBox {transform:translateY(0); opacity:1;}
+[data-board="gallery_default"] .cardBox .thumb img {width:100%; transition:transform 0.4s ease;}
+[data-board="gallery_default"] .cardBox:hover .thumb img {transform:scale(1.05);}
+[data-board="gallery_default"] .cardBox .thumb .youtube_ico {display:flex; justify-content:center; align-items:center; position:absolute; top:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.3); opacity:0; transition:all 0.3s ease;}
+[data-board="gallery_default"] .cardBox:hover .thumb .youtube_ico {opacity:1;}
+[data-board="gallery_default"] .cardBox .thumb .youtube_ico img {width:50px; transform:scale(0.8); transition:transform 0.2s ease;}
+[data-board="gallery_default"] .cardBox:hover .thumb .youtube_ico img {transform:scale(1);}
+[data-board="gallery_default"] .cardBox .cardBoxContent {display:flex; flex-direction:column; justify-content:space-between; gap:20px;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .titleBox {display:flex; flex-direction:column; gap:10px;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .titleBox .title {display:block; color:var(--board-gray-900); font-size:16px; font-weight:600; line-height:1.2; display:-webkit-box; overflow:hidden; text-overflow:ellipsis; -webkit-line-clamp:2; -webkit-box-orient:vertical;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .titleBox .title a {display:flex; flex-direction:column; gap:10px;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .titleBox .title a strong {display:-webkit-box; min-height:38px; overflow:hidden; font-size:16px; font-weight:600; text-overflow:ellipsis; line-height:1.4; word-break:break-all;-webkit-line-clamp:2; -webkit-box-orient:vertical;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .titleBox .title a strong .bo_current {padding:2px 8px; border-radius:var(--board-radius-lg); background:var(--color-prime); color:var(--board-white); font-size:11px; font-weight:500;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .titleBox .title a strong .iconBox {padding:2px 6px; border-radius:10px; background:var(--board-success); color:var(--board-white); font-size:10px; font-weight:600;}
+[data-board="gallery_default"] .cardBox:hover .cardBoxContent .titleBox .title {color:var(--color-prime);}
+[data-board="gallery_default"] .cardBox .cardBoxContent .titleBox .desc {display:block; color:var(--board-gray-500); font-size:13px; font-weight:400; text-align:left; line-height:1.4; opacity:0.8; display:-webkit-box; overflow:hidden; text-overflow:ellipsis; -webkit-line-clamp:2; -webkit-box-orient:vertical; min-height:37px;}
+[data-board="gallery_default"] .cardBox:hover .cardBoxContent .titleBox .desc {opacity:1;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .infoBox {justify-content:space-between; align-items:center; display:flex;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .infoBox .user {display:flex; justify-content:center; align-items:center; width:30px; height:30px; background:var(--board-gray-300); border-radius:50%; overflow:hidden; transition:transform 0.2s ease;}
+[data-board="gallery_default"] .cardBox:hover .cardBoxContent .infoBox .user {transform:scale(1.1);}
+[data-board="gallery_default"] .cardBox .cardBoxContent .infoBox .user img {width:100%; height:100%; border-radius:50%; object-fit:cover;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .infoBox .info {gap:10px; display:flex; align-items:center;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .infoBox .info dl {width:auto; border:0; margin:0; display:flex; align-items:center; gap:4px;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .infoBox .info dl dt {color:var(--board-gray-500); font-size:14px;}
+[data-board="gallery_default"] .cardBox .cardBoxContent .infoBox .info dl dd {color:var(--board-gray-600); font-size:13px; margin:0;}
+
+/* 애니메이션 키프레임 */
+@keyframes fadeInUp {
+  0% {opacity:0; transform:translateY(20px);}
+  100% {opacity:1; transform:translateY(0);}
+}
+
+/* 로딩 애니메이션 */
+[data-board="gallery_default"].loading .cardBox {animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse {
+  0%, 100% {opacity:0.4;}
+  50% {opacity:0.8;}
+}
+
+/* 반응형 애니메이션 조정 */
+@media (max-width: 768px) {
+  [data-board="gallery_default"] .cardBox:hover {transform:translateY(-4px) scale(1.01);}
+  [data-board="gallery_default"] .cardBox:hover .thumb img {transform:scale(1.02);}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-board="gallery_default"] .cardBox {animation:none; opacity:1; transform:none;}
+  [data-board="gallery_default"] .cardBox:hover {transform:none; transition:box-shadow 0.2s ease;}
+}

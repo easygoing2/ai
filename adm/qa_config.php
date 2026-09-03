@@ -25,6 +25,7 @@ if (!sql_query(" DESCRIBE `{$g5['qa_config_table']}` ", false)) {
                   `qa_send_number` varchar(255) NOT NULL DEFAULT '',
                   `qa_admin_hp` varchar(255) NOT NULL DEFAULT '',
                   `qa_use_editor` tinyint(4) NOT NULL DEFAULT '0',
+                  `qa_select_editor` varchar(50) NOT NULL DEFAULT '',
                   `qa_subject_len` int(11) NOT NULL DEFAULT '0',
                   `qa_mobile_subject_len` int(11) NOT NULL DEFAULT '0',
                   `qa_page_rows` int(11) NOT NULL DEFAULT '0',
@@ -115,6 +116,16 @@ if (!isset($qaconfig['qa_admin_email'])) {
     );
 }
 
+// 1:1문의 전용 에디터 선택 필드 추가
+if (!isset($qaconfig['qa_select_editor'])) {
+    sql_query(
+        " ALTER TABLE `{$g5['qa_config_table']}`
+                    ADD `qa_select_editor` varchar(50) NOT NULL DEFAULT '' AFTER `qa_use_editor` ",
+        true
+    );
+    $qaconfig['qa_select_editor'] = '';
+}
+
 // 상단 하단 설정 필드 추가
 if (!isset($qaconfig['qa_include_head'])) {
     sql_query(
@@ -130,7 +141,7 @@ if (!isset($qaconfig['qa_include_head'])) {
 }
 ?>
 
-<form name="fqaconfigform" id="fqaconfigform" method="post" onsubmit="return fqaconfigform_submit(this);" autocomplete="off">
+<form name="fqaconfigform" id="fqaconfigform" method="post" action="./qa_config_update.php" onsubmit="return fqaconfigform_submit(this);" autocomplete="off">
     <input type="hidden" name="token" value="" id="token">
 
     <section id="anc_cf_qa_config">
@@ -222,6 +233,24 @@ if (!isset($qaconfig['qa_include_head'])) {
                             <select name="qa_use_editor" id="qa_use_editor">
                                 <?php echo option_selected(0, $qaconfig['qa_use_editor'], '사용안함'); ?>
                                 <?php echo option_selected(1, $qaconfig['qa_use_editor'], '사용함'); ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="qa_select_editor">1:1문의 에디터 선택</label></th>
+                        <td>
+                            <?php echo help('1:1문의 작성 및 답변에 사용할 에디터를 선택합니다. 선택하지 않으면 기본환경설정의 에디터를 사용합니다.'); ?>
+                            <select name="qa_select_editor" id="qa_select_editor">
+                                <option value="">기본환경설정의 에디터 사용 (<?php echo get_text($config['cf_editor']); ?>)</option>
+                                <?php
+                                $editors = get_skin_dir('', G5_EDITOR_PATH);
+                                foreach ($editors as $editor) {
+                                    if (!is_file(G5_EDITOR_PATH . '/' . $editor . '/editor.lib.php')) {
+                                        continue;
+                                    }
+                                    echo option_selected($editor, $qaconfig['qa_select_editor'], $editor);
+                                }
+                                ?>
                             </select>
                         </td>
                     </tr>
@@ -394,6 +423,10 @@ if (!isset($qaconfig['qa_include_head'])) {
     });
 
     function fqaconfigform_submit(f) {
+        // 편집기 동기화 중 오류가 발생해도 현재 설정 페이지로 제출되지 않도록
+        // 저장 경로를 먼저 확정한다.
+        f.action = "./qa_config_update.php";
+
         <?php echo get_editor_js("qa_content_head"); ?>
         <?php echo get_editor_js("qa_content_tail"); ?>
         <?php echo get_editor_js("qa_mobile_content_head"); ?>
@@ -403,7 +436,6 @@ if (!isset($qaconfig['qa_include_head'])) {
             <?php echo isset($captcha_js) ? $captcha_js : ''; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함 ?>
         }
 
-        f.action = "./qa_config_update.php";
         return true;
     }
 </script>

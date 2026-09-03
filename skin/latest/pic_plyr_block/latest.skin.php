@@ -107,7 +107,7 @@ function get_video_info($url) {
 		?>
         <li class="gallery_li<?php echo $is_hover?' is_hover':'';?>">
 			<div class="img-wrap is-round-post-img">
-				<div class="img-item">
+			<div class="img-item"<?php if ($provider['provider'] === 'youtube') { ?> data-wzy-bo-table="<?php echo htmlspecialchars($bo_table, ENT_QUOTES, 'UTF-8'); ?>" data-wzy-wr-id="<?php echo (int)$list[$i]['wr_id']; ?>" data-wzy-video-id="<?php echo htmlspecialchars($provider['video_id'], ENT_QUOTES, 'UTF-8'); ?>"<?php } ?>>
 				<?php
 				if($provider['provider']){
 
@@ -186,6 +186,8 @@ if (typeof Plyr != "undefined") {
 	//var vidiom_player = new Plyr('.vidiom_player', {captions: {active: true}});
 
 	if( vidiom_player ){
+		window.wzyPlyrPlayers = (window.wzyPlyrPlayers || []).concat(vidiom_player);
+		document.dispatchEvent(new CustomEvent('wzy:plyr-ready'));
 		vidiom_player.forEach(( player, index ) =>
 			player.on("play", () =>
 				vidiom_player
@@ -196,4 +198,3 @@ if (typeof Plyr != "undefined") {
 	}
 }
 </script>
-

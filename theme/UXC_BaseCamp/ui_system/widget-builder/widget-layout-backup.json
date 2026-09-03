@@ -1,0 +1,117 @@
+{
+    "grid_rows": [
+        {
+            "columns": [
+                {
+                    "width": 100,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery_box",
+                        "boards": [
+                            "ai_agent",
+                            "ai_agent_01",
+                            "ai_Engineering_01"
+                        ],
+                        "board": "ai_agent,ai_agent_01,ai_Engineering_01",
+                        "rows": 15,
+                        "subject_len": 80,
+                        "title": "AI Agent",
+                        "show_more": false
+                    }
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "width": 100,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery_box",
+                        "boards": [
+                            "ai_skill",
+                            "ai_skill_dev",
+                            "ai_skill_planning",
+                            "ai_skill_design",
+                            "ai_skill_maketing"
+                        ],
+                        "board": "ai_skill,ai_skill_dev,ai_skill_planning,ai_skill_design,ai_skill_maketing",
+                        "rows": 15,
+                        "subject_len": 40,
+                        "title": "AI Skill",
+                        "show_more": false
+                    }
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "width": 50,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery_box",
+                        "boards": [
+                            "gallery"
+                        ],
+                        "board": "gallery",
+                        "rows": 20,
+                        "subject_len": 40,
+                        "title": "Vector RAG",
+                        "show_more": true
+                    }
+                },
+                {
+                    "width": 50,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery_box",
+                        "boards": [
+                            "notice"
+                        ],
+                        "board": "notice",
+                        "rows": 5,
+                        "subject_len": 40,
+                        "title": "GRAPH RAG",
+                        "show_more": true
+                    }
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "width": 50,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_list",
+                        "boards": [
+                            "notice"
+                        ],
+                        "board": "notice",
+                        "rows": 5,
+                        "subject_len": 40,
+                        "title": "공지사항",
+                        "show_more": true
+                    }
+                },
+                {
+                    "width": 50,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_list",
+                        "boards": [
+                            "free"
+                        ],
+                        "board": "free",
+                        "rows": 5,
+                        "subject_len": 40,
+                        "title": "자유게시판",
+                        "show_more": true
+                    }
+                }
+            ]
+        }
+    ],
+    "updated_at": "2026-09-03T18:18:24+09:00"
+}

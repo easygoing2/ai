@@ -6,7 +6,7 @@ if (!defined('_GNUBOARD_')) exit;
 // $cache_time 캐시 갱신시간
 function get_new_list($skin_dir = '', $rows = 10, $subject_len = 40, $cache_time = 1, $options = '')
 {
-  global $g5;
+  global $g5, $config;
 
   if (!$skin_dir) $skin_dir = 'basic';
 
@@ -113,7 +113,7 @@ function get_new_list($skin_dir = '', $rows = 10, $subject_len = 40, $cache_time
       $file_table = $g5['board_file_table'];
       $sql = " select bf_file, bf_content from {$file_table} where bo_table = '{$row['bo_table']}' and wr_id = '{$row2['wr_id']}' and bf_type between '1' and '3' order by bf_no limit 0, 1 ";
       $file = sql_fetch($sql);
-      if ($file['bf_file']) {
+      if (!empty($file['bf_file'])) {
         $list[$i]['image'] = G5_DATA_URL . '/file/' . $row['bo_table'] . '/' . $file['bf_file'];
       }
 

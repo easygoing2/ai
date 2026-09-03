@@ -1,0 +1,134 @@
+@charset "utf-8";
+
+/* ========================================
+   FAQ 스킨 스타일
+   * 기반: UXC_Flarumix 테마 UI 시스템
+   * 참조: uxc_list 스킨 구조
+   * 색상: UI.css 변수 시스템 활용
+   * 디자인: 모던 미니멀 카드 레이아웃
+======================================== */
+
+/* ========================================
+   FAQ 목록 래퍼
+======================================== */
+.faqListWrap {position:relative;}
+
+/* ========================================
+   헤더 이미지 영역
+======================================== */
+.faqListWrap .faq_himg {margin-bottom:var(--ui-padding-l); text-align:center;}
+.faqListWrap .faq_himg img {max-width:100%; height:auto; border-radius:12px;}
+
+/* 상단 HTML */
+.faqListWrap .faq_hhtml {margin-bottom:var(--ui-padding-l); padding:20px; background:var(--ui-color-gray-50); border-radius:12px;}
+
+/* ========================================
+   검색 영역
+======================================== */
+.faqListWrap .searchBox {margin-bottom:var(--ui-padding-l); border:1px solid var(--ui-color-gray-200);}
+.faqListWrap .searchBox .searchForm {display:flex; align-items:center; gap:12px;}
+.faqListWrap .searchBox .searchInput {flex:1; padding:12px 16px; border:1px solid var(--ui-color-gray-300); border-radius:8px; font-size:16px;}
+.faqListWrap .searchBox .searchInput:focus {outline:none; border-color:var(--color-prime);}
+.faqListWrap .searchBox .searchInput::placeholder {color:var(--ui-color-gray-400);}
+
+/* ========================================
+   카테고리 영역
+======================================== */
+.faqListWrap .catagory {margin-bottom:var(--ui-padding-l);}
+.faqListWrap .catagory ul {display:flex; flex-wrap:wrap; margin:0; padding:0; list-style:none; gap:8px;}
+.faqListWrap .catagory ul li {margin:0;}
+.faqListWrap .catagory ul li a {display:block; padding:10px 16px; border:1px solid var(--ui-color-gray-300); border-radius:8px; background:var(--ui-color-white); color:var(--ui-color-gray-600); font-size:14px; font-weight:500; text-decoration:none; white-space:nowrap;}
+.faqListWrap .catagory ul li a:hover,
+.faqListWrap .catagory ul li a#bo_cate_on {border-color:var(--color-prime); background:var(--color-prime); color:var(--ui-color-white-only);}
+
+/* ========================================
+   FAQ 리스트 박스
+======================================== */
+.faqListWrap .faqWrap {margin-bottom:var(--ui-padding-l);}
+.faqListWrap .faqListBox {display:flex; flex-direction:column; gap:16px;}
+
+/* FAQ 아이템 */
+.faqListWrap .faqItem {border:1px solid var(--ui-color-gray-200); overflow:hidden; transition:all 0.3s ease;}
+.faqListWrap .faqItem:hover {border-color:var(--color-prime); box-shadow:0 4px 12px rgba(0, 0, 0, 0.08);}
+.faqListWrap .faqItem.active {border-color:var(--color-prime);}
+
+/* 질문 영역 */
+.faqListWrap .faqQuestion {display:flex; align-items:center; padding:20px; cursor:pointer; gap:16px;}
+.faqListWrap .faqQuestion .qIcon {display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:var(--ui-color-gray-300); color:var(--ui-color-gray-700); font-size:14px; font-weight:700; border-radius:50%; flex-shrink:0;}
+.faqListWrap .faqQuestion .qContent {flex:1;}
+.faqListWrap .faqQuestion .qContent h3 {margin:0; color:var(--ui-color-gray-900); font-size:16px; font-weight:600; line-height:1.5;}
+.faqListWrap .faqItem:hover .faqQuestion .qContent h3 {color:var(--color-prime);}
+.faqListWrap .faqQuestion .toggleBtn {display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:none; background:var(--ui-color-gray-100); border-radius:50%; cursor:pointer; transition:all 0.2s ease;}
+.faqListWrap .faqQuestion .toggleBtn i {font-size:20px; color:var(--ui-color-gray-600); transition:transform 0.2s ease;}
+.faqListWrap .faqItem.active .faqQuestion .toggleBtn {background:var(--color-prime);}
+.faqListWrap .faqItem.active .faqQuestion .toggleBtn i {color:var(--ui-color-white);}
+
+/* 답변 영역 */
+.faqListWrap .faqAnswer {display:none; padding:20px; background:var(--ui-color-gray-50); border-top:1px solid var(--ui-color-gray-200);}
+.faqListWrap .faqAnswer > div {display:inline-flex; align-items:flex-start; flex-direction:column; }
+.faqListWrap .faqAnswer .aIcon {display:inline-flex; justify-content:center; align-items:center; width:28px; height:28px; background:var(--color-prime); color:var(--ui-color-white); font-size:14px; font-weight:700; border-radius:50%; flex-shrink:0;}
+.faqListWrap .faqAnswer .aContent {width:calc(100% - 50px); margin-left:12px; color:var(--ui-color-gray-700); font-size:15px; line-height:1.6;}
+.faqListWrap .faqAnswer .aContent p {margin:0;}
+.faqListWrap .faqAnswer .aContent p:last-child {margin-bottom:0;}
+
+/* ========================================
+   빈 목록 메시지
+======================================== */
+.faqListWrap .emptyBox {display:flex; flex-direction:column; align-items:center;text-align:center; padding:60px 20px;}
+.faqListWrap .emptyBox .emptyMessage {color:var(--ui-color-gray-500); font-size:16px; margin-bottom:20px;}
+.faqListWrap .emptyBox .emptyMessage i {font-size:32px; display:block; margin-bottom:12px; opacity:0.5;}
+
+/* ========================================
+   페이징
+======================================== */
+.faqListWrap .listFooter {margin-bottom:var(--ui-padding-l); text-align:center;}
+
+/* ========================================
+   하단 영역
+======================================== */
+.faqListWrap .faq_thtml {margin-top:var(--ui-padding-l); padding:20px; background:var(--ui-color-gray-50); border-radius:12px;}
+.faqListWrap .faq_timg {margin-top:var(--ui-padding-l); text-align:center;}
+.faqListWrap .faq_timg img {max-width:100%; height:auto; border-radius:12px;}
+
+/* ========================================
+   관리자 버튼
+======================================== */
+.faqListWrap .admBtn {display:flex; justify-content:center; text-align:center; margin-top:var(--ui-padding-l);}
+
+/* ========================================
+   반응형 디자인
+======================================== */
+@media (max-width:1024px) {
+
+}
+
+@media (max-width:768px) {
+    .faqListWrap .searchBox .searchForm {flex-direction:column;}
+    .faqListWrap .searchBox .searchInput {width:100%;}
+    .faqListWrap .searchBox .button {width:100%; justify-content:center;}
+    
+    .faqListWrap .catagory ul {justify-content:center;}
+    
+    .faqListWrap .faqQuestion {padding:16px;}
+    .faqListWrap .faqQuestion .qIcon {width:24px; height:24px; font-size:12px;}
+    .faqListWrap .faqQuestion .qContent h3 {font-size:14px;}
+    
+    .faqListWrap .faqAnswer {padding:16px;}
+    .faqListWrap .faqAnswer .aIcon {width:24px; height:24px; font-size:12px;}
+    .faqListWrap .faqAnswer .aContent {font-size:14px;}
+}
+
+@media (max-width:480px) {
+    .faqListWrap .searchBox {padding:12px;}
+    .faqListWrap .faqQuestion {flex-wrap:wrap;}
+    .faqListWrap .faqQuestion .toggleBtn {position:absolute; right:16px; top:16px;}
+}
+
+/* ========================================
+   접근성 향상
+======================================== */
+@media (prefers-reduced-motion:reduce) {
+    .faqListWrap .faqItem,
+    .faqListWrap .faqQuestion .toggleBtn,
+    .faqListWrap .faqQuestion .toggleBtn i {transition:none;}
+}

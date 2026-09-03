@@ -1,0 +1,295 @@
+@charset "utf-8";
+
+/* ========================================
+   UXC_Flarumix 소셜 로그인 스킨 스타일시트
+   목차: 1. CSS 변수 정의
+   2. 기본 리셋 및 공통 스타일
+   3. 소셜 로그인 페이지
+   4. 소셜 회원가입
+   5. 소셜 연결 관리
+   6. 팝업 스타일
+   7. 유틸리티 클래스
+   8. 반응형 디자인
+======================================== */
+
+/* ========================================
+   1. CSS 변수 정의 (member/basic 스타일 상속)
+======================================== */
+:root {
+    --social-naver:#03C75A;
+    --social-kakao:#FEE500;
+    --social-google:#4285F4;
+    --social-facebook:#1877F2;
+    --social-twitter:#1DA1F2;
+    --social-payco:#E2231A;
+}
+
+/* ========================================
+   2. 기본 리셋 및 공통 스타일
+======================================== */
+/* 소셜 로그인 기본 레이아웃 */
+.socialRegisterWrap {
+
+}
+
+/* ========================================
+   3. 소셜 로그인 페이지
+======================================== */
+/* 소셜 로그인 박스 - member/basic loginBox 스타일 적용 */
+.snsLoginWrp {overflow:hidden; background:var(--ui-color-white); box-shadow:0 1px 3px rgba(0, 0, 0, 0.04);}
+/* 소셜 로그인 헤더 */
+.snsLoginWrp h2 {display:flex; justify-content:center; align-items:center; padding:var(--ui-gap-m) var(--ui-gap-x); border-bottom:1px solid var(--ui-color-gray-100); background:var(--ui-color-gray-50); color:var(--ui-color-gray-800); font-size:16px; font-weight:600; gap:var(--ui-gap-s);letter-spacing:-0.01em;}
+.snsLoginWrp h2 i {color:var(--color-prime); font-size:18px;}
+.snsLoginWrp h3 {display:block; padding:var(--ui-gap-l) 0 var(--ui-gap-s); color:var(--ui-color-gray-600); font-size:14px; font-weight:500; text-align:center;}
+/* 소셜 버튼 그리드 */
+.snsLoginWrp .sns-wrap,
+.loginBox .memberBox .snsLoginWrp .sns-wrap {display:grid; grid-template-columns:repeat(2, 1fr);gap:var(--ui-gap-s);}
+.snsLoginWrp .sns-wrap .sns-icon {display:flex; justify-content:center; align-items:center; width:100%; padding:var(--ui-gap-s) var(--ui-gap-m); border:1px solid var(--ui-color-gray-200); border-radius:6px; font-size:14px; font-weight:600; text-decoration:none; gap:var(--ui-gap-s);transition:all 0.2s ease;}
+.snsLoginWrp .sns-wrap .sns-icon:hover {box-shadow:0 4px 12px rgba(0, 0, 0, 0.1); transform:translateY(-2px);}
+/* ========================================
+   4. 소셜 회원가입
+======================================== */
+/* 소셜 회원가입 헤더 - register.skin.php 스타일 반영 */
+.socialRegisterWrap .socialRegisterHeader {text-align:center;}
+.socialRegisterWrap .socialRegisterTitle {display:flex; justify-content:center; align-items:center; color:var(--ui-color-gray-900); font-size:28px; font-weight:700; gap:var(--ui-gap-s);letter-spacing:-0.02em;}
+.socialRegisterWrap .socialRegisterTitle i {color:var(--color-prime); font-size:32px;}
+.socialRegisterWrap .socialRegisterDesc {display:inline-flex; align-items:center; padding:var(--ui-gap-m) var(--ui-gap-x); border-radius:8px; background:var(--ui-color-info-light); color:var(--ui-color-info-dark); font-size:14px; line-height:1.6; gap:var(--ui-gap-s);}
+.socialRegisterWrap .socialRegisterDesc i {flex-shrink:0; font-size:18px;}
+/* 소셜 약관 박스 */
+.socialRegisterWrap .socialAgreeBox {display:flex; flex-direction:column; margin-bottom:var(--ui-gap-x); gap:var(--ui-gap-m);}
+/* 소셜 약관 아이템 */
+.socialRegisterWrap .socialAgreeItem {overflow:hidden; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-white); box-shadow:0 1px 3px rgba(0, 0, 0, 0.04); transition:all 0.2s ease;}
+.socialRegisterWrap .socialAgreeHeader {padding:var(--ui-gap-m) var(--ui-gap-l); border-bottom:1px solid var(--ui-color-gray-100); background:var(--ui-color-gray-50);}
+.socialRegisterWrap .socialAgreeTitle {display:flex; align-items:center; margin:0; color:var(--ui-color-gray-800); font-size:16px; font-weight:600; gap:var(--ui-gap-s);letter-spacing:-0.01em;}
+.socialRegisterWrap .socialAgreeTitle i {color:var(--color-prime); font-size:18px;}
+.socialRegisterWrap .socialAgreeContent {padding:var(--ui-gap-l);}
+.socialRegisterWrap .socialAgreeContent textarea {width:100%; height:200px; padding:var(--ui-gap-m); border:1px solid var(--ui-color-gray-200); border-radius:6px; background:var(--ui-color-white); color:var(--ui-color-gray-700); font-size:13px; font-family:inherit; line-height:1.7; resize:none;}
+.socialRegisterWrap .socialAgreeContent textarea:focus {border-color:var(--color-prime); outline:none;}
+/* 소셜 체크박스 영역 */
+.socialRegisterWrap .socialAgreeCheck {padding:var(--ui-gap-m) var(--ui-gap-l); border-top:1px solid var(--ui-color-gray-100);}
+.socialRegisterWrap .socialAgreeCheck .opt {display:flex; justify-content:flex-start; align-items:center; gap:10px;}
+/* 체크박스 스타일 */
+.socialRegisterWrap input[type="checkbox"] {flex-shrink:0; width:18px; height:18px; margin:0; cursor:pointer;}
+.socialRegisterWrap .socialAgreeAll input[type="checkbox"] {width:20px; height:20px;}
+/* 체크박스 레이블 */
+.socialRegisterWrap label[for^="agree"] {display:inline-block; cursor:pointer;}
+.socialRegisterWrap .socialAgreeCheck .checkText {color:var(--ui-color-gray-700); font-size:14px; cursor:pointer; transition:all 0.2s ease;}
+.socialRegisterWrap .socialAgreeCheck .opt input[type="checkbox"]:checked ~ .checkText {color:var(--ui-color-gray-900); font-weight:500;}
+/* 소셜 전체 동의 */
+.socialRegisterWrap .socialAgreeAll {margin-bottom:calc(var(--ui-gap-x) * 1.5); padding:var(--ui-gap-m) var(--ui-gap-l); overflow:hidden; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-white); transition:all 0.2s ease;}
+.socialRegisterWrap .socialAgreeAll .opt {display:flex; justify-content:center; align-items:center; gap:10px;}
+.socialRegisterWrap .socialAgreeAll .checkText {color:var(--ui-color-gray-700); font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s ease;}
+.socialRegisterWrap .socialAgreeAll .checkText strong {font-weight:500;}
+.socialRegisterWrap .socialAgreeAll .opt input[type="checkbox"]:checked ~ .checkText {color:var(--ui-color-gray-900);}
+/* 소셜 폼 컨테이너 */
+.socialRegisterWrap .socialFormContainer {margin-bottom:var(--ui-gap-x); overflow:hidden; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-white); box-shadow:0 1px 3px rgba(0, 0, 0, 0.04);}
+.socialRegisterWrap .socialFormSection {border-bottom:1px solid var(--ui-color-gray-100);}
+.socialRegisterWrap .socialFormSection:last-child {border-bottom:none;}
+.socialRegisterWrap .socialSectionHeader {padding:var(--ui-gap-m) var(--ui-gap-x); border-bottom:1px solid var(--ui-color-gray-100); background:var(--ui-color-gray-50);}
+.socialRegisterWrap .socialSectionTitle {display:flex; align-items:center; margin:0; color:var(--ui-color-gray-800); font-size:16px; font-weight:600; gap:var(--ui-gap-s);letter-spacing:-0.01em;}
+.socialRegisterWrap .socialSectionTitle i {color:var(--color-prime); font-size:18px;}
+.socialRegisterWrap .socialSectionContent {padding:var(--ui-gap-x);}
+.socialRegisterWrap .socialFormGroup {margin-bottom:var(--ui-gap-x);}
+.socialRegisterWrap .socialFormGroup:last-child {margin-bottom:0;}
+.socialRegisterWrap .socialFormLabel {display:block; margin-bottom:var(--ui-gap-s); color:var(--ui-color-gray-700); font-size:13px; font-weight:600; letter-spacing:-0.01em;}
+.socialRegisterWrap .socialFormLabel.required::after {content:'*'; margin-left:4px; color:var(--ui-color-danger);}
+.socialRegisterWrap .socialFormMessage {margin-top:var(--ui-gap-s); font-size:13px;}
+.socialRegisterWrap .socialFormMessage.error {color:var(--ui-color-danger);}
+/* 소셜 버튼 영역 */
+.socialRegisterWrap .socialButtonArea {display:flex; justify-content:center; gap:var(--ui-gap-s);}
+.socialRegisterWrap .socialButtonArea .button {min-width:180px;}
+/* 소셜 기존 계정 연결 */
+.socialRegisterWrap .socialMemberConnect {display:flex; justify-content:center; align-items:center; flex-direction:column; margin-top:calc(var(--ui-gap-x) * 1.5); padding:var(--ui-gap-l); border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-gray-50); text-align:center;}
+.socialRegisterWrap .socialMemberConnect .socialConnectTitle {margin-bottom:var(--ui-gap-m); color:var(--ui-color-gray-800); font-size:16px; font-weight:600;}
+/* 회원가입 박스 상속 구조 */
+.registerWrp {max-width:600px; margin:60px auto; padding:0 var(--ui-gap-l);}
+.registerWrp .socialBox {overflow:hidden; border:1px solid var(--ui-color-gray-200); border-radius:8px; background:var(--ui-color-white); box-shadow:0 1px 3px rgba(0, 0, 0, 0.04);}
+/* 회원가입 헤더 */
+.registerWrp h2,
+.socialHeader {padding:var(--ui-gap-l) var(--ui-gap-x); border-bottom:1px solid var(--ui-color-gray-100); background:var(--ui-color-gray-50); text-align:center;}
+.socialTitle {display:flex; justify-content:center; align-items:center; margin:0 0 var(--ui-gap-s) 0; color:var(--ui-color-gray-900); font-size:18px; font-weight:600; gap:var(--ui-gap-s);letter-spacing:-0.01em;}
+.socialTitle i {color:var(--color-prime); font-size:20px;}
+.socialDesc {color:var(--ui-color-gray-600); font-size:14px; line-height:1.6;}
+/* 소셜 버튼 리스트 */
+.registerWrp .sns-wrap,
+.socialList {display:grid; padding:var(--ui-gap-x); grid-template-columns:repeat(2, 1fr);gap:var(--ui-gap-s);}
+.registerWrp .sns-icon,
+.socialItem {display:flex; justify-content:center; align-items:center; width:100%; padding:var(--ui-gap-m) var(--ui-gap-l); border-radius:6px; font-size:15px; font-weight:600; text-decoration:none; gap:var(--ui-gap-s);transition:all 0.2s ease;}
+.registerWrp .sns-icon:hover,
+.socialItem:hover {box-shadow:0 4px 12px rgba(0, 0, 0, 0.15); transform:translateY(-2px);}
+.registerWrp .sns-icon .ico,
+.socialItem i {width:24px; height:24px; font-size:20px;}
+.registerWrp .sns-icon .txt,
+.socialItem .txt {flex-shrink:0;}
+/* SNS별 색상 스타일 통합 */
+.sns-naver,
+.socialItem.naver,
+.registerWrp .sns-naver {border:1px solid var(--social-naver); background:var(--social-naver); color:var(--ui-color-white);}
+.sns-naver:hover,
+.socialItem.naver:hover,
+.registerWrp .sns-naver:hover {border-color:#02B351; background:#02B351;}
+.sns-kakao,
+.socialItem.kakao,
+.registerWrp .sns-kakao {border:1px solid var(--social-kakao); background:var(--social-kakao); color:#3C1E1E;}
+.sns-kakao:hover,
+.socialItem.kakao:hover,
+.registerWrp .sns-kakao:hover {border-color:#FAD700; background:#FAD700;}
+.sns-google,
+.socialItem.google,
+.registerWrp .sns-google {border:1px solid var(--ui-color-gray-300); background:var(--ui-color-white); color:var(--social-google);}
+.sns-google:hover,
+.socialItem.google:hover,
+.registerWrp .sns-google:hover {border-color:var(--social-google); background:var(--ui-color-gray-50);}
+.sns-facebook,
+.socialItem.facebook,
+.registerWrp .sns-facebook {border:1px solid var(--social-facebook); background:var(--social-facebook); color:var(--ui-color-white);}
+.sns-facebook:hover,
+.socialItem.facebook:hover,
+.registerWrp .sns-facebook:hover {border-color:#0C63D4; background:#0C63D4;}
+.sns-twitter,
+.socialItem.twitter,
+.registerWrp .sns-twitter {border:1px solid var(--social-twitter); background:var(--social-twitter); color:var(--ui-color-white);}
+.sns-twitter:hover,
+.socialItem.twitter:hover,
+.registerWrp .sns-twitter:hover {border-color:#0C85D0; background:#0C85D0;}
+.sns-payco,
+.socialItem.payco,
+.registerWrp .sns-payco {border:1px solid var(--social-payco); background:var(--social-payco); color:var(--ui-color-white);}
+.sns-payco:hover,
+.socialItem.payco:hover,
+.registerWrp .sns-payco:hover {border-color:#C71F17; background:#C71F17;}
+/* 소셜 로딩 화면 */
+.social-login-loading {display:flex; justify-content:center; align-items:center; min-height:300px; text-align:center;}
+.social-login-loading p {display:inline-block; padding:40px 0 0; color:var(--ui-color-gray-600); font-size:14px; line-height:30px;}
+/* ========================================
+   5. 소셜 연결 관리
+======================================== */
+/* 소셜 폼 입력 요소 */
+.socialRegisterWrap .socialFrmInput {width:100%; padding:10px 14px; border:1px solid var(--ui-color-gray-200); border-radius:6px; background:var(--ui-color-white); color:var(--ui-color-gray-900); font-size:14px; transition:all 0.2s ease;}
+.socialRegisterWrap .socialFrmInput:focus {border-color:var(--color-prime); outline:none; box-shadow:0 0 0 3px rgba(var(--color-prime-rgb), 0.1);}
+.socialRegisterWrap textarea.socialFrmInput {min-height:120px; resize:vertical;}
+/* 체크박스 레이블 */
+.socialRegisterWrap label[for^="agree"] {display:inline-block; cursor:pointer;}
+/* 스크린 리더 전용 */
+.sr-only {position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; border:0; white-space:nowrap; clip:rect(0,0,0,0);}
+/* ========================================
+   6. 팝업 스타일
+======================================== */
+/* SNS 연결 팝업 */
+#sns-link-pnl {position:relative;}
+#sns-link-pnl .connect-close {display:flex; justify-content:center; align-items:center; position:absolute; top:var(--ui-gap-m); right:var(--ui-gap-m); width:32px; height:32px; border:none; border-radius:50%; background:transparent; color:var(--ui-color-gray-600); font-size:18px; cursor:pointer; transition:all 0.2s ease;}
+#sns-link-pnl .connect-close:hover {background:var(--ui-color-gray-100); color:var(--ui-color-danger);}
+#sns-link-pnl .connect-fg {padding:var(--ui-gap-x); text-align:center;}
+#sns-link-pnl .connect-title {margin-bottom:var(--ui-gap-l); color:var(--ui-color-gray-900); font-size:20px; font-weight:700;}
+#sns-link-pnl .connect-desc {margin-bottom:var(--ui-gap-l); padding:var(--ui-gap-m); border:1px solid var(--ui-color-success); border-radius:6px; background:var(--ui-color-success-light); color:var(--ui-color-success-dark); font-size:14px; line-height:1.6;}
+#sns-link-pnl #login_fs {max-width:320px; margin:0 auto; text-align:left;}
+#sns-link-pnl #login_fs label {display:block; margin-bottom:var(--ui-gap-s); color:var(--ui-color-gray-700); font-size:14px; font-weight:500;}
+#sns-link-pnl #login_fs .lg_id,
+#sns-link-pnl #login_fs .lg_pw {margin-bottom:var(--ui-gap-m);}
+#sns-link-pnl #login_id,
+#sns-link-pnl #login_pw {width:100%; padding:var(--ui-gap-s) var(--ui-gap-m); border:1px solid var(--ui-color-gray-300); border-radius:6px; font-size:14px;}
+#sns-link-pnl #login_fs .button {width:100%; margin-top:var(--ui-gap-l);}
+/* ========================================
+   7. 유틸리티 클래스
+======================================== */
+/* 안내 메시지 */
+.social_info_guide {margin:0 0 var(--ui-gap-l); padding:var(--ui-gap-m) var(--ui-gap-l); border:1px solid var(--ui-color-gray-200); border-radius:6px; background:var(--ui-color-gray-50); color:var(--ui-color-gray-700); font-size:14px; line-height:1.6;}
+.bg-warning {margin:0 0 var(--ui-gap-m); padding:var(--ui-gap-m) var(--ui-gap-l); border-radius:6px; font-size:14px; line-height:1.6;}
+.bg-warning1 {border:1px solid var(--ui-color-danger); background:var(--ui-color-danger-light); color:var(--ui-color-danger-dark);}
+.bg-warning2 {border:1px solid var(--ui-color-success); background:var(--ui-color-success-light); color:var(--ui-color-success-dark);}
+.bg-warning3 {border:1px solid var(--ui-color-warning); background:var(--ui-color-warning-light); color:var(--ui-color-warning-dark);}
+/* 아이콘 텍스트 숨김 */
+.sns-icon .txt i {font-style:normal;}
+/* ========================================
+   8. 반응형 디자인
+======================================== */
+@media (max-width:1024px) {
+    .mbskin {width:100%; padding:var(--ui-gap-l);}
+    #sns-link-pnl.remodal {max-width:90%; padding:var(--ui-gap-x);}
+}
+@media (max-width:768px) {
+    .socialRegisterWrap {margin:40px auto; padding:0 var(--ui-gap-m);}
+    .registerWrp {margin:40px auto; padding:0 var(--ui-gap-m);}
+    .snsLoginWrp .sns-wrap,
+    .loginBox .memberBox .snsLoginWrp .sns-wrap,
+    .registerWrp .sns-wrap,
+    .socialList {padding:var(--ui-gap-l); grid-template-columns:1fr;}
+    .registerWrp .sns-icon,
+    .socialItem {width:100%; padding:var(--ui-gap-m) var(--ui-gap-l);}
+    .socialRegisterWrap .socialAgreeHeader,
+    .socialRegisterWrap .socialAgreeCheck,
+    .socialRegisterWrap .socialAgreeAll {padding:var(--ui-gap-m);}
+    .socialRegisterWrap .socialSectionHeader,
+    .socialRegisterWrap .socialSectionContent {padding:var(--ui-gap-m);}
+ /* 타이틀 크기 */
+    .socialRegisterWrap .socialRegisterTitle {font-size:24px;}
+    .socialRegisterWrap .socialRegisterTitle i {font-size:28px;}
+ /* 버튼 영역 */
+    .socialRegisterWrap .socialButtonArea {flex-direction:column;}
+    .socialRegisterWrap .socialButtonArea .button {width:100%;}
+}
+@media (max-width:480px) {
+    .socialHeader,
+    .registerWrp h2 {padding:var(--ui-gap-m);}
+    .socialTitle {font-size:16px;}
+    .socialDesc {font-size:13px;}
+    .snsLoginWrp .sns-wrap,
+    .registerWrp .sns-wrap,
+    .socialList {padding:var(--ui-gap-m);}
+    #sns-link-pnl .connect-fg {padding:var(--ui-gap-l);}
+    #sns-link-pnl .connect-title {font-size:18px;}
+ /* 타이틀 크기 추가 조정 */
+    .socialRegisterWrap .socialRegisterTitle {font-size:20px;}
+    .socialRegisterWrap .socialRegisterTitle i {font-size:24px;}
+ /* 약관 내용 */
+    .socialRegisterWrap .socialAgreeContent textarea {height:150px; font-size:12px;}
+}
+/* 레거시 지원 (하위 호환성) */
+html.remodal-is-locked {overflow-y:scroll !important;}
+@media only screen and (min-width:641px) {
+    #sns-link-pnl.remodal {max-width:400px; padding:50px;}
+}
+/* 레거시 스타일 - 기존 기능 호환을 위해 유지 */
+/* SNS 아이콘 기본 스타일 */
+.login-sns {clear:both; margin:10px 0; border:1px solid var(--ui-color-gray-200); border-radius:4px; background:var(--ui-color-white);}
+.login-sns h3 {display:none;}
+/* 회원가입 폼의 SNS 아이콘 */
+#fregisterform .form_01 .reg-form {margin-bottom:20px;}
+#fregisterform .form_01 .reg-form .sns-wrap {margin:10px 0 0; text-align:left;}
+.reg-form .sns-icon {display:inline-block; margin:0 1px; overflow:hidden; border:1px solid; text-decoration:none; vertical-align:middle;}
+.reg-form .sns-icon:hover {text-decoration:none;}
+.reg-form .sns-icon .ico {display:block; width:24px; height:24px; background:url('./img/sns_logo.png') no-repeat;}
+.reg-form .sns-icon-not .ico {display:block; background:url('./img/sns_logo_not.png') no-repeat;}
+.reg-form .sns-icon .txt {position:absolute; overflow:hidden; font-size:0; line-height:0;}
+/* SNS별 아이콘 위치 및 색상 */
+.sns-wrap-reg .sns-icon {border-color:#dcdcdc;}
+.sns-wrap-reg .sns-icon-not {border-color:#8b8b8b; background:#8b8b8b;}
+.sns-wrap-reg .sns-naver {border-color:#18a400; background:#2db400;}
+.sns-wrap-reg .sns-naver .ico {background-position:-29px 0;}
+.sns-wrap-reg .sns-google {border-color:#ca2c19; background:#dd5443;}
+.sns-wrap-reg .sns-google .ico {background-position:-58px 0;}
+.sns-wrap-reg .sns-facebook {border-color:#2e5393; background:#3a5897;}
+.sns-wrap-reg .sns-facebook .ico {background-position:0 0;}
+.sns-wrap-reg .sns-kakao {border-color:#f2df00; background:#ffeb00;}
+.sns-wrap-reg .sns-kakao .ico {background-position:-87px 0;}
+.sns-wrap-reg .sns-twitter {border-color:#488FC9;}
+.sns-wrap-reg .sns-twitter .ico {background-position:-145px 0;}
+.sns-wrap-reg .sns-payco {border-color:#C44646;}
+.sns-wrap-reg .sns-payco .ico {background-position:-116px 0;}
+/* 컬러 아이콘 배경 */
+.sns-wrap-over .sns-naver {background:url('./img/sns_naver_s.png') no-repeat;}
+.sns-wrap-over .sns-google {background:url('./img/sns_gp_s.png') no-repeat;}
+.sns-wrap-over .sns-facebook {background:url('./img/sns_fb_s.png') no-repeat;}
+.sns-wrap-over .sns-twitter {background:url('./img/sns_twitter_s.png') no-repeat;}
+.sns-wrap-over .sns-payco {background:url('./img/sns_payco_s.png') no-repeat;}
+.sns-wrap-over .sns-kakao {background:url('./img/sns_kakao_s.png') no-repeat;}
+/* 아웃로그인 */
+#sns_outlogin .sns-icon {margin:0 1px; overflow:hidden;}
+#sns_outlogin .sns-icon .txt {position:absolute; overflow:hidden; font-size:0; line-height:0; vertical-align:middle;}
+/* 레거시 아이콘 배경 위치 (구버전 호환) */
+.registerWrp .sns-naver .ico {background:url(./img/sns_naver_s.png) no-repeat;}
+.registerWrp .sns-kakao .ico {background:url(./img/sns_kakao_s.png) no-repeat;}
+/* 기존 버튼 스타일 오버라이드 (구버전 호환) */
+.snsLoginWrp h2 {border-bottom:1px solid var(--ui-color-gray-100) !important;}
+/* 컨테이너 배경 오버라이드 */
+.containerWrap .container .contentsWrap[data-ui="sub"]:has(.mbskin) {justify-content:center; overflow:auto; background:var(--ui-color-gray-100);}

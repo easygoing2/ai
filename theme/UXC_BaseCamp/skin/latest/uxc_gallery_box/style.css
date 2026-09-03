@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+/* 리스트 컨테이너 - Grid 사용 */
+.uxc_gallery_box ul {display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, auto)); grid-gap:10px; list-style:none; margin:0; padding:0;}
+
+/* 리스트 아이템 - Grid 기반 + 박스 스타일 */
+.uxc_gallery_box li {display:flex; flex-direction:column; padding:10px; background:var(--board-white); border:1px solid var(--board-gray-300); border-radius:var(--board-radius-lg); box-shadow:0 1px 3px rgba(0,0,0,0.05); transition:all 0.2s;}
+.uxc_gallery_box li:hover {border-color:var(--color-prime); box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.uxc_gallery_box li.empty_li {grid-column:1 / -1; text-align:center; color:var(--board-gray-500); padding:40px 0; border:2px dashed var(--board-gray-300); background:transparent; box-shadow:none;}
+.uxc_gallery_box li.empty_li:hover {border-color:var(--board-gray-300); transform:none; box-shadow:none;}
+.uxc_gallery_box li.empty_li i {font-size:48px; color:var(--board-gray-300); display:block; margin-bottom:10px;}
+
+/* 썸네일 이미지 */
+.uxc_gallery_box li .lt_img {display:flex; position:relative; overflow:hidden; border-radius:var(--board-radius); background:var(--board-gray-100); margin:0;}
+.uxc_gallery_box li .lt_img img {width:100%; height:100%; object-fit:cover;}
+.uxc_gallery_box li .lt_img img[alt="이미지가 없습니다."] {height:115px;}
+.uxc_gallery_box li .lt_img:hover {opacity:0.8;}
+
+/* 제목 텍스트 */
+.uxc_gallery_box li a {margin-top:10px; font-size:14px; font-weight:600; min-height:42px; color:var(--board-gray-900); line-height:1.5; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical;}
+.uxc_gallery_box li a:hover {color:var(--color-prime);}
+.uxc_gallery_box li strong {font-weight:600;}
+
+/* 아이콘 뱃지 - 가이드라인 따름 */
+.uxc_gallery_box li .new_icon {display:inline-block; width:16px; height:16px; line-height:16px; font-size:10px; font-weight:700; color:var(--board-white-only); background:var(--color-prime); text-align:center; border-radius:2px; vertical-align:middle; margin-left:4px; opacity:0.8;}
+.uxc_gallery_box li .hot_icon {display:inline-block; width:16px; height:16px; line-height:16px; font-size:10px; font-weight:700; color:var(--board-white-only); background:var(--board-danger); text-align:center; border-radius:2px; vertical-align:middle; margin-left:4px; opacity:0.8;}
+.uxc_gallery_box li a:hover .new_icon, .uxc_gallery_box li a:hover .hot_icon {opacity:1; transform:scale(1.1);}
+
+/* 비밀글 아이콘 */
+.uxc_gallery_box li .bx-lock-alt {display:inline-block; width:16px; height:16px; line-height:16px; font-size:12px; color:var(--board-gray-600); background:var(--board-gray-100); text-align:center; border-radius:2px; vertical-align:middle; margin-right:4px;}
+
+/* 댓글 수 */
+.uxc_gallery_box .lt_cmt {display:inline-block; padding:2px 8px; background:var(--board-gray-100); color:var(--board-gray-600); font-size:11px; font-weight:400; line-height:1.2; border-radius:12px; vertical-align:middle; margin-left:6px;}
+.uxc_gallery_box li a:hover .lt_cmt {background:var(--color-prime); color:var(--board-white-only);}
+
+/* 메타 정보 */
+.uxc_gallery_box .lt_info {display:flex; gap:4px; margin-top:8px; font-size:12px; color:var(--board-gray-500);}
+.uxc_gallery_box .lt_info > span i {font-size:14px;}
+.uxc_gallery_box .lt_board,
+.uxc_gallery_box .lt_nick,
+.uxc_gallery_box .lt_date {color:var(--board-gray-500); font-size:11px; display:flex; align-items:center; gap:4px;}
+
+
+/* 반응형 디자인 - Grid 기반 */
+
+
+/* 접근성 - 모션 감소 */
+@media (prefers-reduced-motion: reduce) {
+    .uxc_gallery_box * {transition:none !important; transform:none !important;}
+}

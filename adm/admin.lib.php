@@ -54,7 +54,13 @@ function get_mobile_skin_select($skin_gubun, $id, $name, $selected = '', $event 
     $skins = array();
 
     if (defined('G5_THEME_PATH') && $config['cf_theme']) {
-        $dirs = get_skin_dir($skin_gubun, G5_THEME_MOBILE_PATH . '/' . G5_SKIN_DIR);
+        // 모바일 전용 스킨이 없으면 get_skin_path()는 테마의 PC 스킨을
+        // 대신 사용하므로, 관리자 선택 목록에도 같은 후보를 표시한다.
+        $dirs = array_merge(
+            get_skin_dir($skin_gubun, G5_THEME_MOBILE_PATH . '/' . G5_SKIN_DIR),
+            get_skin_dir($skin_gubun, G5_THEME_PATH . '/' . G5_SKIN_DIR)
+        );
+        $dirs = array_values(array_unique($dirs));
         if (!empty($dirs)) {
             foreach ($dirs as $dir) {
                 $skins[] = 'theme/' . $dir;

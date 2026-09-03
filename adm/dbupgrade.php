@@ -81,6 +81,25 @@ $result = sql_query($sql);
 while ($row = sql_fetch_array($result)) {
     $write_table = $g5['write_prefix'] . $row['bo_table']; // 게시판 테이블 전체이름
 
+    // 게시글 링크를 5개까지 저장할 수 있도록 필드를 추가합니다.
+    for ($i=3; $i<=G5_LINK_COUNT; $i++) {
+        $previous = $i - 1;
+        $link_field = 'wr_link'.$i;
+        $link_hit_field = $link_field.'_hit';
+
+        if (!sql_fetch(" SHOW COLUMNS FROM {$write_table} LIKE '{$link_field}' ")) {
+            sql_query(" ALTER TABLE `{$write_table}`
+                        ADD `{$link_field}` text NOT NULL AFTER `wr_link{$previous}` ", false);
+            $is_check = true;
+        }
+
+        if (!sql_fetch(" SHOW COLUMNS FROM {$write_table} LIKE '{$link_hit_field}' ")) {
+            sql_query(" ALTER TABLE `{$write_table}`
+                        ADD `{$link_hit_field}` int(11) NOT NULL DEFAULT '0' AFTER `wr_link{$previous}_hit` ", false);
+            $is_check = true;
+        }
+    }
+
     $sql = " SHOW COLUMNS FROM {$write_table} LIKE 'wr_seo_title' ";
     $row = sql_fetch($sql);
     

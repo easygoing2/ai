@@ -1,0 +1,94 @@
+/* ========================================
+   MODULE- MAIN KV
+======================================== */
+
+/* Main Slider */
+.kvWrap[data-section="main_kv"] {position:relative; width:100%; margin-top:20px; margin-bottom:20px; z-index:1; overflow:hidden;}
+.kvWrap[data-section="main_kv"] .mainSwiper {width:100%; height:300px; overflow:hidden;}
+.kvWrap[data-section="main_kv"] .swiper-slide {height:100%;}
+
+/* Slide Item */
+.slideItem {position:relative; width:100%; height:100%; background-size:cover; background-position:center; background-repeat:no-repeat;}
+.slideContent {display:flex; justify-content:center; align-items:center; position:absolute; z-index:2; top:0; left:0; width:100%; height:100%;}
+.slideInner {display:flex; flex-direction:column; text-align:center; gap:10px; align-items:center; margin-bottom:20px;}
+
+/* Slide Text */
+.slideTitle {font-size:30px; font-weight:600; line-height:1.2;}
+.slideTitle.white {color:var(--ui-color-white-only) !important;}
+.slideTitle.black {color:var(--ui-color-black-only) !important;}
+.slideSubtitle {font-size:18px; line-height:1.5;}
+.slideSubtitle.white {color:var(--ui-color-white-only) !important;}
+.slideSubtitle.black {color:var(--ui-color-black-only) !important;}
+.slideButton {display:inline-flex;}
+/* 슬라이더 버튼 색상 고정 (다크모드 영향 없음) */
+.slideButton.bg-wh {background-color:var(--ui-color-white-only) !important; color:var(--ui-color-black-only) !important; border-color:var(--ui-color-gray-300) !important;}
+.slideButton.bg-bl {background-color:var(--ui-color-black-only) !important; color:var(--ui-color-white-only) !important;}
+.slideButton.bg-pr {background-color:var(--color-prime) !important; color:var(--ui-color-white-only) !important;}
+.slideButton.bg-pink {background-color:var(--ui-color-pink) !important; color:var(--ui-color-white-only) !important;}
+.slideButton.bg-purple {background-color:var(--ui-color-purple) !important; color:var(--ui-color-white-only) !important;}
+.slideButton.bg-yellow {background-color:var(--ui-color-yellow) !important; color:var(--ui-color-black-only) !important;}
+.slideButton.bg-green {background-color:var(--ui-color-green) !important; color:var(--ui-color-white-only) !important;}
+.slideButton.bg-mint {background-color:var(--ui-color-mint) !important; color:var(--ui-color-white-only) !important;}
+.slideButton.bg-lightblue {background-color:var(--ui-color-lightblue) !important; color:var(--ui-color-white-only) !important;}
+.slideButton.bg-blue {background-color:var(--ui-color-blue) !important; color:var(--ui-color-white-only) !important;}
+
+/* Swiper Navigation */
+.kvWrap[data-section="main_kv"] .swiper-button-prev,
+.kvWrap[data-section="main_kv"] .swiper-button-next {width:50px; height:50px; border-radius:50%; transition:all 0.3s;}
+.kvWrap[data-section="main_kv"] .swiper-button-prev::after,
+.kvWrap[data-section="main_kv"] .swiper-button-next::after {display:none;}
+.kvWrap[data-section="main_kv"] .swiper-button-prev i,
+.kvWrap[data-section="main_kv"] .swiper-button-next i {font-size:28px; line-height:50px;}
+
+/* Navigation Colors */
+.kvWrap[data-section="main_kv"] .swiper-button-prev.white,
+.kvWrap[data-section="main_kv"] .swiper-button-next.white {background:rgba(255,255,255,0.01); color:var(--ui-color-white-only); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);}
+.kvWrap[data-section="main_kv"] .swiper-button-prev.white:hover,
+.kvWrap[data-section="main_kv"] .swiper-button-next.white:hover {background:rgba(255,255,255,0.5);}
+
+.kvWrap[data-section="main_kv"] .swiper-button-prev.black,
+.kvWrap[data-section="main_kv"] .swiper-button-next.black {background:rgba(0,0,0,0.02); color:var(--ui-color-black-only); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);}
+.kvWrap[data-section="main_kv"] .swiper-button-prev.black:hover,
+.kvWrap[data-section="main_kv"] .swiper-button-next.black:hover {background:rgba(0,0,0,0.2);}
+
+/* Play/Pause Button */
+.kvWrap[data-section="main_kv"] .swiper-button-play {position:absolute; bottom:10px; right:14px; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.3s; z-index:10;}
+.kvWrap[data-section="main_kv"] .swiper-button-play i {font-size:20px; line-height:1;}
+
+.kvWrap[data-section="main_kv"] .swiper-button-play.white {background:rgba(255,255,255,0.01); color:var(--ui-color-white-only); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);}
+.kvWrap[data-section="main_kv"] .swiper-button-play.white:hover {background:rgba(255,255,255,0.5);}
+
+.kvWrap[data-section="main_kv"] .swiper-button-play.black {background:rgba(0,0,0,0.02); color:var(--ui-color-black-only); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);}
+.kvWrap[data-section="main_kv"] .swiper-button-play.black:hover {background:rgba(0,0,0,0.2);}
+
+/* Admin Settings Button */
+.kvWrap[data-section="main_kv"] .slider-admin-btn {position:absolute; top:10px; right:14px; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.3s; z-index:2; text-decoration:none; background:rgba(0,0,0,0.2); color:var(--ui-color-white-only); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);}
+.kvWrap[data-section="main_kv"] .slider-admin-btn:hover {background:rgba(0,0,0,0.7); transform:rotate(90deg); color:var(--ui-color-white-only);}
+.kvWrap[data-section="main_kv"] .slider-admin-btn i {font-size:20px; line-height:1;}
+
+/* Swiper Pagination */
+.kvWrap[data-section="main_kv"] .swiper-pagination {bottom:10px; transition:all 0.3s;}
+.kvWrap[data-section="main_kv"] .swiper-pagination-bullet {width:6px; height:6px; opacity:1; transition:all 0.3s;}
+.kvWrap[data-section="main_kv"] .swiper-pagination-bullet-active {width:30px; border-radius:4px;}
+
+/* Pagination Colors */
+.kvWrap[data-section="main_kv"] .swiper-pagination.white .swiper-pagination-bullet {background:rgba(255,255,255,0.5);}
+.kvWrap[data-section="main_kv"] .swiper-pagination.white .swiper-pagination-bullet-active {background:var(--ui-color-white-only);}
+
+.kvWrap[data-section="main_kv"] .swiper-pagination.black .swiper-pagination-bullet {background:rgba(0,0,0,0.3);}
+.kvWrap[data-section="main_kv"] .swiper-pagination.black .swiper-pagination-bullet-active {background:var(--ui-color-black-only);}
+
+/* Slide Content - Swiper Parallax로 제어됨 */
+.slideTitle, .slideSubtitle, .slideButton {
+    /* Swiper의 parallax 효과가 애니메이션 처리 */
+}
+
+@media (max-width:1024px) {
+	.slideContent {justify-content:center; justify-content:center; width:calc(100% - 100px); margin:0 50px;}
+	.slideContent .slideInner {align-items:center; text-align:center;}
+}
+
+@media (max-width:768px) {
+	.slideContent .slideInner .slideTitle {font-size:4.6vw;}
+	.slideContent .slideInner .slideSubtitle {font-size:3.2vw;}
+}

@@ -1,0 +1,112 @@
+@charset "utf-8";
+/* ----------------------------------------------
+LAYOUT.CSS - Theme Layout & Structure
+* writer : uxcamp
+* version : 1.0.0
+* last update : 2025.01.18
+* purpose : Pink Theme - Modern Rose
+* license : © 2025 uxcamp. All rights reserved.
+------------------------------------------------*/
+:root {
+    /* === 브랜드 컬러 === */
+    --color-prime: #e83e8c; /* Modern Pink - 모던하고 세련된 핑크 */
+
+    /* === layout 영역별 색상 === */
+    /* 헤더 영역 */
+    --layout-header: #ffffff; /* 순수 흰색 */
+    --layout-tnb: #fcfcfc;    /* 아주 연한 회색 */
+    --layout-header-border: #f0f0f0; /* 연한 회색 테두리 */
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #fefefe; /* 거의 흰색에 가까운 배경 */
+    --layout-container-bg: #ffffff;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #fbfbfb; /* 매우 연한 회색 배경 */
+    --layout-sidebar-border: #e8e8e8;
+    --layout-sidebar-border-dashed: #e8e8e8;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #f8f8f8;
+    --layout-footer-border: #e8e8e8;
+    --layout-footer-copyright-bg: #f4f4f4;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(20, 20, 20, 0.85); /* 깔끔한 다크 팝업 */
+    --layout-searchpop-dim: rgba(20, 20, 20, 0.4);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #ffffff;
+    --layout-dropdown-border: #f0f0f0;
+    --layout-dropdown-hover-bg: #fafafa;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #f8f8f8;
+    --layout-board-border: #f0f0f0;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #e8e8e8;
+    --layout-snb-hover-bg: #fafafa;
+    --layout-snb-active-bg: var(--color-prime); /* 핑크 액센트 */
+    --layout-snb-active-color: #ffffff;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #f8f8f8;
+    --layout-demo-border: #e0e0e0;
+
+}
+/* ========================================
+   다크모드 색상 시스템
+======================================== */
+:root.darkMode {
+    /* === 브랜드 컬러 === */
+    --color-prime: #f06292; /* 다크모드에서 더 밝은 핑크 */
+
+    /* === layout 영역별 색상 (다크모드) === */
+    /* 헤더 영역 */
+    --layout-header: #0a0a0a; /* 깊은 검정 */
+    --layout-tnb: #151515;    /* 매우 어두운 회색 */
+    --layout-header-border: #2a2a2a; /* 어두운 회색 테두리 */
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #0a0a0a;
+    --layout-container-bg: #151515;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #181818;
+    --layout-sidebar-border: #2a2a2a;
+    --layout-sidebar-border-dashed: #2a2a2a;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #181818;
+    --layout-footer-border: #2a2a2a;
+    --layout-footer-copyright-bg: #151515;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(0, 0, 0, 0.95);
+    --layout-searchpop-dim: rgba(0, 0, 0, 0.7);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #181818;
+    --layout-dropdown-border: #2a2a2a;
+    --layout-dropdown-hover-bg: #252525;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #181818;
+    --layout-board-border: #2a2a2a;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #2a2a2a;
+    --layout-snb-hover-bg: #252525;
+    --layout-snb-active-bg: var(--color-prime); /* 핑크 액센트 */
+    --layout-snb-active-color: #ffffff;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #181818;
+    --layout-demo-border: #3a3a3a;
+
+}

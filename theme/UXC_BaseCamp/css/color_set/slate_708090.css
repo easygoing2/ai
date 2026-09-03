@@ -1,0 +1,112 @@
+@charset "utf-8";
+/* ----------------------------------------------
+LAYOUT.CSS - Theme Layout & Structure
+* writer : uxcamp
+* version : 1.0.0
+* last update : 2025.01.18
+* purpose : Slate Theme - Calm Slate
+* license : © 2025 uxcamp. All rights reserved.
+------------------------------------------------*/
+:root {
+    /* === 브랜드 컬러 === */
+    --color-prime: #708090; /* Calm Slate - 차분한 슬레이트 그레이 */
+
+    /* === layout 영역별 색상 === */
+    /* 헤더 영역 - 순수 무채색 */
+    --layout-header: #fafafa;
+    --layout-tnb: #ffffff;
+    --layout-header-border: #eeeeee;
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #ffffff; /* 순수 무채색 */
+    --layout-container-bg: #ffffff;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #f8f8f8;
+    --layout-sidebar-border: #e5e5e5;
+    --layout-sidebar-border-dashed: #e5e5e5;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #f5f5f5;
+    --layout-footer-border: #e5e5e5;
+    --layout-footer-copyright-bg: #f0f0f0;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(15, 23, 42, 0.8); /* 무채색 다크 팝업 */
+    --layout-searchpop-dim: rgba(15, 23, 42, 0.4);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #ffffff;
+    --layout-dropdown-border: #eeeeee;
+    --layout-dropdown-hover-bg: #fafafa;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #f5f5f5;
+    --layout-board-border: #eeeeee;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #e5e5e5;
+    --layout-snb-hover-bg: #fafafa;
+    --layout-snb-active-bg: var(--color-prime);
+    --layout-snb-active-color: #ffffff;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #f5f5f5;
+    --layout-demo-border: #dddddd;
+
+}
+/* ========================================
+   다크모드 색상 시스템
+======================================== */
+:root.darkMode {
+    /* === 브랜드 컬러 === */
+    --color-prime: #8899aa; /* 다크모드에서 더 밝은 슬레이트 */
+
+    /* === layout 영역별 색상 (다크모드) === */
+    /* 헤더 영역 - 순수 다크 */
+    --layout-header: #0a0a0a;
+    --layout-tnb: #1a1a1a;    
+    --layout-header-border: #2a2a2a;
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #0a0a0a;
+    --layout-container-bg: #1a1a1a;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #1f1f1f;
+    --layout-sidebar-border: #2a2a2a;
+    --layout-sidebar-border-dashed: #2a2a2a;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #1f1f1f;
+    --layout-footer-border: #2a2a2a;
+    --layout-footer-copyright-bg: #1a1a1a;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(10, 10, 10, 0.95);
+    --layout-searchpop-dim: rgba(10, 10, 10, 0.7);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #1f1f1f;
+    --layout-dropdown-border: #2a2a2a;
+    --layout-dropdown-hover-bg: #252525;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #1f1f1f;
+    --layout-board-border: #2a2a2a;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #2a2a2a;
+    --layout-snb-hover-bg: #252525;
+    --layout-snb-active-bg: var(--color-prime);
+    --layout-snb-active-color: #ffffff;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #1f1f1f;
+    --layout-demo-border: #333333;
+
+}

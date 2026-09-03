@@ -1,0 +1,125 @@
+/**
+ * Toast UI Editor Image Resize Plugin Styles
+ * 오버레이 방식 (ProseMirror DOM 외부에 절대 위치)
+ */
+
+/* 오버레이 컨테이너 */
+.toastui-image-resize-overlay {
+    position: absolute;
+    pointer-events: none;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+/* 선택 테두리 */
+.toastui-image-resize-border {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid #4b96e6;
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+/* 리사이즈 핸들 (모서리 4개) */
+.toastui-image-resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #4b96e6;
+    border: 1px solid #fff;
+    border-radius: 2px;
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.toastui-image-resize-handle--nw {
+    top: -5px;
+    left: -5px;
+    cursor: nw-resize;
+}
+
+.toastui-image-resize-handle--ne {
+    top: -5px;
+    right: -5px;
+    cursor: ne-resize;
+}
+
+.toastui-image-resize-handle--sw {
+    bottom: -5px;
+    left: -5px;
+    cursor: sw-resize;
+}
+
+.toastui-image-resize-handle--se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}
+
+/* 크기 정보 툴팁 */
+.toastui-image-resize-info {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* 크기 프리셋 버튼 바 */
+.toastui-image-resize-toolbar {
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 3px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.toastui-image-resize-toolbar button {
+    border: none;
+    background: #f5f5f5;
+    color: #333;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.toastui-image-resize-toolbar button:hover {
+    background: #4b96e6;
+    color: #fff;
+}
+
+/* 다크모드 대응 */
+.toastui-editor-dark .toastui-image-resize-toolbar {
+    background: #2b2b2b;
+    border-color: #444;
+}
+
+.toastui-editor-dark .toastui-image-resize-toolbar button {
+    background: #3a3a3a;
+    color: #ddd;
+}
+
+.toastui-editor-dark .toastui-image-resize-toolbar button:hover {
+    background: #4b96e6;
+    color: #fff;
+}

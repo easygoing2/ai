@@ -481,8 +481,12 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['icon_reply'] = '<img src="'.$skin_url.'/img/icon_reply.gif" class="icon_reply" alt="답변글">';
 
     $list['icon_link'] = '';
-    if ($list['wr_link1'] || $list['wr_link2'])
-        $list['icon_link'] = '<i class="fa fa-link" aria-hidden="true"></i> ';
+    for ($i=1; $i<=G5_LINK_COUNT; $i++) {
+        if (!empty($list['wr_link'.$i])) {
+            $list['icon_link'] = '<i class="fa fa-link" aria-hidden="true"></i> ';
+            break;
+        }
+    }
 
     // 분류명 링크
     $list['ca_name_href'] = get_pretty_url($board['bo_table'], '', 'sca='.urlencode($list['ca_name']));

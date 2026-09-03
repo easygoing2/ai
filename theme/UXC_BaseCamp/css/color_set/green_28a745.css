@@ -1,0 +1,112 @@
+@charset "utf-8";
+/* ----------------------------------------------
+LAYOUT.CSS - Theme Layout & Structure
+* writer : uxcamp
+* version : 1.0.0
+* last update : 2025.01.18
+* purpose : Green Theme - Natural Forest
+* license : © 2025 uxcamp. All rights reserved.
+------------------------------------------------*/
+:root {
+    /* === 브랜드 컬러 === */
+    --color-prime: #28a745; /* Forest Green - 자연친화적 포레스트 그린 */
+
+    /* === layout 영역별 색상 === */
+    /* 헤더 영역 - 완전 무채색 */
+    --layout-header: #ffffff; /* 순수 흰색 */
+    --layout-tnb: #fafafa;    /* 무채색 회색 */
+    --layout-header-border: #e5e5e5; /* 무채색 테두리 */
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #fcfcfc; /* 밝은 무채색 배경 */
+    --layout-container-bg: #ffffff;
+    
+    /* 사이드바 영역 - 따뜻한 그레이 */
+    --layout-sidebar-bg: #f7f7f7; /* 무채색 배경 */
+    --layout-sidebar-border: #e0e0e0;
+    --layout-sidebar-border-dashed: #e0e0e0;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #f5f5f5;
+    --layout-footer-border: #e0e0e0;
+    --layout-footer-copyright-bg: #f0f0f0;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(33, 37, 41, 0.85); /* 무채색 다크 팝업 */
+    --layout-searchpop-dim: rgba(33, 37, 41, 0.4);
+    
+    /* 드롭다운 메뉴 - 그린 틴트 호버 */
+    --layout-dropdown-bg: #ffffff;
+    --layout-dropdown-border: #e5e5e5;
+    --layout-dropdown-hover-bg: #f0f8f1; /* 아주 연한 그린 틴트 */
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #f5f5f5;
+    --layout-board-border: #e5e5e5;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #e0e0e0;
+    --layout-snb-hover-bg: #f0f8f1; /* 연한 그린 틴트 */
+    --layout-snb-active-bg: var(--color-prime);
+    --layout-snb-active-color: #ffffff;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #f5f5f5;
+    --layout-demo-border: #d5d5d5;
+
+}
+/* ========================================
+   다크모드 색상 시스템
+======================================== */
+:root.darkMode {
+    /* === 브랜드 컬러 === */
+    --color-prime: #34ce57; /* 다크모드에서 더 밝은 그린 */
+
+    /* === layout 영역별 색상 (다크모드) === */
+    /* 헤더 영역 - 따뜻한 블랙 */
+    --layout-header: #0f0f0f; /* 순수에 가까운 블랙 */
+    --layout-tnb: #1a1a1a;    
+    --layout-header-border: #2d2d2d;
+    
+    /* 바디/컨테이너 영역 */
+    --layout-body: #0f0f0f;
+    --layout-container-bg: #1a1a1a;
+    
+    /* 사이드바 영역 */
+    --layout-sidebar-bg: #1f1f1f;
+    --layout-sidebar-border: #2d2d2d;
+    --layout-sidebar-border-dashed: #2d2d2d;
+    --layout-sidebar-active-bg: var(--color-prime);
+    --layout-sidebar-active-color: #ffffff;
+    
+    /* 푸터 영역 */
+    --layout-footer-bg: #1f1f1f;
+    --layout-footer-border: #2d2d2d;
+    --layout-footer-copyright-bg: #1a1a1a;
+    
+    /* 검색 팝업 영역 */
+    --layout-searchpop-bg: rgba(15, 15, 15, 0.95);
+    --layout-searchpop-dim: rgba(15, 15, 15, 0.7);
+    
+    /* 드롭다운 메뉴 */
+    --layout-dropdown-bg: #1f1f1f;
+    --layout-dropdown-border: #2d2d2d;
+    --layout-dropdown-hover-bg: #252525;
+    
+    /* 게시판 타이틀/정보 영역 */
+    --layout-board-bg: #1f1f1f;
+    --layout-board-border: #2d2d2d;
+    
+    /* 서브 네비게이션 */
+    --layout-snb-border: #2d2d2d;
+    --layout-snb-hover-bg: #252525;
+    --layout-snb-active-bg: var(--color-prime);
+    --layout-snb-active-color: #ffffff;
+    
+    /* 기타 요소 */
+    --layout-kvWrap-bg: #1f1f1f;
+    --layout-demo-border: #353535;
+
+}

@@ -1,0 +1,7 @@
+{
+    "name": "테마설정",
+    "icon": "bx-palette",
+    "file": "uxc_theme_config.php",
+    "order": 1,
+    "description": "테마의 레이아웃, 색상, 헤더/푸터 등 전반적인 설정을 관리합니다."
+}
