@@ -36,9 +36,10 @@ function wzy_render_watch_assets() {
         'currentPost' => $current_post
     );
     $json = json_encode($runtime, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    $script_version = WZY_VERSION.'.'.(int)@filemtime(WZY_PLUGIN_PATH.'/youtube-watch.js');
     echo '<link rel="stylesheet" href="'.WZY_PLUGIN_URL.'/style.css?v='.rawurlencode(WZY_VERSION).'">'.PHP_EOL;
     echo '<script type="application/json" id="wzyRuntimeConfig">'.$json.'</script>'.PHP_EOL;
-    echo '<script src="'.WZY_PLUGIN_URL.'/youtube-watch.js?v='.rawurlencode(WZY_VERSION).'" defer></script>'.PHP_EOL;
+    echo '<script src="'.WZY_PLUGIN_URL.'/youtube-watch.js?v='.rawurlencode($script_version).'" defer></script>'.PHP_EOL;
 }
 
 function wzy_mark_calendar_event_deleted($mb_id, $event_id) {

@@ -8,6 +8,7 @@
     try { config = JSON.parse(configNode.textContent); } catch (error) { return; }
 
     var records = Object.create(null);
+    var statusLoaded = Object.create(null);
     var displays = Object.create(null);
     var trackers = [];
     var registeredPlayers = [];
@@ -204,9 +205,18 @@
         var current = ensureRecord(meta);
         Object.keys(data || {}).forEach(function (name) { current[name] = data[name]; });
         current.ranges = mergeRanges(current.ranges || [], number(current.duration));
+        statusLoaded[key] = true;
         updateDisplays(meta);
         trackers.forEach(function (tracker) {
             if (tracker.key === key) tracker.onServerState(current);
+        });
+    }
+
+    function markStatusLoaded(meta) {
+        var key = keyOf(meta);
+        statusLoaded[key] = true;
+        trackers.forEach(function (tracker) {
+            if (tracker.key === key) tracker.onServerState(ensureRecord(meta));
         });
     }
 
@@ -217,6 +227,7 @@
         this.pending = [];
         this.inFlight = [];
         this.restoredDuration = 0;
+        this.restoredPosition = 0;
         this.segmentStart = null;
         this.lastPosition = null;
         this.lastObservedPosition = null;
@@ -226,9 +237,18 @@
         this.seekFrom = null;
         this.saving = false;
         this.failed = false;
+        this.playerReady = false;
+        this.statusReady = !!statusLoaded[this.key];
+        this.resumeResolved = false;
+        this.userStarted = false;
+        this.restoring = false;
+        this.restoreTimer = null;
         this.lastSaveAt = Date.now();
         this.restorePending();
         this.timer = window.setInterval(this.tick.bind(this), 1000);
+        var self = this;
+        if (typeof this.adapter.ready === 'function') this.adapter.ready(function () { self.onPlayerReady(); });
+        else this.onPlayerReady();
     }
 
     Tracker.prototype.restorePending = function () {
@@ -236,6 +256,7 @@
             var saved = JSON.parse(sessionStorage.getItem(pendingStorageKey(this.meta)) || 'null');
             if (!saved || !Array.isArray(saved.ranges)) return;
             this.restoredDuration = clamp(number(saved.duration), 0, 604800);
+            this.restoredPosition = clamp(number(saved.last_position), 0, this.restoredDuration || 604800);
             this.pending = mergeRanges(saved.ranges, this.restoredDuration || Number.MAX_SAFE_INTEGER);
             if (this.pending.length) this.failed = true;
         } catch (error) {}
@@ -252,15 +273,64 @@
             sessionStorage.setItem(storageKey, JSON.stringify({
                 duration: this.duration() || this.restoredDuration,
                 ranges: ranges,
+                last_position: this.positionForSave(),
                 saved_at: Date.now()
             }));
         } catch (error) {}
     };
 
     Tracker.prototype.onServerState = function () {
+        this.statusReady = true;
         this.failed = false;
         this.render();
+        this.maybeResume();
         if (this.pending.length && !this.saving) this.flush(false);
+    };
+
+    Tracker.prototype.onPlayerReady = function () {
+        this.playerReady = true;
+        this.maybeResume();
+    };
+
+    Tracker.prototype.finishResume = function (position) {
+        if (this.restoreTimer !== null) {
+            window.clearTimeout(this.restoreTimer);
+            this.restoreTimer = null;
+        }
+        this.restoring = false;
+        this.lastObservedPosition = number(position, this.currentTime());
+        this.resetSample();
+    };
+
+    Tracker.prototype.maybeResume = function () {
+        if (this.resumeResolved || !this.playerReady || !this.statusReady) return;
+
+        var duration = this.duration();
+        if (duration <= 0) return;
+
+        this.resumeResolved = true;
+        var current = clamp(this.currentTime(), 0, duration);
+        var saved = this.restoredPosition > 0
+            ? this.restoredPosition
+            : number(ensureRecord(this.meta).last_position);
+        var position = clamp(saved, 0, duration);
+
+        // Do not interrupt playback or a seek that happened before the status
+        // request completed. Positions at the very beginning or end are also
+        // more useful when restarted from zero.
+        if (this.userStarted || current > 1 || position < 2 || duration - position <= 5) return;
+
+        try {
+            this.restoring = true;
+            this.adapter.seek(position);
+            this.lastObservedPosition = position;
+            var self = this;
+            this.restoreTimer = window.setTimeout(function () {
+                self.finishResume(position);
+            }, 1500);
+        } catch (error) {
+            this.finishResume(current);
+        }
     };
 
     Tracker.prototype.duration = function () {
@@ -272,6 +342,11 @@
 
     Tracker.prototype.currentTime = function () {
         return number(this.adapter.currentTime(), 0);
+    };
+
+    Tracker.prototype.positionForSave = function () {
+        if (this.restoring && this.lastObservedPosition !== null) return this.lastObservedPosition;
+        return this.currentTime();
     };
 
     Tracker.prototype.allRanges = function () {
@@ -359,6 +434,8 @@
     };
 
     Tracker.prototype.onPlay = function () {
+        if (this.restoring) this.finishResume(this.currentTime());
+        this.userStarted = true;
         if (this.seeking) this.finishSeek();
         this.playing = true;
         this.seeking = false;
@@ -366,6 +443,10 @@
     };
 
     Tracker.prototype.onPause = function () {
+        if (this.restoring) {
+            this.finishResume(this.currentTime());
+            return;
+        }
         if (this.seeking) this.finishSeek();
         else this.closeSegment(this.currentTime());
         this.playing = false;
@@ -373,6 +454,8 @@
     };
 
     Tracker.prototype.onSeeking = function () {
+        if (this.restoring) return;
+        this.userStarted = true;
         if (this.seekFrom === null) {
             this.seekFrom = this.lastObservedPosition !== null ? this.lastObservedPosition : this.currentTime();
         }
@@ -382,10 +465,16 @@
     };
 
     Tracker.prototype.onSeeked = function () {
+        if (this.restoring) {
+            this.finishResume(this.currentTime());
+            return;
+        }
         this.finishSeek();
     };
 
     Tracker.prototype.onEnded = function () {
+        if (this.restoring) this.finishResume(this.currentTime());
+        this.userStarted = true;
         if (this.seeking) this.finishSeek();
         else this.closeSegment(this.currentTime());
         this.playing = false;
@@ -416,7 +505,7 @@
             video_id: this.meta.videoId,
             duration: duration,
             ranges: sent,
-            last_position: this.currentTime(),
+            last_position: this.positionForSave(),
             player: this.adapter.name
         }, keepalive).then(function (body) {
             self.saving = false;
@@ -485,8 +574,14 @@
         enableIframeApi(iframe);
         loadYouTubeApi().then(function (YT) {
             var player;
+            var playerReady = false;
+            var readyCallbacks = [];
             player = new YT.Player(iframe, {
                 events: {
+                    onReady: function () {
+                        playerReady = true;
+                        readyCallbacks.splice(0).forEach(function (callback) { callback(); });
+                    },
                     onStateChange: function (event) {
                         if (event.data === YT.PlayerState.PLAYING) handlers.play();
                         else if (event.data === YT.PlayerState.PAUSED) handlers.pause();
@@ -502,6 +597,11 @@
                 currentTime: function () { try { return player.getCurrentTime(); } catch (error) { return 0; } },
                 duration: function () { try { return player.getDuration(); } catch (error) { return 0; } },
                 playbackRate: function () { try { return player.getPlaybackRate(); } catch (error) { return 1; } },
+                seek: function (position) { player.seekTo(position, true); },
+                ready: function (callback) {
+                    if (playerReady) callback();
+                    else readyCallbacks.push(callback);
+                },
                 bind: function (callbacks) { handlers = callbacks; }
             };
             registerAdapter(meta, adapter);
@@ -525,6 +625,21 @@
             currentTime: function () { return instance.currentTime; },
             duration: function () { return instance.duration; },
             playbackRate: function () { return instance.speed || 1; },
+            seek: function (position) { instance.currentTime = position; },
+            ready: function (callback) {
+                if (instance.ready) {
+                    callback();
+                    return;
+                }
+                var called = false;
+                var once = function () {
+                    if (called) return;
+                    called = true;
+                    callback();
+                };
+                instance.once('ready', once);
+                window.setTimeout(once, 1000);
+            },
             bind: function (handlers) {
                 instance.on('playing', handlers.play);
                 instance.on('play', handlers.play);
@@ -592,7 +707,14 @@
                 var meta = metas.find(function (item) { return keyOf(item) === key; });
                 if (meta) setRecord(meta, body.items[key]);
             });
-        }).catch(function () {});
+            metas.forEach(function (meta) {
+                if (!statusLoaded[keyOf(meta)]) markStatusLoaded(meta);
+            });
+        }).catch(function () {
+            // A pending session record can still provide a resume position when
+            // the initial server status request is temporarily unavailable.
+            metas.forEach(markStatusLoaded);
+        });
     }
 
     function scanPlyrPlayers() {
