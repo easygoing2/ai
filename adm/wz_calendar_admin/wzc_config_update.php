@@ -11,8 +11,16 @@ if (!wzc_schema_installed()) alert('개인 캘린더를 먼저 설치해 주세�
 $use = isset($_POST['wcf_use']) && (int)$_POST['wcf_use'] === 1 ? 1 : 0;
 $max_events = isset($_POST['wcf_max_events']) ? (int)$_POST['wcf_max_events'] : 5000;
 $max_events = max(10, min(100000, $max_events));
+$daily_line_use = isset($_POST['wcf_daily_line_use']) && (int)$_POST['wcf_daily_line_use'] === 1 ? 1 : 0;
+$daily_line_max_length = isset($_POST['wcf_daily_line_max_length']) ? (int)$_POST['wcf_daily_line_max_length'] : 80;
+$daily_line_max_length = max(50, min(100, $daily_line_max_length));
 
-sql_query("UPDATE `{$g5['wzc_config_table']}` SET wcf_use={$use}, wcf_max_events={$max_events}, wcf_updated_at=NOW() WHERE wcf_ix=1");
+if (!wzc_daily_line_schema_installed()) alert('오늘의 한 줄 DB 설치가 필요합니다. 설치 상태 복구를 먼저 실행해 주세요.', './wzc_install.php');
+
+sql_query("UPDATE `{$g5['wzc_config_table']}` SET wcf_use={$use}, wcf_max_events={$max_events},
+    wcf_daily_line_use={$daily_line_use}, wcf_daily_line_max_length={$daily_line_max_length}, wcf_updated_at=NOW() WHERE wcf_ix=1");
+sql_query("UPDATE `{$g5['wzc_daily_line_table']}` SET wdl_content=LEFT(wdl_content, {$daily_line_max_length}), wdl_updated_at=NOW()
+    WHERE CHAR_LENGTH(wdl_content) > {$daily_line_max_length}", false);
 
 $calendar_backfilled = 0;
 if (wzy_schema_installed()) {

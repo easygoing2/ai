@@ -30,6 +30,8 @@ if ($edit_mode) {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<?php include G5_THEME_PATH.'/ui_module/ui_dailyLine/ui_dailyLine.php'; ?>
+
 <?php if ($edit_mode): ?>
     <!-- 편집 모드일 때 -->    
     <?php include_once(G5_THEME_PATH.'/ui_system/widget-builder/widget-builder.php'); ?>

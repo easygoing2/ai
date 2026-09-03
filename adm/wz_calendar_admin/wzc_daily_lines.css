@@ -1,0 +1,134 @@
+.wzc-admin-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 20px 0 12px;
+}
+
+.wzc-admin-month {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wzc-admin-month strong {
+    font-size: 22px;
+    letter-spacing: -.03em;
+}
+
+.wzc-admin-month a {
+    padding: 4px 9px;
+    border: 1px solid #d5d9df;
+    border-radius: 12px;
+    color: #59616d;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.wzc-admin-calendar-wrap {
+    /* max-width: 1400px; */
+    border: 1px solid #d8dce1;
+    border-radius: 8px;
+    background: #fff;
+    overflow-x: auto;
+}
+
+.wzc-admin-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(150px, 1fr));
+    min-width: 1050px;
+}
+
+.wzc-admin-weekday {
+    padding: 11px 8px;
+    border-right: 1px solid #e5e7eb;
+    border-bottom: 1px solid #d8dce1;
+    background: #f6f7f9;
+    color: #4b5563;
+    font-weight: 700;
+    text-align: center;
+}
+
+.wzc-admin-weekday:nth-child(7) {
+    border-right: 0;
+}
+
+.wzc-admin-day {
+    min-height: 142px;
+    padding: 10px;
+    border-right: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.wzc-admin-day:nth-child(7n) {
+    border-right: 0;
+}
+
+.wzc-admin-day.is-empty {
+    background: #fafbfc;
+}
+
+.wzc-admin-day.is-today {
+    background: #f8f6ff;
+    box-shadow: inset 0 0 0 2px #6f48ff;
+}
+
+.wzc-admin-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.wzc-admin-date label {
+    color: #303640;
+    font-weight: 700;
+}
+
+.wzc-admin-day.is-sunday .wzc-admin-date label,
+.wzc-admin-weekday.is-sunday {
+    color: #e5484d;
+}
+
+.wzc-admin-day.is-saturday .wzc-admin-date label,
+.wzc-admin-weekday.is-saturday {
+    color: #2563eb;
+}
+
+.wzc-admin-date span {
+    color: #8a929e;
+    font-size: 11px;
+}
+
+.wzc-admin-day textarea {
+    width: 100%;
+    min-height: 88px;
+    padding: 8px;
+    border: 1px solid #d8dce1;
+    border-radius: 6px;
+    background: #fff;
+    color: #303640;
+    font-size: 13px;
+    line-height: 1.45;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.wzc-admin-day textarea:focus {
+    border-color: #6f48ff;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(111, 72, 255, .12);
+}
+
+@media (max-width: 768px) {
+    .wzc-admin-toolbar {
+        gap: 8px;
+    }
+
+    .wzc-admin-month strong {
+        font-size: 18px;
+    }
+}

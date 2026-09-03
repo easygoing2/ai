@@ -49,6 +49,21 @@ $menu_row = sql_fetch("SELECT me_id FROM `{$g5['menu_table']}` WHERE me_name='�
                         <span class="frm_info">삭제하지 않은 일정 기준입니다. 기본값은 5,000개입니다.</span>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">오늘의 한 줄</th>
+                    <td>
+                        <label><input type="radio" name="wcf_daily_line_use" value="1" <?php echo get_checked((int)$wzc_config['wcf_daily_line_use'], 1); ?>> 표시</label>
+                        <label><input type="radio" name="wcf_daily_line_use" value="0" <?php echo get_checked((int)$wzc_config['wcf_daily_line_use'], 0); ?>> 숨김</label>
+                        <span class="frm_info">메인 화면의 AI Agent 영역 위에 날짜별 문구를 표시합니다.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="wcf_daily_line_max_length">한 줄 최대 글자 수</label></th>
+                    <td>
+                        <input type="number" name="wcf_daily_line_max_length" id="wcf_daily_line_max_length" value="<?php echo (int)$wzc_config['wcf_daily_line_max_length']; ?>" min="50" max="100" class="frm_input" required> 자
+                        <span class="frm_info">50~100자 사이에서 설정할 수 있습니다. 저장된 문구에도 변경된 제한이 적용됩니다.</span>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -115,6 +130,7 @@ $menu_row = sql_fetch("SELECT me_id FROM `{$g5['menu_table']}` WHERE me_name='�
     <div class="local_desc01 local_desc"><p>설치 상태 복구를 실행하면 유튜브 시청률 기능이 함께 설치됩니다.</p></div>
     <?php } ?>
     <div class="btn_fixed_top">
+        <a href="./wzc_daily_lines.php" class="btn btn_02">오늘의 한 줄 관리</a>
         <a href="<?php echo WZC_BOARD_URL; ?>" class="btn btn_02" target="_blank" rel="noopener">사용자 화면</a>
         <a href="./wzc_install.php" class="btn btn_03">설치 상태 복구</a>
         <button type="submit" class="btn_submit btn">설정 저장</button>

@@ -1,6 +1,9 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+if (!defined('WZC_DAILY_LINE_SCHEMA_VERSION')) define('WZC_DAILY_LINE_SCHEMA_VERSION', 2);
+if (empty($g5['wzc_daily_line_table'])) $g5['wzc_daily_line_table'] = G5_TABLE_PREFIX.'wzc_daily_line';
+
 function wzc_json_response($success, $data = array(), $status = 200) {
     if (!headers_sent()) {
         http_response_code($status);
@@ -133,6 +136,29 @@ function wzc_schema_installed() {
     return true;
 }
 
+function wzc_table_exists($table) {
+    $table_sql = sql_escape_string($table);
+    $row = sql_fetch("SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='{$table_sql}'", false);
+    return !empty($row['TABLE_NAME']);
+}
+
+function wzc_column_exists($table, $column) {
+    $table_sql = sql_escape_string($table);
+    $column_sql = sql_escape_string($column);
+    $row = sql_fetch("SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='{$table_sql}' AND COLUMN_NAME='{$column_sql}'", false);
+    return !empty($row['COLUMN_NAME']);
+}
+
+function wzc_daily_line_schema_installed() {
+    global $g5;
+    static $installed = null;
+    if ($installed !== null) return $installed;
+    $installed = wzc_table_exists($g5['wzc_daily_line_table'])
+        && wzc_column_exists($g5['wzc_config_table'], 'wcf_daily_line_use')
+        && wzc_column_exists($g5['wzc_config_table'], 'wcf_daily_line_max_length');
+    return $installed;
+}
+
 function wzc_install_schema() {
     global $g5;
     $queries = array();
@@ -194,17 +220,35 @@ function wzc_install_schema() {
         `wcf_ix` tinyint unsigned NOT NULL DEFAULT '1',
         `wcf_use` tinyint(1) NOT NULL DEFAULT '1',
         `wcf_max_events` int unsigned NOT NULL DEFAULT '5000',
+        `wcf_daily_line_use` tinyint(1) NOT NULL DEFAULT '1',
+        `wcf_daily_line_max_length` tinyint unsigned NOT NULL DEFAULT '80',
         `wcf_schema_version` int unsigned NOT NULL DEFAULT '1',
         `wcf_updated_at` datetime NOT NULL,
         PRIMARY KEY (`wcf_ix`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+    $queries[] = "CREATE TABLE IF NOT EXISTS `{$g5['wzc_daily_line_table']}` (
+        `wdl_date` date NOT NULL,
+        `wdl_content` varchar(100) NOT NULL,
+        `wdl_created_by` varchar(20) NOT NULL DEFAULT '',
+        `wdl_created_at` datetime NOT NULL,
+        `wdl_updated_at` datetime NOT NULL,
+        PRIMARY KEY (`wdl_date`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
     foreach ($queries as $query) {
         if (!sql_query($query, false)) return false;
     }
-    sql_query("INSERT INTO `{$g5['wzc_config_table']}` (`wcf_ix`,`wcf_use`,`wcf_max_events`,`wcf_schema_version`,`wcf_updated_at`)
-        VALUES (1,1,5000,".(int)WZC_SCHEMA_VERSION.",NOW())
+
+    if (!wzc_column_exists($g5['wzc_config_table'], 'wcf_daily_line_use')) {
+        if (!sql_query("ALTER TABLE `{$g5['wzc_config_table']}` ADD `wcf_daily_line_use` tinyint(1) NOT NULL DEFAULT '1' AFTER `wcf_max_events`", false)) return false;
+    }
+    if (!wzc_column_exists($g5['wzc_config_table'], 'wcf_daily_line_max_length')) {
+        if (!sql_query("ALTER TABLE `{$g5['wzc_config_table']}` ADD `wcf_daily_line_max_length` tinyint unsigned NOT NULL DEFAULT '80' AFTER `wcf_daily_line_use`", false)) return false;
+    }
+
+    sql_query("INSERT INTO `{$g5['wzc_config_table']}` (`wcf_ix`,`wcf_use`,`wcf_max_events`,`wcf_daily_line_use`,`wcf_daily_line_max_length`,`wcf_schema_version`,`wcf_updated_at`)
+        VALUES (1,1,5000,1,80,".(int)WZC_DAILY_LINE_SCHEMA_VERSION.",NOW())
         ON DUPLICATE KEY UPDATE `wcf_schema_version`=GREATEST(`wcf_schema_version`, VALUES(`wcf_schema_version`))", false);
-    return wzc_schema_installed();
+    return wzc_schema_installed() && wzc_daily_line_schema_installed();
 }
 
 function wzc_sql_value($value) {
@@ -326,9 +370,44 @@ function wzc_install_all() {
 
 function wzc_get_config() {
     global $g5;
-    if (!wzc_schema_installed()) return array('wcf_use' => 0, 'wcf_max_events' => 5000, 'wcf_schema_version' => 0);
+    $defaults = array(
+        'wcf_use' => 0,
+        'wcf_max_events' => 5000,
+        'wcf_daily_line_use' => 1,
+        'wcf_daily_line_max_length' => 80,
+        'wcf_schema_version' => 0
+    );
+    if (!wzc_schema_installed()) return $defaults;
     $row = sql_fetch("SELECT * FROM `{$g5['wzc_config_table']}` WHERE wcf_ix=1", false);
-    return $row ?: array('wcf_use' => 1, 'wcf_max_events' => 5000, 'wcf_schema_version' => WZC_SCHEMA_VERSION);
+    if (!$row) {
+        $defaults['wcf_use'] = 1;
+        $defaults['wcf_schema_version'] = max((int)WZC_SCHEMA_VERSION, (int)WZC_DAILY_LINE_SCHEMA_VERSION);
+        return $defaults;
+    }
+    return array_merge($defaults, $row);
+}
+
+function wzc_get_daily_line($date) {
+    global $g5;
+    if (!wzc_valid_date($date)) return '';
+    $date_sql = sql_escape_string($date);
+    $row = sql_fetch("SELECT daily.wdl_content
+        FROM `{$g5['wzc_daily_line_table']}` daily
+        INNER JOIN `{$g5['wzc_config_table']}` config ON config.wcf_ix=1 AND config.wcf_daily_line_use=1
+        WHERE daily.wdl_date='{$date_sql}'", false);
+    return isset($row['wdl_content']) ? (string)$row['wdl_content'] : '';
+}
+
+function wzc_get_daily_lines($start_date, $end_date) {
+    global $g5;
+    $lines = array();
+    if (!wzc_valid_date($start_date) || !wzc_valid_date($end_date) || $start_date > $end_date || !wzc_daily_line_schema_installed()) return $lines;
+    $start_sql = sql_escape_string($start_date);
+    $end_sql = sql_escape_string($end_date);
+    $result = sql_query("SELECT wdl_date, wdl_content FROM `{$g5['wzc_daily_line_table']}` WHERE wdl_date BETWEEN '{$start_sql}' AND '{$end_sql}' ORDER BY wdl_date", false);
+    if (!$result) return $lines;
+    while ($row = sql_fetch_array($result)) $lines[$row['wdl_date']] = $row['wdl_content'];
+    return $lines;
 }
 
 function wzc_require_enabled_json() {

@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 <div class="local_desc01 local_desc">
-    <p>개인 일정, 분류, 날짜별 순서, 유튜브 시청률 테이블과 전용 게시판·메뉴를 설치합니다.</p>
+    <p>개인 일정, 분류, 날짜별 순서, 오늘의 한 줄, 유튜브 시청률 테이블과 전용 게시판·메뉴를 설치합니다.</p>
     <p>이미 설치된 항목은 유지하므로 다시 실행해도 중복 생성되지 않습니다.</p>
 </div>
 
