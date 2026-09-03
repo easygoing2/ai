@@ -29,6 +29,10 @@
         var toast = document.getElementById('wzcToast');
         var toastTimer = null;
         var timePickers = Array.prototype.slice.call(eventForm.querySelectorAll('[data-time-picker]'));
+        var linkInput = eventForm.elements.link_url;
+        var linkLabel = eventForm.querySelector('.wzc-link-field label');
+        var externalLink = document.getElementById('wzcExternalLink');
+        var externalLinkText = externalLink ? externalLink.querySelector('[data-external-link-text]') : null;
 
         function api(path, payload) {
             payload = payload || {};
@@ -274,6 +278,31 @@
             eventForm.querySelectorAll('.wzc-time-field, .wzc-location-field').forEach(function (field) {
                 field.hidden = enabled;
             });
+            if (!linkInput || !externalLink || !externalLinkText) return;
+
+            linkInput.hidden = enabled;
+            externalLink.hidden = !enabled;
+            if (linkLabel) {
+                if (enabled) linkLabel.removeAttribute('for');
+                else linkLabel.setAttribute('for', 'wzcLinkUrl');
+            }
+
+            if (enabled) {
+                var url = String(linkInput.value || '').trim();
+                var clickable = /^https?:\/\//i.test(url);
+                externalLinkText.textContent = clickable ? url : '연결된 링크가 없습니다.';
+                if (clickable) {
+                    externalLink.href = url;
+                    externalLink.removeAttribute('aria-disabled');
+                } else {
+                    externalLink.removeAttribute('href');
+                    externalLink.setAttribute('aria-disabled', 'true');
+                }
+            } else {
+                externalLink.href = '#';
+                externalLinkText.textContent = '';
+                externalLink.removeAttribute('aria-disabled');
+            }
         }
 
         function resetEventForm(date) {

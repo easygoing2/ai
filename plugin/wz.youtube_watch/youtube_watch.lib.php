@@ -320,13 +320,30 @@ function wzy_watch_public_data($row, $include_ranges = false) {
     return $data;
 }
 
-function wzy_calendar_event_title($subject, $percent, $completed = false) {
-    $subject = wzy_plain_subject($subject);
-    $prefix = $completed ? '[시청완료] ' : '['.max(0, min(100, (int)$percent)).'%] ';
-    return $prefix.$subject;
+function wzy_calendar_event_title_prefix($percent, $completed = false) {
+    return $completed ? '[시청완료] ' : '['.max(0, min(100, (int)$percent)).'%] ';
 }
 
-function wzy_create_calendar_event($mb_id, $post, $watch_id, $percent, $completed = false) {
+function wzy_calendar_event_title($subject, $percent, $completed = false) {
+    return wzy_calendar_event_title_prefix($percent, $completed).wzy_plain_subject($subject);
+}
+
+/**
+ * Replace only the watch-tracker prefix so member edits to the title body remain
+ * intact. Titles whose managed prefix was removed are treated as customized and
+ * are deliberately left alone.
+ */
+function wzy_synced_calendar_event_title($title, $percent, $completed = false) {
+    $title = (string)$title;
+    $pattern = '/^\[(?:시청완료|[0-9]{1,3}%(?:\s*시청)?)\]\s*/u';
+    if (!preg_match($pattern, $title)) return $title;
+
+    $body = preg_replace($pattern, '', $title, 1);
+    $synced = wzy_calendar_event_title_prefix($percent, $completed).$body;
+    return mb_strlen($synced, 'UTF-8') > 255 ? mb_substr($synced, 0, 255, 'UTF-8') : $synced;
+}
+
+function wzy_load_calendar_library() {
     global $g5;
     if (!defined('WZC_PLUGIN_PATH')) {
         $config_file = G5_PLUGIN_PATH.'/wz.calendar/config.php';
@@ -334,7 +351,38 @@ function wzy_create_calendar_event($mb_id, $post, $watch_id, $percent, $complete
     }
     $lib_file = G5_PLUGIN_PATH.'/wz.calendar/calendar.lib.php';
     if (is_file($lib_file)) include_once($lib_file);
-    if (!function_exists('wzc_schema_installed') || !wzc_schema_installed()) return array('success' => false, 'code' => 'CALENDAR_NOT_INSTALLED');
+    return function_exists('wzc_schema_installed') && function_exists('wzc_event_for_member');
+}
+
+function wzy_sync_calendar_event_title($mb_id, $event_id, $percent, $completed = false) {
+    global $g5;
+    if (!$mb_id || !(int)$event_id || !wzy_load_calendar_library() || !wzc_schema_installed()) {
+        return array('success' => false, 'code' => 'CALENDAR_UNAVAILABLE');
+    }
+
+    $mb_sql = sql_escape_string((string)$mb_id);
+    $event_id = (int)$event_id;
+    $event = sql_fetch("SELECT we_ix, we_title, we_version, we_deleted_at
+        FROM `{$g5['wzc_event_table']}` WHERE we_ix={$event_id} AND mb_id='{$mb_sql}' LIMIT 1", false);
+    if (empty($event['we_ix'])) return array('success' => false, 'code' => 'NOT_FOUND');
+    if (!empty($event['we_deleted_at'])) return array('success' => false, 'code' => 'DELETED');
+
+    $title = wzy_synced_calendar_event_title($event['we_title'], $percent, $completed);
+    if ($title === (string)$event['we_title']) return array('success' => true, 'code' => 'UNCHANGED');
+
+    $title_sql = sql_escape_string($title);
+    $version = (int)$event['we_version'];
+    $updated = sql_query("UPDATE `{$g5['wzc_event_table']}` SET we_title='{$title_sql}',
+        we_version=we_version+1, we_updated_at=NOW()
+        WHERE we_ix={$event_id} AND mb_id='{$mb_sql}' AND we_version={$version} AND we_deleted_at IS NULL", false);
+    if (!$updated) return array('success' => false, 'code' => 'UPDATE_FAILED');
+    if (mysqli_affected_rows($GLOBALS['connect_db']) !== 1) return array('success' => false, 'code' => 'VERSION_CONFLICT');
+    return array('success' => true, 'code' => 'UPDATED');
+}
+
+function wzy_create_calendar_event($mb_id, $post, $watch_id, $percent, $completed = false) {
+    global $g5;
+    if (!wzy_load_calendar_library() || !wzc_schema_installed()) return array('success' => false, 'code' => 'CALENDAR_NOT_INSTALLED');
     $calendar_config = wzc_get_config();
     if (empty($calendar_config['wcf_use'])) return array('success' => false, 'code' => 'CALENDAR_DISABLED');
     if (!function_exists('wzc_create_member_event')) return array('success' => false, 'code' => 'CALENDAR_UNAVAILABLE');

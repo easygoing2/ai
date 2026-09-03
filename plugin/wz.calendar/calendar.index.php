@@ -41,15 +41,26 @@ $events = wzc_get_events($mb_id, $grid_start, $grid_end);
 $youtube_watch_config = G5_PLUGIN_PATH.'/wz.youtube_watch/config.php';
 if ($events && is_file($youtube_watch_config)) {
     include_once($youtube_watch_config);
+    $youtube_watch_lib = G5_PLUGIN_PATH.'/wz.youtube_watch/youtube_watch.lib.php';
+    if (is_file($youtube_watch_lib)) include_once($youtube_watch_lib);
     if (!empty($g5['wzy_watch_table'])) {
         $event_ids = array_map('intval', array_keys($events));
         $mb_sql = sql_escape_string($mb_id);
-        $linked_result = sql_query("SELECT ww_calendar_event_id FROM `{$g5['wzy_watch_table']}`
+        $linked_result = sql_query("SELECT ww_calendar_event_id, ww_percent, ww_status FROM `{$g5['wzy_watch_table']}`
             WHERE mb_id='{$mb_sql}' AND ww_calendar_event_id IN (".implode(',', $event_ids).')', false);
         if ($linked_result) {
             while ($linked = sql_fetch_array($linked_result)) {
                 $linked_event_id = (int)$linked['ww_calendar_event_id'];
-                if (isset($events[$linked_event_id])) $events[$linked_event_id]['_source_type'] = 'youtube_watch';
+                if (isset($events[$linked_event_id])) {
+                    $events[$linked_event_id]['_source_type'] = 'youtube_watch';
+                    if (function_exists('wzy_synced_calendar_event_title')) {
+                        $events[$linked_event_id]['we_title'] = wzy_synced_calendar_event_title(
+                            $events[$linked_event_id]['we_title'],
+                            (int)$linked['ww_percent'],
+                            $linked['ww_status'] === 'completed'
+                        );
+                    }
+                }
             }
         }
     }
@@ -326,9 +337,12 @@ $render_event = function($event) use ($events_per_day) {
         <label for="wzcContent">메모</label>
         <textarea name="content" id="wzcContent" rows="5" placeholder="일정에 필요한 내용을 입력하세요"></textarea>
       </div>
-      <div class="wzc-field wzc-field-full">
+      <div class="wzc-field wzc-field-full wzc-link-field">
         <label for="wzcLinkUrl">외부 링크</label>
         <input type="url" name="link_url" id="wzcLinkUrl" maxlength="500" placeholder="https://">
+        <a href="#" class="wzc-external-link" id="wzcExternalLink" target="_blank" rel="noopener noreferrer" hidden>
+          <span data-external-link-text></span><i class="bx bx-link-external" aria-hidden="true"></i>
+        </a>
       </div>
       <div class="wzc-form-message" role="alert" hidden></div>
       <div class="wzc-order-actions" id="wzcOrderActions" hidden aria-label="일정 순서 변경">
