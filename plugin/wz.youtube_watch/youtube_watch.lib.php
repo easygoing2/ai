@@ -328,6 +328,42 @@ function wzy_calendar_event_title($subject, $percent, $completed = false) {
     return wzy_calendar_event_title_prefix($percent, $completed).wzy_plain_subject($subject);
 }
 
+function wzy_calendar_date_from_datetime($value) {
+    $date = substr(trim((string)$value), 0, 10);
+    if (!preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $date, $matches)) return '';
+    return checkdate((int)$matches[2], (int)$matches[3], (int)$matches[1]) ? $date : '';
+}
+
+/**
+ * Build the calendar period represented by a watch record.
+ *
+ * A calendar event can span at most 366 days, so an unusually old watch
+ * record keeps the most recent 366-day portion instead of failing to sync.
+ */
+function wzy_watch_calendar_dates($watch, $fallback_date = '') {
+    $fallback = wzy_calendar_date_from_datetime($fallback_date);
+    $start = is_array($watch) && isset($watch['ww_started_at'])
+        ? wzy_calendar_date_from_datetime($watch['ww_started_at'])
+        : '';
+    $end = is_array($watch) && isset($watch['ww_last_watched_at'])
+        ? wzy_calendar_date_from_datetime($watch['ww_last_watched_at'])
+        : '';
+
+    if (!$start) $start = $fallback;
+    if (!$end) $end = $fallback ?: $start;
+    if (!$start) $start = $end;
+    if (!$start || !$end) return array();
+    if ($start > $end) $start = $end;
+
+    $start_at = new DateTimeImmutable($start);
+    $end_at = new DateTimeImmutable($end);
+    if ((int)$start_at->diff($end_at)->format('%a') > 365) {
+        $start = $end_at->modify('-365 days')->format('Y-m-d');
+    }
+
+    return array('start_date' => $start, 'end_date' => $end);
+}
+
 /**
  * Replace only the watch-tracker prefix so member edits to the title body remain
  * intact. Titles whose managed prefix was removed are treated as customized and
@@ -354,7 +390,7 @@ function wzy_load_calendar_library() {
     return function_exists('wzc_schema_installed') && function_exists('wzc_event_for_member');
 }
 
-function wzy_sync_calendar_event_title($mb_id, $event_id, $percent, $completed = false) {
+function wzy_sync_calendar_event($mb_id, $event_id, $percent, $completed = false, $watch = array()) {
     global $g5;
     if (!$mb_id || !(int)$event_id || !wzy_load_calendar_library() || !wzc_schema_installed()) {
         return array('success' => false, 'code' => 'CALENDAR_UNAVAILABLE');
@@ -362,25 +398,79 @@ function wzy_sync_calendar_event_title($mb_id, $event_id, $percent, $completed =
 
     $mb_sql = sql_escape_string((string)$mb_id);
     $event_id = (int)$event_id;
-    $event = sql_fetch("SELECT we_ix, we_title, we_version, we_deleted_at
-        FROM `{$g5['wzc_event_table']}` WHERE we_ix={$event_id} AND mb_id='{$mb_sql}' LIMIT 1", false);
-    if (empty($event['we_ix'])) return array('success' => false, 'code' => 'NOT_FOUND');
-    if (!empty($event['we_deleted_at'])) return array('success' => false, 'code' => 'DELETED');
+    sql_query('START TRANSACTION', false);
+    $event = sql_fetch("SELECT we_ix, we_title, we_start_date, we_end_date, we_version, we_deleted_at
+        FROM `{$g5['wzc_event_table']}` WHERE we_ix={$event_id} AND mb_id='{$mb_sql}' LIMIT 1 FOR UPDATE", false);
+    if (empty($event['we_ix'])) {
+        sql_query('ROLLBACK', false);
+        return array('success' => false, 'code' => 'NOT_FOUND');
+    }
+    if (!empty($event['we_deleted_at'])) {
+        sql_query('ROLLBACK', false);
+        return array('success' => false, 'code' => 'DELETED');
+    }
 
     $title = wzy_synced_calendar_event_title($event['we_title'], $percent, $completed);
-    if ($title === (string)$event['we_title']) return array('success' => true, 'code' => 'UNCHANGED');
+    $start_date = (string)$event['we_start_date'];
+    $end_date = (string)$event['we_end_date'];
+    $watch_dates = wzy_watch_calendar_dates($watch);
+    if ($watch_dates) {
+        $candidate_start = min($start_date, $watch_dates['start_date']);
+        $candidate_end = max($end_date, $watch_dates['end_date']);
+        if (wzc_event_day_count($candidate_start, $candidate_end) <= 366) {
+            $start_date = $candidate_start;
+            $end_date = $candidate_end;
+        }
+    }
+
+    $title_changed = $title !== (string)$event['we_title'];
+    $dates_changed = $start_date !== (string)$event['we_start_date'] || $end_date !== (string)$event['we_end_date'];
+    if (!$title_changed && !$dates_changed) {
+        sql_query('COMMIT', false);
+        return array('success' => true, 'code' => 'UNCHANGED');
+    }
 
     $title_sql = sql_escape_string($title);
+    $start_sql = sql_escape_string($start_date);
+    $end_sql = sql_escape_string($end_date);
     $version = (int)$event['we_version'];
     $updated = sql_query("UPDATE `{$g5['wzc_event_table']}` SET we_title='{$title_sql}',
+        we_start_date='{$start_sql}', we_end_date='{$end_sql}',
         we_version=we_version+1, we_updated_at=NOW()
         WHERE we_ix={$event_id} AND mb_id='{$mb_sql}' AND we_version={$version} AND we_deleted_at IS NULL", false);
-    if (!$updated) return array('success' => false, 'code' => 'UPDATE_FAILED');
-    if (mysqli_affected_rows($GLOBALS['connect_db']) !== 1) return array('success' => false, 'code' => 'VERSION_CONFLICT');
-    return array('success' => true, 'code' => 'UPDATED');
+    if (!$updated) {
+        sql_query('ROLLBACK', false);
+        return array('success' => false, 'code' => 'UPDATE_FAILED');
+    }
+    if (mysqli_affected_rows($GLOBALS['connect_db']) !== 1) {
+        sql_query('ROLLBACK', false);
+        return array('success' => false, 'code' => 'VERSION_CONFLICT');
+    }
+
+    if ($dates_changed) {
+        $new_dates = array();
+        for ($date = $start_date; $date < $event['we_start_date']; $date = wzc_date_add($date, 1)) $new_dates[$date] = true;
+        for ($date = wzc_date_add($event['we_end_date'], 1); $date <= $end_date; $date = wzc_date_add($date, 1)) $new_dates[$date] = true;
+        foreach (array_keys($new_dates) as $date) {
+            if (!wzc_save_date_order($mb_id, $date, wzc_valid_event_ids_for_date($mb_id, $date))) {
+                sql_query('ROLLBACK', false);
+                return array('success' => false, 'code' => 'ORDER_FAILED');
+            }
+        }
+    }
+
+    if (!sql_query('COMMIT', false)) {
+        sql_query('ROLLBACK', false);
+        return array('success' => false, 'code' => 'COMMIT_FAILED');
+    }
+    return array('success' => true, 'code' => 'UPDATED', 'dates_changed' => $dates_changed);
 }
 
-function wzy_create_calendar_event($mb_id, $post, $watch_id, $percent, $completed = false) {
+function wzy_sync_calendar_event_title($mb_id, $event_id, $percent, $completed = false) {
+    return wzy_sync_calendar_event($mb_id, $event_id, $percent, $completed);
+}
+
+function wzy_create_calendar_event($mb_id, $post, $watch_id, $percent, $completed = false, $watch = array()) {
     global $g5;
     if (!wzy_load_calendar_library() || !wzc_schema_installed()) return array('success' => false, 'code' => 'CALENDAR_NOT_INSTALLED');
     $calendar_config = wzc_get_config();
@@ -392,7 +482,9 @@ function wzy_create_calendar_event($mb_id, $post, $watch_id, $percent, $complete
     $bo_table = isset($post['_bo_table']) ? $post['_bo_table'] : '';
     $link = html_entity_decode(get_pretty_url($bo_table, (int)$post['wr_id']), ENT_QUOTES, 'UTF-8');
     $recorded_at = defined('G5_TIME_YMDHIS') ? G5_TIME_YMDHIS : date('Y-m-d H:i:s');
-    $date = substr($recorded_at, 0, 10);
+    $watch_dates = wzy_watch_calendar_dates($watch, $recorded_at);
+    $start_date = $watch_dates['start_date'];
+    $end_date = $watch_dates['end_date'];
     $content = $completed
         ? "유튜브 영상 시청률 {$percent}%로 시청 완료\n완료 시각: {$recorded_at}"
         : "유튜브 영상 시청률 {$percent}%에서 캘린더 자동등록 기준 도달\n등록 시각: {$recorded_at}";
@@ -402,8 +494,8 @@ function wzy_create_calendar_event($mb_id, $post, $watch_id, $percent, $complete
         'content' => $content,
         'location' => '',
         'category_id' => 0,
-        'start_date' => $date,
-        'end_date' => $date,
+        'start_date' => $start_date,
+        'end_date' => $end_date,
         'all_day' => 1,
         'start_time' => '',
         'end_time' => '',
@@ -444,7 +536,7 @@ function wzy_backfill_calendar_events($limit = 200) {
         }
 
         $bundle['post']['_bo_table'] = $watch['bo_table'];
-        $calendar = wzy_create_calendar_event($watch['mb_id'], $bundle['post'], $watch_id, (int)$watch['ww_percent'], $watch['ww_status'] === 'completed');
+        $calendar = wzy_create_calendar_event($watch['mb_id'], $bundle['post'], $watch_id, (int)$watch['ww_percent'], $watch['ww_status'] === 'completed', $watch);
         $event_id = !empty($calendar['success']) ? (int)$calendar['event_id'] : 0;
         if ($event_id) {
             $calendar_status = 'created';

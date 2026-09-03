@@ -81,6 +81,33 @@
 
         if (toast) toast.querySelector('.wzc-toast-close').addEventListener('click', hideToast);
 
+        var multidayLabelFrame = 0;
+
+        function syncMultidayLabelWidths() {
+            window.cancelAnimationFrame(multidayLabelFrame);
+            multidayLabelFrame = window.requestAnimationFrame(function () {
+                root.querySelectorAll('.wzc-event.is-multiday.has-label').forEach(function (startEvent) {
+                    var title = startEvent.querySelector('.wzc-event-title');
+                    var endDate = startEvent.getAttribute('data-segment-end-date');
+                    var eventId = startEvent.getAttribute('data-event-id');
+                    if (!title || !endDate || !eventId) return;
+
+                    title.style.removeProperty('--wzc-event-title-width');
+                    var endList = root.querySelector('.wzc-event-list[data-date="' + endDate + '"]');
+                    var endEvent = endList ? endList.querySelector('.wzc-event[data-event-id="' + eventId + '"]') : null;
+                    if (!endEvent || !startEvent.offsetParent || !endEvent.offsetParent) return;
+
+                    var titleRect = title.getBoundingClientRect();
+                    var endRect = endEvent.getBoundingClientRect();
+                    var available = Math.floor(endRect.right - titleRect.left - 5);
+                    if (available > 0) title.style.setProperty('--wzc-event-title-width', available + 'px');
+                });
+            });
+        }
+
+        window.addEventListener('resize', syncMultidayLabelWidths);
+        syncMultidayLabelWidths();
+
         function padTime(value) {
             return String(value).padStart(2, '0');
         }
@@ -427,7 +454,16 @@
             button.addEventListener('click', function () {
                 var list = button.previousElementSibling;
                 var expanded = list.classList.toggle('is-expanded');
-                button.textContent = expanded ? '접기' : '+' + button.getAttribute('data-more-count') + '개 더보기';
+                var count = button.querySelector('.wzc-more-count');
+                var label = button.querySelector('.wzc-more-label');
+                button.classList.toggle('is-expanded', expanded);
+                button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                button.setAttribute('aria-label', expanded
+                    ? '추가 일정 접기'
+                    : '숨겨진 일정 ' + button.getAttribute('data-more-count') + '개 더보기');
+                if (count) count.hidden = expanded;
+                if (label) label.textContent = expanded ? '접기' : '개 더보기';
+                syncMultidayLabelWidths();
             });
         });
 

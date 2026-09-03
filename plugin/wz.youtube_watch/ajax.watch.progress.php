@@ -107,7 +107,9 @@ if (!sql_query($update, false)) {
 if ($percent >= $calendar_threshold && !$calendar_event_id && in_array($calendar_status, array('none', 'pending'), true)) {
     if (!empty($wzy_config['wyc_calendar_use'])) {
         $bundle['post']['_bo_table'] = $bo_table;
-        $calendar = wzy_create_calendar_event($mb_id, $bundle['post'], $watch_id, $percent, $status === 'completed');
+        $calendar_watch = $row;
+        $calendar_watch['ww_last_watched_at'] = defined('G5_TIME_YMDHIS') ? G5_TIME_YMDHIS : date('Y-m-d H:i:s');
+        $calendar = wzy_create_calendar_event($mb_id, $bundle['post'], $watch_id, $percent, $status === 'completed', $calendar_watch);
         if (!empty($calendar['success'])) {
             $calendar_event_id = (int)$calendar['event_id'];
             $calendar_status = 'created';
@@ -129,13 +131,14 @@ if (!sql_query('COMMIT', false)) {
     wzy_json_response(false, array('message' => '시청률 저장을 완료하지 못했습니다.'), 500);
 }
 
-if ($calendar_event_id && $calendar_status === 'created') {
+$saved = sql_fetch("SELECT * FROM `{$g5['wzy_watch_table']}` WHERE ww_ix={$watch_id} AND mb_id='{$mb_sql}'", false);
+
+if ($calendar_event_id && $calendar_status === 'created' && $saved) {
     // Synchronization runs after the watch transaction so a temporary calendar
     // conflict never rolls back valid progress.
-    wzy_sync_calendar_event_title($mb_id, $calendar_event_id, $percent, $status === 'completed');
+    wzy_sync_calendar_event($mb_id, $calendar_event_id, $percent, $status === 'completed', $saved);
 }
 
-$saved = sql_fetch("SELECT * FROM `{$g5['wzy_watch_table']}` WHERE ww_ix={$watch_id} AND mb_id='{$mb_sql}'", false);
 $public = wzy_watch_public_data($saved, true);
 $public['completed_now'] = $completed_now;
 $public['calendar_event_id'] = $calendar_event_id;

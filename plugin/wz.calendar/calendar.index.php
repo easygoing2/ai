@@ -95,9 +95,10 @@ $render_event = function($event) use ($events_per_day) {
     if (!empty($event['_event_end'])) $classes[] = 'is-event-end';
     if (!empty($event['_show_title'])) $classes[] = 'has-label';
     $show_label = !empty($event['_show_title']);
+    $segment_end_date = isset($event['_segment_end_date']) ? (string)$event['_segment_end_date'] : $data['end_date'];
     $time = $show_label && !empty($event['_event_start']) && !$data['all_day'] && $data['start_time'] ? '<span class="wzc-event-time">'.htmlspecialchars($data['start_time'], ENT_QUOTES, 'UTF-8').'</span>' : '';
     $title = $show_label ? '<span class="wzc-event-title">'.htmlspecialchars($data['title'], ENT_QUOTES, 'UTF-8').'</span>' : '<span class="wzc-event-title" aria-hidden="true"></span>';
-    echo '<article class="'.implode(' ', $classes).'" data-event-id="'.(int)$data['id'].'" data-category-id="'.(int)$data['category_id'].'" data-event="'.$json.'" style="--wzc-event-color:'.htmlspecialchars($color, ENT_QUOTES, 'UTF-8').';--wzc-event-lane:'.($lane + 1).'">';
+    echo '<article class="'.implode(' ', $classes).'" data-event-id="'.(int)$data['id'].'" data-category-id="'.(int)$data['category_id'].'" data-segment-end-date="'.htmlspecialchars($segment_end_date, ENT_QUOTES, 'UTF-8').'" data-event="'.$json.'" style="--wzc-event-color:'.htmlspecialchars($color, ENT_QUOTES, 'UTF-8').';--wzc-event-lane:'.($lane + 1).'">';
     echo '<button type="button" class="wzc-drag-handle" aria-label="'.htmlspecialchars($data['title'], ENT_QUOTES, 'UTF-8').' 일정 이동"><i class="bx bx-grid-vertical"></i></button>';
     echo '<button type="button" class="wzc-event-open" aria-label="'.htmlspecialchars($data['title'], ENT_QUOTES, 'UTF-8').' 일정 열기">'.$time.$title.'</button>';
     echo '</article>';
@@ -159,7 +160,12 @@ $render_event = function($event) use ($events_per_day) {
             if ($cell['weekday'] === 6) $classes[] = 'is-saturday';
             $date_events = isset($event_layout[$cell['date']]) ? $event_layout[$cell['date']] : array();
             $hidden_event_count = 0;
-            foreach ($date_events as $date_event) if ((int)$date_event['_layout_lane'] >= $events_per_day) $hidden_event_count++;
+            foreach ($date_events as $date_event) {
+                if ((int)$date_event['_layout_lane'] >= $events_per_day) $hidden_event_count++;
+                if (!empty($date_event['_show_title']) && $date_event['we_start_date'] !== $date_event['we_end_date']) {
+                    $classes[] = 'has-multiday-label';
+                }
+            }
             $cell_year = (int)substr($cell['date'], 0, 4);
             $cell_month = (int)substr($cell['date'], 5, 2);
         ?>
@@ -179,7 +185,12 @@ $render_event = function($event) use ($events_per_day) {
       </div>
       <?php if ($hidden_event_count > 0) { ?>
       <button type="button" class="wzc-more"
-        data-more-count="<?php echo $hidden_event_count; ?>">+<?php echo $hidden_event_count; ?>개 더보기</button>
+        data-more-count="<?php echo $hidden_event_count; ?>" aria-expanded="false"
+        aria-label="숨겨진 일정 <?php echo $hidden_event_count; ?>개 더보기">
+        <span class="wzc-more-count">+<?php echo $hidden_event_count; ?></span>
+        <span class="wzc-more-label">개 더보기</span>
+        <i class="bx bx-chevron-down" aria-hidden="true"></i>
+      </button>
       <?php } ?>
     </section>
     <?php } ?>
