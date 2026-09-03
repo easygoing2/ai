@@ -504,7 +504,7 @@
 	align-items: center;
 	min-height: 23px;
 	max-width: 100%;
-	margin-top: 4px;
+	margin-top: 3px;
 	padding: 2px 6px 2px 4px;
 	border: 1px solid color-mix(in srgb, var(--wzc-primary) 24%, var(--wzc-line));
 	border-radius: 7px;

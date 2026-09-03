@@ -210,7 +210,7 @@ function wzc_install_schema() {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
     $queries[] = "CREATE TABLE IF NOT EXISTS `{$g5['wzc_preference_table']}` (
         `mb_id` varchar(20) NOT NULL,
-        `wp_events_per_day` tinyint unsigned NOT NULL DEFAULT '3',
+        `wp_events_per_day` tinyint unsigned NOT NULL DEFAULT '5',
         `wp_default_category` int unsigned DEFAULT NULL,
         `wp_touch_drag_use` tinyint(1) NOT NULL DEFAULT '1',
         `wp_updated_at` datetime NOT NULL,
@@ -422,7 +422,7 @@ function wzc_get_preference($mb_id) {
     global $g5;
     $mb = sql_escape_string($mb_id);
     $row = sql_fetch("SELECT * FROM `{$g5['wzc_preference_table']}` WHERE mb_id='{$mb}'", false);
-    if (!$row) return array('mb_id' => $mb_id, 'wp_events_per_day' => 3, 'wp_default_category' => null, 'wp_touch_drag_use' => 1);
+    if (!$row) return array('mb_id' => $mb_id, 'wp_events_per_day' => 5, 'wp_default_category' => null, 'wp_touch_drag_use' => 1);
     return $row;
 }
 

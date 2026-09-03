@@ -7,7 +7,7 @@ wzc_require_enabled_json();
 $data = wzc_require_post_json();
 wzc_rate_limit('preference_save', 20, 60);
 
-$events_per_day = isset($data['events_per_day']) ? (int)$data['events_per_day'] : 3;
+$events_per_day = isset($data['events_per_day']) ? (int)$data['events_per_day'] : 5;
 $default_category = isset($data['default_category']) ? (int)$data['default_category'] : 0;
 $touch_drag = !empty($data['touch_drag_use']) ? 1 : 0;
 if ($events_per_day < 1 || $events_per_day > 10) wzc_json_response(false, array('message' => '날짜 셀 표시 개수는 1~10 사이여야 합니다.'), 422);
