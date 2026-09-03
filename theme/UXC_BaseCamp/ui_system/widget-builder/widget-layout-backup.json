@@ -5,17 +5,6 @@
                 {
                     "width": 100,
                     "widget": {
-                        "type": "latest_posts\/widget_latest_posts",
-                        "title": ""
-                    }
-                }
-            ]
-        },
-        {
-            "columns": [
-                {
-                    "width": 100,
-                    "widget": {
                         "type": "latest",
                         "skin": "theme\/uxc_gallery_box",
                         "boards": [
@@ -124,5 +113,5 @@
             ]
         }
     ],
-    "updated_at": "2026-09-03T18:18:09+09:00"
+    "updated_at": "2026-09-03T18:18:24+09:00"
 }
