@@ -548,6 +548,7 @@ function wzc_event_layout_by_date($events_by_date, $cells) {
                     'event' => $event,
                     'start_column' => $start_column,
                     'end_column' => $end_column,
+                    'segment_end' => $segment_end,
                     'sort' => isset($event['_sort']) ? (int)$event['_sort'] : 100000,
                     'position' => (int)$position
                 );
@@ -588,7 +589,7 @@ function wzc_event_layout_by_date($events_by_date, $cells) {
                 $copy['_layout_lane'] = $lane;
                 $copy['_segment_start'] = $column === $item['start_column'];
                 $copy['_segment_end'] = $column === $item['end_column'];
-                $copy['_segment_end_date'] = $segment_end;
+                $copy['_segment_end_date'] = $item['segment_end'];
                 $copy['_event_start'] = $date === $copy['we_start_date'];
                 $copy['_event_end'] = $date === $copy['we_end_date'];
                 $copy['_show_title'] = $column === $item['start_column'];
