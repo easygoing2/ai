@@ -41,7 +41,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </div>
         <div class="themeVersion">
           <span class="versionLabel">Theme Make by</span>
-          <span class="versionNumber"><a href="https://uxcamp.net/" class="color-prime"
+          <span class="versionNumber"><a href="http://topgun8127.ipdisk.co.kr:8000/" class="color-prime"
               target="_blank">UXCAMP</a></span>
         </div>
       </div>

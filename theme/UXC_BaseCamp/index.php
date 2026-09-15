@@ -36,11 +36,24 @@ if ($edit_mode) {
     <!-- 편집 모드일 때 -->    
     <?php include_once(G5_THEME_PATH.'/ui_system/widget-builder/widget-builder.php'); ?>
 <?php elseif ($use_widget_builder): ?>
+    <?php
+    $study_feed_rows = 0;
+    foreach ($widget_layout['grid_rows'] as $study_row) {
+        $study_columns = $study_row['columns'] ?? array();
+        $study_widget = $study_columns[0]['widget'] ?? array();
+        if (count($study_columns) !== 1 || ($study_widget['type'] ?? '') !== 'latest' || strpos($study_widget['skin'] ?? '', 'gallery') === false) break;
+        $study_feed_rows++;
+    }
+    $study_feed_rows = max(1, $study_feed_rows);
+    add_stylesheet('<link rel="stylesheet" href="'.G5_THEME_URL.'/ui_module/ui_study/style.css?v='.(int)filemtime(G5_THEME_PATH.'/ui_module/ui_study/style.css').'">', 10);
+    add_javascript('<script src="'.G5_THEME_URL.'/ui_module/ui_study/study.js?v='.(int)filemtime(G5_THEME_PATH.'/ui_module/ui_study/study.js').'" defer></script>', 20);
+    ?>
     <!-- 일반 모드일 때 위젯 출력 -->
-    <div class="grid-container">
+    <div class="grid-container home-dashboard">
+        <?php include G5_THEME_PATH.'/ui_module/ui_study/ui_study.php'; ?>
         <?php if (!empty($widget_layout['grid_rows'])): ?>
             <?php foreach ($widget_layout['grid_rows'] as $rowIndex => $row): ?>
-            <div class="grid-row">
+            <div class="grid-row <?php echo $rowIndex < $study_feed_rows ? 'home-feed-row' : 'home-wide-row'; ?>">
                 <?php foreach ($row['columns'] as $colIndex => $col): ?>
                 <div class="grid-col-<?php echo $col['width']; ?>">
                     <?php if (!empty($col['widget'])): ?>
