@@ -128,19 +128,8 @@
                         
                         // active 클래스 설정
                         $active_class = '';
-                        if (isset($row['me_link'])) {
-                            // bo_table 체크
-                            if (!empty($current_bo_table) && strpos($row['me_link'], 'bo_table='.$current_bo_table) !== false) {
-                                $active_class = 'active';
-                            }
-                            // co_id 체크
-                            else if (!empty($current_co_id) && strpos($row['me_link'], 'co_id='.$current_co_id) !== false) {
-                                $active_class = 'active';
-                            }
-                            // URL 끝부분 체크
-                            else if (!empty($current_bo_table) && strpos($row['me_link'], $current_bo_table) !== false) {
-                                $active_class = 'active';
-                            }
+                        if (isset($row['me_link']) && uxc_menu_link_matches($row['me_link'], $current_bo_table, $current_co_id)) {
+                            $active_class = 'active';
                         }
                         ?>
                         <a href="<?php echo isset($row['me_link']) ? $row['me_link'] : '#'; ?>" class="tabItem <?php echo $active_class; ?>">

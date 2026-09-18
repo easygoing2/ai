@@ -206,6 +206,51 @@ function is_menu_active($me_link) {
 }
 
 /**
+ * 메뉴 링크가 현재 게시판 또는 내용 페이지와 정확히 일치하는지 확인한다.
+ */
+if (!function_exists('uxc_menu_link_matches')) {
+function uxc_menu_link_matches($me_link, $bo_table = '', $co_id = '') {
+    if (!$me_link) return false;
+
+    $menu_url = parse_url($me_link);
+    if (!is_array($menu_url)) return false;
+
+    $menu_params = array();
+    if (isset($menu_url['query'])) {
+        parse_str($menu_url['query'], $menu_params);
+    }
+
+    if ($bo_table !== '') {
+        if (isset($menu_params['bo_table'])) {
+            return (string)$menu_params['bo_table'] === (string)$bo_table;
+        }
+
+        if (isset($menu_url['path'])) {
+            $menu_path = trim($menu_url['path'], '/');
+            if ($menu_path !== '' && basename($menu_path) === (string)$bo_table) {
+                return true;
+            }
+        }
+    }
+
+    if ($co_id !== '') {
+        if (isset($menu_params['co_id'])) {
+            return (string)$menu_params['co_id'] === (string)$co_id;
+        }
+
+        if (isset($menu_url['path'])) {
+            $menu_path = trim($menu_url['path'], '/');
+            if ($menu_path !== '' && basename($menu_path) === (string)$co_id) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+}
+
+/**
  * 현재 페이지가 속한 메뉴 그룹(대메뉴) 이름을 반환하는 함수
  * breadcrumbs 표시 등에 사용
  *
@@ -240,14 +285,7 @@ function uxc_get_current_menu_group($bo_table = '', $co_id = '') {
             foreach ($row['sub'] as $row2) {
                 if (empty($row2) || !isset($row2['me_link'])) continue;
 
-                // bo_table로 찾기
-                if (!empty($bo_table) && strpos($row2['me_link'], $bo_table) !== false) {
-                    $menu_group_name = isset($row['me_name']) ? $row['me_name'] : '';
-                    break 2;
-                }
-
-                // co_id로 찾기
-                if (!empty($co_id) && strpos($row2['me_link'], $co_id) !== false) {
+                if (uxc_menu_link_matches($row2['me_link'], $bo_table, $co_id)) {
                     $menu_group_name = isset($row['me_name']) ? $row['me_name'] : '';
                     break 2;
                 }
@@ -256,13 +294,7 @@ function uxc_get_current_menu_group($bo_table = '', $co_id = '') {
 
         // 메인메뉴에서도 확인
         if (empty($menu_group_name) && isset($row['me_link'])) {
-            // bo_table로 찾기
-            if (!empty($bo_table) && strpos($row['me_link'], $bo_table) !== false) {
-                $menu_group_name = isset($row['me_name']) ? $row['me_name'] : '';
-                break;
-            }
-            // co_id로 찾기
-            if (!empty($co_id) && strpos($row['me_link'], $co_id) !== false) {
+            if (uxc_menu_link_matches($row['me_link'], $bo_table, $co_id)) {
                 $menu_group_name = isset($row['me_name']) ? $row['me_name'] : '';
                 break;
             }
@@ -307,14 +339,7 @@ function uxc_get_current_menu_group_icon($bo_table = '', $co_id = '') {
             foreach ($row['sub'] as $row2) {
                 if (empty($row2) || !isset($row2['me_link'])) continue;
 
-                // bo_table로 찾기
-                if (!empty($bo_table) && strpos($row2['me_link'], $bo_table) !== false) {
-                    $menu_group_icon = (isset($row['me_icon']) && !empty(trim($row['me_icon']))) ? trim($row['me_icon']) : '';
-                    break 2;
-                }
-
-                // co_id로 찾기
-                if (!empty($co_id) && strpos($row2['me_link'], $co_id) !== false) {
+                if (uxc_menu_link_matches($row2['me_link'], $bo_table, $co_id)) {
                     $menu_group_icon = (isset($row['me_icon']) && !empty(trim($row['me_icon']))) ? trim($row['me_icon']) : '';
                     break 2;
                 }
@@ -323,13 +348,7 @@ function uxc_get_current_menu_group_icon($bo_table = '', $co_id = '') {
 
         // 메인메뉴에서도 확인
         if (empty($menu_group_icon) && isset($row['me_link'])) {
-            // bo_table로 찾기
-            if (!empty($bo_table) && strpos($row['me_link'], $bo_table) !== false) {
-                $menu_group_icon = (isset($row['me_icon']) && !empty(trim($row['me_icon']))) ? trim($row['me_icon']) : '';
-                break;
-            }
-            // co_id로 찾기
-            if (!empty($co_id) && strpos($row['me_link'], $co_id) !== false) {
+            if (uxc_menu_link_matches($row['me_link'], $bo_table, $co_id)) {
                 $menu_group_icon = (isset($row['me_icon']) && !empty(trim($row['me_icon']))) ? trim($row['me_icon']) : '';
                 break;
             }
