@@ -700,7 +700,7 @@ if ($action === 'list') {
             wr_subject,
             wr_content,
             wr_link1,
-            wr_link2,
+            wr_10,
             mb_id,
             wr_name,
             wr_datetime,
@@ -756,7 +756,7 @@ if ($action === 'list') {
 			$row['wr_link1'],
 
 			'youtube_url' =>
-			$row['wr_link2'],
+			$row['wr_10'],
 
 			'author' =>
 			$row['wr_name'],
@@ -860,7 +860,7 @@ if ($action === 'get') {
                 wr_subject,
                 wr_content,
                 wr_link1,
-                wr_link2,
+                wr_10,
                 mb_id,
                 wr_name,
                 wr_datetime,
@@ -920,7 +920,7 @@ if ($action === 'get') {
 				$row['wr_link1'],
 
 				'youtube_url' =>
-				$row['wr_link2'],
+				$row['wr_10'],
 
 				'author' =>
 				$row['wr_name'],
@@ -1086,28 +1086,25 @@ if ($action === 'create') {
      * 링크 처리
      *
      * wr_link1 = source_url
-     * wr_link2 = youtube_url
-     *
-     * 두 URL이 같더라도 각각의 필드에 저장합니다.
+     * wr_10    = youtube_url
      */
 
 	$primary_link =
 		trim($source_url);
 
-	$secondary_link =
+	$youtube_link =
 		trim($youtube_url);
 
 
 	/*
      * 같은 URL 게시물 중복 등록 방지
-     *
-     * source_url이 있으면 source_url을 사용하고,
-     * 없으면 youtube_url을 기준으로 검사합니다.
+     * source_url이 있으면 source_url,
+     * 없으면 youtube_url 기준으로 검사
      */
 
 	$duplicate_check_link =
 		$primary_link
-		?: $secondary_link;
+		?: $youtube_link;
 
 	if ($duplicate_check_link) {
 
@@ -1132,7 +1129,7 @@ if ($action === 'create') {
                     AND (
                         wr_link1 = '{$escaped_link}'
                         OR
-                        wr_link2 = '{$escaped_link}'
+                        wr_10 = '{$escaped_link}'
                     )
 
                 LIMIT 1
@@ -1294,9 +1291,9 @@ if ($action === 'create') {
 		);
 
 
-	$sql_link2 =
+	$sql_youtube_url =
 		api_escape(
-			$secondary_link
+			$youtube_link
 		);
 
 
@@ -1391,7 +1388,10 @@ if ($action === 'create') {
                     '{$sql_link1}',
 
                 wr_link2 =
-                    '{$sql_link2}',
+                    '',
+
+                wr_10 =
+                    '{$sql_youtube_url}',
 
                 wr_link1_hit =
                     0,
@@ -1826,9 +1826,7 @@ if ($action === 'update') {
 
 	/*
      * youtube_url
-     *
-     * YouTube 동영상 URL은 항상 wr_link2에 저장합니다.
-     * source_url과 같은 값이어도 비우지 않습니다.
+     * 사이트의 유튜브동영상 URL 입력란(name="wr_10")에 저장
      */
 
 	if (
@@ -1850,7 +1848,7 @@ if ($action === 'update') {
 
 
 		$updates[] =
-			"wr_link2 = '" .
+			"wr_10 = '" .
 			api_escape(
 				$youtube_url
 			) .
