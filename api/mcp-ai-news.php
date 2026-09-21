@@ -1061,6 +1061,34 @@ if ($action === 'create') {
 
 
 	/*
+     * Toast UI Markdown 식별자 추가
+     *
+     * 게시판 스킨이 이 주석을 확인해
+     * wr_content를 Markdown으로 렌더링합니다.
+     * html_purifier() 이후에 추가해야
+     * HTML comment가 제거되지 않습니다.
+     */
+
+	$markdown_marker =
+		'<!--TOASTUI_EDITOR_MARKDOWN-->';
+
+	if (
+		strpos(
+			$content,
+			$markdown_marker
+		)
+		!==
+		0
+	) {
+
+		$content =
+			$markdown_marker .
+			"\r\n" .
+			$content;
+	}
+
+
+	/*
      * 게시판 확인
      */
 
@@ -1781,6 +1809,31 @@ if ($action === 'update') {
 				html_purifier(
 					$content
 				);
+		}
+
+
+		/*
+         * Toast UI Markdown 식별자 추가
+         * html_purifier() 처리 후 붙여야
+         * 식별용 HTML comment가 유지됩니다.
+         */
+
+		$markdown_marker =
+			'<!--TOASTUI_EDITOR_MARKDOWN-->';
+
+		if (
+			strpos(
+				$content,
+				$markdown_marker
+			)
+			!==
+			0
+		) {
+
+			$content =
+				$markdown_marker .
+				"\r\n" .
+				$content;
 		}
 
 
