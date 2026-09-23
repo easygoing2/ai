@@ -8,6 +8,25 @@
                         "type": "latest",
                         "skin": "theme\/uxc_gallery_box",
                         "boards": [
+                            "ai_agent"
+                        ],
+                        "board": "ai_agent",
+                        "rows": 8,
+                        "subject_len": 40,
+                        "title": "AI 소식",
+                        "show_more": true
+                    }
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "width": 100,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery_box",
+                        "boards": [
                             "ai_agent_01",
                             "ai_mcp_01",
                             "ai_Engineering_01"
@@ -56,8 +75,8 @@
                             "notice"
                         ],
                         "board": "ai_agent,notice",
-                        "rows": 5,
-                        "subject_len": 40,
+                        "rows": 4,
+                        "subject_len": 100,
                         "title": "AI 소식",
                         "show_more": false
                     }
@@ -80,5 +99,5 @@
             ]
         }
     ],
-    "updated_at": "2026-09-21T14:27:41+09:00"
+    "updated_at": "2026-09-22T20:41:31+09:00"
 }

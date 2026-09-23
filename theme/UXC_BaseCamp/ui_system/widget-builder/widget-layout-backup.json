@@ -8,13 +8,31 @@
                         "type": "latest",
                         "skin": "theme\/uxc_gallery_box",
                         "boards": [
+                            "ai_agent"
+                        ],
+                        "board": "ai_agent",
+                        "rows": 4,
+                        "subject_len": 40,
+                        "title": "AI 소식",
+                        "show_more": true
+                    }
+                }
+            ]
+        },
+        {
+            "columns": [
+                {
+                    "width": 100,
+                    "widget": {
+                        "type": "latest",
+                        "skin": "theme\/uxc_gallery_box",
+                        "boards": [
                             "ai_agent_01",
-                            "ai_agent",
                             "ai_mcp_01",
                             "ai_Engineering_01"
                         ],
-                        "board": "ai_agent_01,ai_agent,ai_mcp_01,ai_Engineering_01",
-                        "rows": 8,
+                        "board": "ai_agent_01,ai_mcp_01,ai_Engineering_01",
+                        "rows": 4,
                         "subject_len": 80,
                         "title": "AI Agent",
                         "show_more": false
@@ -37,7 +55,7 @@
                             "ai_skill_maketing"
                         ],
                         "board": "ai_skill,ai_skill_dev,ai_skill_planning,ai_skill_design,ai_skill_maketing",
-                        "rows": 8,
+                        "rows": 4,
                         "subject_len": 40,
                         "title": "AI Skill",
                         "show_more": false
@@ -57,8 +75,8 @@
                             "notice"
                         ],
                         "board": "ai_agent,notice",
-                        "rows": 5,
-                        "subject_len": 40,
+                        "rows": 4,
+                        "subject_len": 100,
                         "title": "AI 소식",
                         "show_more": false
                     }
@@ -81,5 +99,5 @@
             ]
         }
     ],
-    "updated_at": "2026-09-21T14:27:20+09:00"
+    "updated_at": "2026-09-22T20:40:54+09:00"
 }

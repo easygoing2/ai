@@ -17,6 +17,9 @@
  * update
  *   게시물 수정
  *
+ * categories
+ *   MCP에서 사용할 수 있는 게시판 메뉴 조회
+ *
  * 인증:
  * Authorization: Bearer <AI_NEWS_API_TOKEN>
  */
@@ -61,32 +64,6 @@ if (!file_exists($common_file)) {
 }
 
 require_once $common_file;
-
-
-/* =========================================================
- * 게시판 설정
- * ========================================================= */
-
-/*
- * 현재 ai.23yellow.com의 실제 게시판 URL 기준
- *
- * AI 소식        /ai_agent
- * AI Agent       /ai_agent_01
- * AI 엔지니어링   /ai_Engineering_01
- * AI MCP         /ai_mcp_01
- */
-
-$AI_NEWS_BOARDS = [
-
-	'AI소식' => 'ai_agent',
-
-	'AI Agent' => 'ai_agent_01',
-
-	'AI 엔지니어링' => 'ai_Engineering_01',
-
-	'AI MCP' => 'ai_mcp_01',
-
-];
 
 
 /* =========================================================
@@ -181,127 +158,267 @@ function api_escape(string $value): string
 
 
 /*
- * 게시판 카테고리 이름 정규화
+ * 카테고리 이름 비교용 키 생성
+ *
+ * 공백과 대소문자 차이를 무시하고,
+ * 자주 혼용되는 한글/영문 명칭을 맞춥니다.
  */
 
-function api_normalize_category(
-	string $category
+function api_category_key(
+	string $value
 ): string {
 
-	$category = trim($category);
+	$value = html_entity_decode(
+		trim($value),
+		ENT_QUOTES | ENT_HTML5,
+		'UTF-8'
+	);
 
-	$aliases = [
+	$value = mb_strtolower(
+		$value,
+		'UTF-8'
+	);
 
-		'AI 소식' => 'AI소식',
-		'ai소식' => 'AI소식',
-		'ai 소식' => 'AI소식',
+	$value = str_replace(
+		['에이전트', '스킬'],
+		['agent', 'skill'],
+		$value
+	);
 
-		'AI 에이전트' => 'AI Agent',
-		'ai agent' => 'AI Agent',
-
-		'AI엔지니어링' => 'AI 엔지니어링',
-		'ai 엔지니어링' => 'AI 엔지니어링',
-
-		'AI MCP' => 'AI MCP',
-		'ai mcp' => 'AI MCP',
-
-	];
-
-	if (isset($aliases[$category])) {
-		return $aliases[$category];
-	}
-
-	return $category;
+	return preg_replace(
+		'/[\s?]+/u',
+		'',
+		$value
+	);
 }
 
 
 /*
- * category → bo_table
+ * 메뉴 URL에서 bo_table 후보 추출
+ */
+
+function api_menu_bo_table(
+	string $link
+): string {
+
+	$link = html_entity_decode(
+		trim($link),
+		ENT_QUOTES | ENT_HTML5,
+		'UTF-8'
+	);
+
+	if ($link === '') {
+		return '';
+	}
+
+	$parts = parse_url($link);
+
+	if ($parts === false) {
+		return '';
+	}
+
+	if (!empty($parts['query'])) {
+		$query = [];
+		parse_str($parts['query'], $query);
+
+		$bo_table = trim(
+			$query['bo_table']
+			??
+			''
+		);
+
+		if (preg_match('/^[A-Za-z0-9_]+$/', $bo_table)) {
+			return $bo_table;
+		}
+	}
+
+	$path = rawurldecode(
+		$parts['path']
+		??
+		''
+	);
+
+	$bo_table = basename(
+		rtrim($path, '/')
+	);
+
+	if (
+		$bo_table !== 'board.php'
+		&&
+		preg_match('/^[A-Za-z0-9_]+$/', $bo_table)
+	) {
+		return $bo_table;
+	}
+
+	return '';
+}
+
+
+/*
+ * 활성 메뉴에 연결된 게시판 목록
+ *
+ * 메뉴에 노출된 게시판만 MCP 쓰기 대상으로 허용합니다.
+ * 상위 메뉴와 하위 메뉴가 같은 게시판을 가리키면
+ * 더 구체적인 하위 메뉴 이름을 대표 카테고리로 사용합니다.
+ */
+
+function api_get_menu_boards(): array
+{
+
+	global $g5;
+
+	$boards = [];
+
+	$board_result = api_sql(
+		"
+        SELECT *
+        FROM {$g5['board_table']}
+        ORDER BY bo_table
+        "
+	);
+
+	while ($board = sql_fetch_array($board_result)) {
+		$bo_table = $board['bo_table'] ?? '';
+
+		if (preg_match('/^[A-Za-z0-9_]+$/', $bo_table)) {
+			$boards[$bo_table] = $board;
+		}
+	}
+
+	$available = [];
+
+	$menu_result = api_sql(
+		"
+        SELECT
+            me_code,
+            me_name,
+            me_link
+        FROM {$g5['menu_table']}
+        WHERE me_use = 1
+        ORDER BY me_code
+        "
+	);
+
+	while ($menu = sql_fetch_array($menu_result)) {
+		$bo_table = api_menu_bo_table(
+			$menu['me_link']
+			??
+			''
+		);
+
+		if ($bo_table === '' || !isset($boards[$bo_table])) {
+			continue;
+		}
+
+		$menu_name = trim(
+			$menu['me_name']
+			??
+			''
+		);
+
+		if ($menu_name === '') {
+			continue;
+		}
+
+		$menu_code = (string) (
+			$menu['me_code']
+			??
+			''
+		);
+
+		if (!isset($available[$bo_table])) {
+			$available[$bo_table] = [
+				'category' => $menu_name,
+				'bo_table' => $bo_table,
+				'board' => $boards[$bo_table],
+				'menu_names' => [],
+				'canonical_code_length' => 0
+			];
+		}
+
+		$available[$bo_table]['menu_names'][] = $menu_name;
+
+		$code_length = strlen($menu_code);
+
+		if (
+			$code_length
+			>
+			$available[$bo_table]['canonical_code_length']
+		) {
+			$available[$bo_table]['category'] = $menu_name;
+			$available[$bo_table]['canonical_code_length'] = $code_length;
+		}
+	}
+
+	foreach ($available as &$item) {
+		$item['menu_names'] = array_values(
+			array_unique($item['menu_names'])
+		);
+		unset($item['canonical_code_length']);
+	}
+	unset($item);
+
+	return $available;
+}
+
+
+/*
+ * category 또는 bo_table → 게시판 정보
  */
 
 function api_get_board(
 	string $category
 ): array {
 
-	global $AI_NEWS_BOARDS;
-	global $g5;
+	$requested_category = trim($category);
+	$requested_key = api_category_key($requested_category);
+	$available = api_get_menu_boards();
 
-	$category = api_normalize_category(
-		$category
+	foreach ($available as $item) {
+		if (
+			strcasecmp(
+				$requested_category,
+				$item['bo_table']
+			)
+			===
+			0
+		) {
+			return $item;
+		}
+
+		$names = array_merge(
+			[$item['category'], $item['board']['bo_subject'] ?? ''],
+			$item['menu_names']
+		);
+
+		foreach ($names as $name) {
+			if (
+				$name !== ''
+				&&
+				api_category_key($name) === $requested_key
+			) {
+				return $item;
+			}
+		}
+	}
+
+	$allowed_categories = [];
+	$allowed_bo_tables = [];
+
+	foreach ($available as $item) {
+		$allowed_categories[] = $item['category'];
+		$allowed_bo_tables[] = $item['bo_table'];
+	}
+
+	api_error(
+		'지원하지 않는 카테고리입니다.',
+		400,
+		[
+			'category' => $requested_category,
+			'allowed_categories' => $allowed_categories,
+			'allowed_bo_tables' => $allowed_bo_tables
+		]
 	);
-
-	if (!isset(
-		$AI_NEWS_BOARDS[$category]
-	)) {
-
-		api_error(
-			'지원하지 않는 카테고리입니다.',
-			400,
-			[
-				'category' => $category,
-				'allowed_categories' =>
-				array_keys(
-					$AI_NEWS_BOARDS
-				)
-			]
-		);
-	}
-
-	$bo_table =
-		$AI_NEWS_BOARDS[$category];
-
-	/*
-     * 혹시라도 table name을 잘못 설정했을 경우
-     * SQL table injection 방지
-     */
-
-	if (!preg_match(
-		'/^[A-Za-z0-9_]+$/',
-		$bo_table
-	)) {
-
-		api_error(
-			'잘못된 bo_table 값입니다.',
-			500
-		);
-	}
-
-
-	/*
-     * 실제 그누보드 게시판 존재 확인
-     */
-
-	$escaped_bo_table =
-		api_escape($bo_table);
-
-	$board = sql_fetch(
-		"
-        SELECT *
-        FROM {$g5['board_table']}
-        WHERE bo_table = '{$escaped_bo_table}'
-        "
-	);
-
-	if (
-		!$board ||
-		empty($board['bo_table'])
-	) {
-
-		api_error(
-			'그누보드 게시판을 찾을 수 없습니다.',
-			500,
-			[
-				'category' => $category,
-				'bo_table' => $bo_table
-			]
-		);
-	}
-
-	return [
-		'category' => $category,
-		'bo_table' => $bo_table,
-		'board' => $board
-	];
 }
 
 
@@ -642,6 +759,36 @@ if (!$action) {
 	api_error(
 		'action 값이 필요합니다.',
 		400
+	);
+}
+
+
+/* =========================================================
+ * CATEGORIES
+ * 활성 메뉴에 연결된 게시판 조회
+ * ========================================================= */
+
+if ($action === 'categories') {
+
+	$categories = [];
+
+	foreach (api_get_menu_boards() as $item) {
+		$categories[] = [
+			'category' => $item['category'],
+			'bo_table' => $item['bo_table'],
+			'board_subject' =>
+				$item['board']['bo_subject']
+				??
+				'',
+			'menu_names' => $item['menu_names']
+		];
+	}
+
+	api_success(
+		[
+			'count' => count($categories),
+			'categories' => $categories
+		]
 	);
 }
 
@@ -1991,6 +2138,7 @@ api_error(
 		$action,
 
 		'allowed_actions' => [
+			'categories',
 			'list',
 			'get',
 			'create',
