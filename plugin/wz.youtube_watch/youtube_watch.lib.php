@@ -286,6 +286,17 @@ function wzy_merge_ranges($ranges, $duration) {
     return $merged;
 }
 
+function wzy_normalize_finished_ranges($ranges, $duration) {
+    $duration = (float)$duration;
+    if (count($ranges) !== 1 || $duration <= 0) return $ranges;
+    $watched = $ranges[0][1] - $ranges[0][0];
+    // Match the player's boundary tolerance without filling skipped intervals.
+    if ($duration - $watched <= 3 && $watched / $duration >= 0.95 && $duration - $ranges[0][1] <= 3) {
+        return array(array(0, $duration));
+    }
+    return $ranges;
+}
+
 function wzy_ranges_are_valid($ranges, $duration) {
     $duration = (float)$duration;
     if (!is_array($ranges) || !$ranges || count($ranges) > 50 || !is_finite($duration) || $duration < 1) return false;

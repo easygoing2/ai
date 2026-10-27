@@ -354,7 +354,16 @@
         if (this.segmentStart !== null && this.lastPosition !== null && this.lastPosition > this.segmentStart) {
             ranges.push([this.segmentStart, this.lastPosition]);
         }
-        return mergeRanges(ranges, this.duration());
+        ranges = mergeRanges(ranges, this.duration());
+        var duration = this.duration();
+        // Allow small boundary timing errors only for one continuous viewing.
+        if (ranges.length === 1 && duration > 0) {
+            var watched = ranges[0][1] - ranges[0][0];
+            if (duration - watched <= 3 && watched / duration >= 0.95 && duration - ranges[0][1] <= 3) {
+                ranges = [[0, duration]];
+            }
+        }
+        return ranges;
     };
 
     Tracker.prototype.render = function () {
@@ -440,6 +449,8 @@
         this.playing = true;
         this.seeking = false;
         this.resetSample();
+        // Seed immediately: waiting for the next timer loses the first second.
+        this.tick();
     };
 
     Tracker.prototype.onPause = function () {
@@ -478,6 +489,16 @@
         if (this.seeking) this.finishSeek();
         else this.closeSegment(this.currentTime());
         this.playing = false;
+        // The ended event may report a position slightly before the duration.
+        // Only extend an already watched tail; never fill skipped middle ranges.
+        var duration = this.duration();
+        var ranges = this.allRanges();
+        var tail = ranges[ranges.length - 1];
+        if (tail && duration > tail[1] && duration - tail[1] <= 3) {
+            this.pending.push([tail[0], duration]);
+            this.pending = mergeRanges(this.pending, duration);
+        }
+        this.render();
         this.flush(false);
     };
 

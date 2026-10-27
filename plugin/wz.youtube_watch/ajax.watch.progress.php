@@ -75,6 +75,7 @@ if ((float)$row['ww_duration_seconds'] > 0) {
     $duration = $old_duration;
 }
 $ranges = wzy_merge_ranges(array_merge($old_ranges, $clean_new_ranges), $duration);
+$ranges = wzy_normalize_finished_ranges($ranges, $duration);
 if (count($ranges) > 1000) {
     sql_query('ROLLBACK', false);
     wzy_json_response(false, array('message' => '시청 구간 데이터가 너무 많습니다.', 'code' => 'RANGE_LIMIT'), 422);
